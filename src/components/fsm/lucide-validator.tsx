@@ -58,7 +58,7 @@ export function LucideValidator() {
   return (
     <FsmViewWrapper
       title="Lucide Icon Validator FSM"
-      description="An FSM agent that finds invalid lucide-react icons and suggests fixes, handling the deterministic work before calling an LLM."
+      description="A deterministic FSM that finds invalid lucide-react icons and then uses the creative AI to suggest fixes."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
@@ -118,7 +118,7 @@ export function LucideValidator() {
                     <Lightbulb className="h-4 w-4" />
                     <AlertTitle>Suggestions</AlertTitle>
                     <AlertDescription>
-                      The AI agent suggests the following corrections:
+                      The AI suggests the following corrections:
                       <ul className="mt-2 list-disc list-inside">
                         {Object.entries(result.recommendations).map(([invalid, valid]) => (
                           <li key={invalid}>

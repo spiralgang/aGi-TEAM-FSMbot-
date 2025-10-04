@@ -71,7 +71,7 @@ export function XmlParserFsm() {
   return (
     <FsmViewWrapper
       title="XML Manifest Parser FSM"
-      description="An agentic workflow to parse, analyze, and extract insights from XML manifest files, similar to the YAML Policy Parser."
+      description="A workflow to parse, analyze, and extract insights from XML manifest files, similar to the YAML Policy Parser FSM."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>

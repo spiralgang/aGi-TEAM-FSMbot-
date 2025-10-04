@@ -1,8 +1,8 @@
 'use server';
 
 /**
- * @fileOverview An agentic workflow to parse, analyze, and extract insights from XML manifest files.
- * This FSM-based agent provides a structured analysis of XML content, similar to the YAML Policy Parser.
+ * @fileOverview A workflow to parse, analyze, and extract insights from XML manifest files.
+ * This FSM-based flow provides a structured analysis of XML content, similar to the YAML Policy Parser.
  *
  * - xmlParserWorkflow - A function that handles the XML parsing and analysis.
  * - XmlParserWorkflowInput - The input type for the xmlParserWorkflow function.

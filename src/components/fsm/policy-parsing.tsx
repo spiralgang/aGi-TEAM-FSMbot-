@@ -13,17 +13,19 @@ import type { PolicyParsingFSMOutput } from '@/ai/flows/policy-parsing-fsm';
 import { useToast } from '@/hooks/use-toast';
 
 const examplePolicy = `
-agent:
-  name: "ComplianceEnforcer"
-  behaviors:
-    - "Normalize files"
-    - "Run build checks"
-    - "Audit artifacts"
-    - "Enforce org policies"
-plugins:
-  - "copilot"
-  - "android"
-  - "security"
+agent_behavior:
+  # Rules for the creative AI
+  style: "professional"
+  allowed_actions:
+    - "create_file"
+    - "update_file"
+    - "run_lint"
+  disallowed_actions:
+    - "delete_root_files"
+compliance_rules:
+  # Rules for deterministic FSMs
+  max_line_length: 120
+  enforce_naming_convention: "camelCase"
 `.trim();
 
 export function PolicyParsing() {
@@ -56,7 +58,7 @@ export function PolicyParsing() {
   return (
     <FsmViewWrapper
       title="Policy Parsing FSM"
-      description="A deterministic FSM agent that interprets structured policy files (like YAML) to direct other AI agents."
+      description="A deterministic FSM that interprets structured policy files (like YAML) to direct the creative AI and other FSMs."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>

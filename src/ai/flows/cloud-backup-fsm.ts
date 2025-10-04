@@ -1,7 +1,7 @@
 'use server';
 /**
  * @fileOverview An FSM-based Genkit flow that simulates a multi-step cloud backup process.
- * This agent orchestrates scanning, archiving, encrypting, and uploading files, providing
+ * This deterministic workflow orchestrates scanning, archiving, encrypting, and uploading files, providing
  * step-by-step logging of its progress.
  *
  * - cloudBackupFSM - A function that handles the backup process.

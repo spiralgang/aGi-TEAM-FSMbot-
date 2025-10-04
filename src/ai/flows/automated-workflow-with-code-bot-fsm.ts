@@ -1,9 +1,9 @@
 'use server';
 
 /**
- * @fileOverview An AI agentic workflow assistant using Finite State Machines (FSM). This file exports the
- * `automatedWorkflowWithCodeBotFSM` function, which enables developers to build more productive and reliable AI-assisted
- * coding workflows by defining and managing states, transitions, and actions within a Genkit flow.
+ * @fileOverview A creative coding workflow using a Finite State Machine (FSM) to guide the central AI.
+ * This file exports the `automatedWorkflowWithCodeBotFSM` function, which enables the AI to build code
+ * by moving through defined states, transitions, and actions within a Genkit flow.
  *
  * - automatedWorkflowWithCodeBotFSM - The main function to orchestrate the FSM-driven coding workflow.
  * - AutomatedWorkflowWithCodeBotFSMInput - The input type for the automatedWorkflowWithCodeBotFSM function.
@@ -40,12 +40,12 @@ const prompt = ai.definePrompt({
   output: {
     schema: z.object({
       nextState: z.string().describe('The next state in the FSM workflow.'),
-      agentAction: z.string().describe('The action to be performed by the agent.'),
+      agentAction: z.string().describe('The action to be performed by the AI.'),
       generatedCode: z.string().describe('The code generated or modified in this step.'),
-      reasoning: z.string().describe('Explanation of the agent action and state transition.'),
+      reasoning: z.string().describe('Explanation of the AI action and state transition.'),
     }),
   },
-  prompt: `You are a code bot operating within a finite state machine.
+  prompt: `You are a creative AI coder operating within a finite state machine.
 Your task is to assist in generating code based on the user provided description, working one state at a time.
 
 You are currently in state: {{{currentState}}}
