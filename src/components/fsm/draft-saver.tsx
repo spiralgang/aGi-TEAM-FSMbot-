@@ -58,7 +58,6 @@ export function DraftSaver() {
   const saveDraft = useCallback(() => {
     if (text.length < MIN_CONTENT_LENGTH) return;
 
-    // Generate a summary title (mocking an LLM call)
     const firstLine = text.split('\n')[0];
     const title = firstLine.length > 40 ? firstLine.substring(0, 37) + '...' : firstLine;
     
@@ -71,9 +70,12 @@ export function DraftSaver() {
     };
 
     try {
-      const updatedDrafts = [newDraft, ...savedDrafts].slice(0, 10); // Keep max 10 drafts
-      localStorage.setItem(DRAFT_SAVE_KEY, JSON.stringify(updatedDrafts));
-      setSavedDrafts(updatedDrafts);
+      setSavedDrafts(prevDrafts => {
+        const updatedDrafts = [newDraft, ...prevDrafts].slice(0, 10);
+        localStorage.setItem(DRAFT_SAVE_KEY, JSON.stringify(updatedDrafts));
+        return updatedDrafts;
+      });
+
       toast({
         title: "Draft Saved!",
         description: `Your work has been saved to the recycling bin.`,
@@ -87,7 +89,7 @@ export function DraftSaver() {
       });
     }
 
-  }, [text, savedDrafts, toast]);
+  }, [text, toast]);
 
   useEffect(() => {
     if (debounceTimeout.current) {
@@ -96,7 +98,7 @@ export function DraftSaver() {
     if (text.length >= MIN_CONTENT_LENGTH) {
       debounceTimeout.current = setTimeout(saveDraft, SAVE_DEBOUNCE_MS);
     }
-    // Cleanup timeout on unmount
+    
     return () => {
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);

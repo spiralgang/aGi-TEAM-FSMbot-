@@ -9,10 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea } from '@/components/ui/scroll-area';
-
-// TODO: Define the action and types for the XML parser flow
-// import { runXmlParserWorkflowAction } from '@/app/actions';
-// import type { XmlParserWorkflowOutput } from '@/ai/flows/xml-parser-fsm';
+import { runXmlParserWorkflowAction } from '@/app/actions';
+import type { XmlParserWorkflowOutput } from '@/ai/flows/xml-parser-fsm';
 
 const exampleXml = `
 <?xml version="1.0" encoding="UTF-8"?>
@@ -38,8 +36,7 @@ const exampleXml = `
 
 export function XmlParserFsm() {
   const [xmlContent, setXmlContent] = useState(exampleXml);
-  // const [result, setResult] = useState<XmlParserWorkflowOutput | null>(null);
-  const [result, setResult] = useState<any | null>(null);
+  const [result, setResult] = useState<XmlParserWorkflowOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -56,24 +53,7 @@ export function XmlParserFsm() {
     setIsLoading(true);
     setResult(null);
 
-    // TODO: Implement the actual workflow action call
-    // const response = await runXmlParserWorkflowAction({ xmlContent });
-
-    // Mock response for now
-    await new Promise(res => setTimeout(res, 1500));
-    const mockAnalysis = {
-      analysis: `FSM ANALYSIS COMPLETE:
-- Parsed root element: <project>
-- Detected 2 dependencies:
-  - fsm-core (v1.2.0)
-  - agent-sdk (v3.0.1)
-- Found 2 plugins:
-  - lint-checker
-  - compliance-auditor
-- ASSESSMENT: Project appears to be an agentic system with core FSM and AI SDK dependencies. Standard compliance plugins are active.
-`
-    };
-    const response = { success: true, data: mockAnalysis };
+    const response = await runXmlParserWorkflowAction({ xmlContent });
 
     if (response.success && response.data) {
       setResult(response.data);
@@ -81,8 +61,7 @@ export function XmlParserFsm() {
       toast({
         variant: 'destructive',
         title: 'Workflow Failed',
-        // description: response.error || "An unknown error occurred.",
-        description: 'An unknown error occurred.',
+        description: response.error || 'An unknown error occurred.',
       });
     }
 

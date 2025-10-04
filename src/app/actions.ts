@@ -16,6 +16,10 @@ import {
   codeStateValidation,
   type CodeStateValidationInput,
 } from '@/ai/flows/code-state-validation';
+import {
+  xmlParserWorkflow,
+  type XmlParserWorkflowInput,
+} from '@/ai/flows/xml-parser-fsm';
 
 export async function runCodeBotWorkflowAction(
   input: AutomatedWorkflowWithCodeBotFSMInput
@@ -51,6 +55,17 @@ export async function validateCodeStateAction(
 ) {
   try {
     const result = await codeStateValidation(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function runXmlParserWorkflowAction(
+  input: XmlParserWorkflowInput
+) {
+  try {
+    const result = await xmlParserWorkflow(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };
