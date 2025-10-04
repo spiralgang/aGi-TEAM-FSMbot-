@@ -700,6 +700,14 @@ body {
   height: 100svh;
 }
 
+.h-0 {
+  height: 0;
+}
+
+.h-\[500px\] {
+  height: 500px;
+}
+
 .max-h-96 {
   max-height: 24rem;
 }
@@ -1350,6 +1358,14 @@ body {
   background-color: rgb(254 240 138 / var(--tw-bg-opacity, 1));
 }
 
+.bg-accent\/20 {
+  background-color: hsl(var(--accent) / .2);
+}
+
+.bg-destructive\/20 {
+  background-color: hsl(var(--destructive) / .2);
+}
+
 .fill-current {
   fill: currentColor;
 }
@@ -1840,6 +1856,14 @@ body {
 
 .ring-sidebar-ring {
   --tw-ring-color: hsl(var(--sidebar-ring));
+}
+
+.ring-accent\/50 {
+  --tw-ring-color: hsl(var(--accent) / .5);
+}
+
+.ring-destructive\/50 {
+  --tw-ring-color: hsl(var(--destructive) / .5);
 }
 
 .ring-offset-2 {

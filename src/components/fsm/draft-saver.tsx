@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 const DRAFT_SAVE_KEY = 'fsm_draft_saver_bin';
-const MIN_CONTENT_LENGTH = 50;
+const MIN_CONTENT_LENGTH = 30;
 const SAVE_DEBOUNCE_MS = 3000;
 
 type SavedDraft = {
@@ -34,7 +34,7 @@ type SavedDraft = {
 };
 
 export function DraftSaver() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState('This is a draft that is long enough to be saved automatically after a few seconds of inactivity. Try typing more here.');
   const [savedDrafts, setSavedDrafts] = useState<SavedDraft[]>([]);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
   const { toast } = useToast();
@@ -161,7 +161,7 @@ export function DraftSaver() {
                         <p className="text-xs text-muted-foreground">
                           Saved {formatDistanceToNow(new Date(draft.timestamp), { addSuffix: true })} from {draft.location}
                         </p>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 mt-2">
                            <Button size="sm" variant="outline" className="w-full" onClick={() => restoreDraft(draft.content)}>
                             <HardDriveDownload className="mr-2 h-4 w-4" /> Restore
                           </Button>

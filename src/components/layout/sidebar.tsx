@@ -16,6 +16,7 @@ import {
   Save,
   Ear,
   UploadCloud,
+  FileJson,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -40,6 +41,7 @@ const navItems = [
   { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
   { id: 'code-state-validation', label: 'Code State Validation', icon: FileCheck2 },
   { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
+  { id: 'xml-parser', label: 'XML Parser', icon: FileJson },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
   { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },

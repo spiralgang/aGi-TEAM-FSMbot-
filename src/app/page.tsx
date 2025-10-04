@@ -18,6 +18,7 @@ import { TodoManager } from '@/components/fsm/todo-manager';
 import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { CloudBackup } from '@/components/fsm/cloud-backup';
+import { XmlParserFsm } from '@/components/fsm/xml-parser';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -35,6 +36,7 @@ const views: Record<string, React.ReactNode> = {
   'loop-prevention': <LoopPrevention />,
   'code-bot-fsm': <CodeBotFsm />,
   'cloud-backup': <CloudBackup />,
+  'xml-parser': <XmlParserFsm />,
 };
 
 export default function Home() {

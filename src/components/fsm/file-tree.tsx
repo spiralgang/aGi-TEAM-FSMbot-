@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { FsmViewWrapper } from './view-wrapper';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Folder, File, ChevronRight, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
@@ -23,11 +23,27 @@ const fileSystemData: FileSystemNode[] = [
     type: 'folder',
     children: [
       {
+        name: 'ai',
+        type: 'folder',
+        children: [
+           { name: 'genkit.ts', type: 'file' },
+           { name: 'dev.ts', type: 'file' },
+           { 
+             name: 'flows',
+             type: 'folder',
+             children: [
+               { name: 'code-bot-fsm.ts', type: 'file' },
+               { name: 'lucide-validator.ts', type: 'file' },
+             ]
+           },
+        ]
+      },
+      {
         name: 'components',
         type: 'folder',
         children: [
-          { name: 'button.tsx', type: 'file' },
-          { name: 'card.tsx', type: 'file' },
+          { name: 'dashboard.tsx', type: 'file' },
+          { name: 'continuous-audit.tsx', type: 'file' },
         ],
       },
       {
@@ -40,9 +56,9 @@ const fileSystemData: FileSystemNode[] = [
     ],
   },
   {
-    name: 'public',
+    name: 'docs',
     type: 'folder',
-    children: [{ name: 'favicon.ico', type: 'file' }],
+    children: [{ name: 'chckpt1-a2.t3.fb1.md', type: 'file' }],
   },
   { name: 'package.json', type: 'file' },
   { name: 'README.md', type: 'file' },
@@ -79,7 +95,7 @@ const TreeNode: React.FC<{ node: FileSystemNode; level?: number }> = ({ node, le
       className="flex items-center space-x-2 p-1.5 rounded-md"
       style={{ paddingLeft: `${level * 1.5 + 0.375}rem` }}
     >
-      <File className="h-4 w-4 ml-[1.5rem]" />
+      <File className="h-4 w-4 text-muted-foreground" style={{ marginLeft: '1rem' }} />
       <span>{node.name}</span>
     </div>
   );
@@ -90,11 +106,14 @@ export function FileTree() {
   return (
     <FsmViewWrapper
       title="File System Assimilator FSM"
-      description="An FSM that demonstrates assimilating raw hierarchical data (like from 'logcat') into a structured, interactive UI."
+      description="An FSM that demonstrates assimilating raw hierarchical data (like from 'logcat' or a file listing) into a structured, interactive UI."
     >
       <Card>
-        <CardContent className="pt-6">
-          <div className="font-code text-sm">
+        <CardHeader>
+          <CardTitle>Project Structure</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="font-code text-sm p-4 border rounded-lg bg-secondary/30 h-[500px] overflow-auto">
             {fileSystemData.map((node) => (
               <TreeNode key={node.name} node={node} />
             ))}
