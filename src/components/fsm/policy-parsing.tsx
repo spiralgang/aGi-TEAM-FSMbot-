@@ -13,26 +13,17 @@ import type { PolicyParsingFSMOutput } from '@/ai/flows/policy-parsing-fsm';
 import { useToast } from '@/hooks/use-toast';
 
 const examplePolicy = `
-<!-- Universal Build & Behavior Enforcement Policy -->
-<enforcementPolicy>
-  <android>
-    <minSdkVersion>29</minSdkVersion>
-    <fileHygiene>true</fileHygiene>
-    <artifactTypes>apk,aar</artifactTypes>
-  </android>
-  <lint>
-    <enabled>true</enabled>
-    <tool>checkstyle</tool>
-    <config>checkstyle.xml</config>
-  </lint>
-  <test>
-    <enabled>true</enabled>
-    <frameworks>junit,pytest</frameworks>
-  </test>
-  <orgInstructions>
-    <copilotConfig>.github/copilot.yaml</copilotConfig>
-  </orgInstructions>
-</enforcementPolicy>
+agent:
+  name: "ComplianceEnforcer"
+  behaviors:
+    - "Normalize files"
+    - "Run build checks"
+    - "Audit artifacts"
+    - "Enforce org policies"
+plugins:
+  - "copilot"
+  - "android"
+  - "security"
 `.trim();
 
 export function PolicyParsing() {
@@ -65,20 +56,20 @@ export function PolicyParsing() {
   return (
     <FsmViewWrapper
       title="Policy Parsing FSM"
-      description="Applies a parser implemented as an FSM to interpret policy files like XML or YAML."
+      description="Applies a parser implemented as an FSM to interpret policy files like YAML."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="policy-input">Policy (XML) Input</Label>
+                <Label htmlFor="policy-input">Policy (YAML) Input</Label>
                 <Textarea
                   id="policy-input"
                   value={policyInput}
                   onChange={(e) => setPolicyInput(e.target.value)}
                   className="font-code h-96"
-                  placeholder="Enter XML policy to parse..."
+                  placeholder="Enter YAML policy to parse..."
                 />
               </div>
               <Button type="submit" disabled={isLoading} className="w-full">

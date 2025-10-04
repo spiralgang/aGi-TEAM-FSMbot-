@@ -9,6 +9,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import yaml from 'js-yaml';
 
 const PolicyParsingFSMInputSchema = z
   .string()
@@ -28,45 +29,6 @@ export async function parsePolicyWithFSM(input: PolicyParsingFSMInput): Promise<
   return policyParsingFSMFlow(input);
 }
 
-const policyParsingFSMPrompt = ai.definePrompt({
-  name: 'policyParsingFSMPrompt',
-  input: {schema: PolicyParsingFSMInputSchema},
-  output: {schema: PolicyParsingFSMOutputSchema},
-  prompt: `You are a Policy parser implemented as a Finite State Machine.
-  Your job is to determine if the input Policy is valid and, if so, return a parsed Policy object. If not valid, return an error message.
-
-  Input Policy:\n{{{input}}}`,
-});
-
-// A simple regex-based XML to JSON converter for demonstration purposes.
-// In a real-world scenario, a more robust library would be used.
-function xmlToJson(xml: string) {
-  const json: any = {};
-  const tagRegex = /<([a-zA-Z0-9]+)>(.*?)<\/\1>/g;
-  let match;
-
-  while ((match = tagRegex.exec(xml)) !== null) {
-    const tagName = match[1];
-    const tagContent = match[2];
-
-    // If the content is just text, store it.
-    if (!tagContent.includes('<')) {
-      json[tagName] = tagContent;
-    } else {
-      // If the content contains more tags, recurse.
-      json[tagName] = xmlToJson(tagContent);
-    }
-  }
-
-  // Handle case where xml might be just a value between tags
-  if (Object.keys(json).length === 0 && !xml.startsWith('<')) {
-    return xml;
-  }
-  
-  return json;
-}
-
-
 const policyParsingFSMFlow = ai.defineFlow(
   {
     name: 'policyParsingFSMFlow',
@@ -74,27 +36,30 @@ const policyParsingFSMFlow = ai.defineFlow(
     outputSchema: PolicyParsingFSMOutputSchema,
   },
   async input => {
+    // FSM States: START -> PARSING -> VALIDATING -> DONE/ERROR
+    let state = 'START';
     try {
-      // Clean up the input XML
-      const cleanedInput = input.replace(/<!--.*?-->/gs, "").replace(/\s+/g, ' ').trim();
-      const parsedPolicy = xmlToJson(cleanedInput);
-      
-      // The top-level tag might be the only key, so we'll dive into it.
-      const rootKey = Object.keys(parsedPolicy)[0];
-      const finalJson = rootKey ? parsedPolicy[rootKey] : parsedPolicy;
+      state = 'PARSING';
+      const parsedPolicy = yaml.load(input);
 
-      if(Object.keys(finalJson).length === 0) {
-        throw new Error("Could not parse XML. The structure might be invalid or unsupported.");
+      state = 'VALIDATING';
+      if (typeof parsedPolicy !== 'object' || parsedPolicy === null) {
+        throw new Error('YAML does not represent a valid object.');
       }
+      
+      // Add more validation logic here if needed, e.g., schema validation.
+      // For now, we just check if it's a non-null object.
 
+      state = 'DONE';
       return {
         isValid: true,
-        parsedPolicy: finalJson,
+        parsedPolicy: parsedPolicy as Record<string, any>,
       };
     } catch (e: any) {
+      state = 'ERROR';
       return {
         isValid: false,
-        errorMessage: e.message,
+        errorMessage: `Parsing failed in state ${state}: ${e.message}`,
       };
     }
   }
