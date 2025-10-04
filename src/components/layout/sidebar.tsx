@@ -15,6 +15,7 @@ import {
   FileCog,
   Save,
   Ear,
+  UploadCloud,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -33,19 +34,20 @@ interface AppSidebarProps {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
+  { id: 'cloud-backup', label: 'Cloud Backup', icon: UploadCloud },
+  { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
+  { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
   { id: 'code-state-validation', label: 'Code State Validation', icon: FileCheck2 },
   { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
-  { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
-  { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
-  { id: 'todo-manager', label: 'TODO Manager', icon: ListTodo },
+  { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
-  { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
-  { id: 'file-tree', label: 'File Tree', icon: FolderTree },
-  { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
-  { id: 'embed-gemini-manager', label: 'Gemini FSM Manager', icon: FileCog },
+  { id: 'todo-manager', label: 'TODO Manager', icon: ListTodo },
   { id: 'draft-saver', label: 'Draft Saver', icon: Save },
   { id: 'content-whisperer', label: 'Content Whisperer', icon: Ear },
+  { id: 'file-tree', label: 'File Tree', icon: FolderTree },
+  { id: 'embed-gemini-manager', label: 'Gemini FSM Manager', icon: FileCog },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {
