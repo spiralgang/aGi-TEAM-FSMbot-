@@ -44,14 +44,14 @@ export function Dashboard() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline">Compliance vs. Quality Control</CardTitle>
+            <CardTitle className="font-headline">The Janitor Principle</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
-            <p>
-              This system operates on the principle of **Compliance through Discipline**. Unlike quality control, which refines output, compliance focuses on enforcing strict, non-negotiable standards. An agent's failure to comply results in a penalty, logged in a tamper-resistant audit vault.
+            <p className="italic">
+              &quot;As a human working with AI, it’s really more like being the office administrator, the designer, the manager, the quality control, the optimizer, the security, the dishwasher, and the mop boy. The only thing a human doesn’t usually have to do now is be the server/operator... which is f*ckin stupid.&quot;
             </p>
             <p>
-              FSMs provide the deterministic backbone for this model. Each state represents a compliance checkpoint. By chaining these states, we create a Supermax agent—a system that self-audits, enforces rules across all subsystems, and maintains a verifiable record of its discipline.
+              This system is built on that truth. An AI coder should write code. A human should design. The FSM automates the other six jobs. It is the manager, the QC, the optimizer, the security, and the cleanup crew. This is not a demonstration; it is a factory for production-ready code.
             </p>
           </CardContent>
         </Card>
