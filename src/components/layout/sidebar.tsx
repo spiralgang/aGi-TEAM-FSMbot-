@@ -34,6 +34,7 @@ const navItems = [
   { id: 'yaml-parsing', label: 'YAML Parser', icon: FileCode },
   { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
+  { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
   { id: 'todo-manager', label: 'TODO Manager', icon: ListTodo },
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },

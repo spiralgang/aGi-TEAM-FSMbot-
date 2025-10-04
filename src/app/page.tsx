@@ -13,6 +13,7 @@ import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { FileTree } from '@/components/fsm/file-tree';
 import { ContinuousAudit } from '@/components/fsm/continuous-audit';
+import { LucideValidator } from '@/components/fsm/lucide-validator';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -20,6 +21,7 @@ const views: Record<string, React.ReactNode> = {
   'yaml-parsing': <YamlParsing />,
   'syntax-checker': <SyntaxChecker />,
   'lint-compliance': <LintCompliance />,
+  'lucide-validator': <LucideValidator />,
   'todo-manager': <TodoManager />,
   'loop-prevention': <LoopPrevention />,
   'code-bot-fsm': <CodeBotFsm />,
