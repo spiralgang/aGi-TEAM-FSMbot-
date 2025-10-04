@@ -1,3 +1,41 @@
+'use client';
+
+import { useState } from 'react';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/layout/sidebar';
+import { Dashboard } from '@/components/fsm/dashboard';
+import { CodeStateValidation } from '@/components/fsm/code-state-validation';
+import { YamlParsing } from '@/components/fsm/yaml-parsing';
+import { SyntaxChecker } from '@/components/fsm/syntax-checker';
+import { LintCompliance } from '@/components/fsm/lint-compliance';
+import { TodoManager } from '@/components/fsm/todo-manager';
+import { LoopPrevention } from '@/components/fsm/loop-prevention';
+import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
+
+const views: Record<string, React.ReactNode> = {
+  dashboard: <Dashboard />,
+  'code-state-validation': <CodeStateValidation />,
+  'yaml-parsing': <YamlParsing />,
+  'syntax-checker': <SyntaxChecker />,
+  'lint-compliance': <LintCompliance />,
+  'todo-manager': <TodoManager />,
+  'loop-prevention': <LoopPrevention />,
+  'code-bot-fsm': <CodeBotFsm />,
+};
+
 export default function Home() {
-  return <></>;
+  const [activeView, setActiveView] = useState('dashboard');
+
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen">
+        <AppSidebar activeView={activeView} setActiveView={setActiveView} />
+        <SidebarInset>
+          <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-background">
+            {views[activeView]}
+          </main>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
 }
