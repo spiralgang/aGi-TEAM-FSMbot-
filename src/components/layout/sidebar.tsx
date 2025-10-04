@@ -6,6 +6,7 @@ import {
   Code,
   FileCheck2,
   FileCode,
+  FolderTree,
   LayoutDashboard,
   ListTodo,
   RefreshCwOff,
@@ -35,6 +36,7 @@ const navItems = [
   { id: 'todo-manager', label: 'TODO Manager', icon: ListTodo },
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
+  { id: 'file-tree', label: 'File Tree', icon: FolderTree },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {

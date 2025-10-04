@@ -11,6 +11,7 @@ import { LintCompliance } from '@/components/fsm/lint-compliance';
 import { TodoManager } from '@/components/fsm/todo-manager';
 import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
+import { FileTree } from '@/components/fsm/file-tree';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -21,6 +22,7 @@ const views: Record<string, React.ReactNode> = {
   'todo-manager': <TodoManager />,
   'loop-prevention': <LoopPrevention />,
   'code-bot-fsm': <CodeBotFsm />,
+  'file-tree': <FileTree />,
 };
 
 export default function Home() {

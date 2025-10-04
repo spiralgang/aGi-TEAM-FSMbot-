@@ -70,7 +70,7 @@ export function CodeStateValidation() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="fsm-input">FSM Definition</Label>♥
+                <Label htmlFor="fsm-input">FSM Definition</Label>
                 <Textarea
                   id="fsm-input"
                   value={fsm}
