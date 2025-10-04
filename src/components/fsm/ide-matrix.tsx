@@ -232,6 +232,121 @@ export function IDEMatrix() {
         });
     }, []);
 
+    const commands: { [key: string]: (args: string[]) => void | Promise<void> } = {
+        'help': () => {
+            writeToTerminal(helpText);
+        },
+        'ls': () => {
+            const targetDir = navigateTo(currentPath);
+            if (targetDir && typeof targetDir === 'object') {
+                const contents = Object.keys(targetDir).map(key =>
+                    (typeof targetDir[key] === 'object') ? `<span class="text-blue-400 font-bold">${key}/</span>` : key
+                ).join('&nbsp;&nbsp;&nbsp;');
+                writeToTerminal(contents || '(empty)');
+            } else {
+                writeToTerminal('ls: cannot access directory.');
+            }
+        },
+        'cd': (args) => {
+            if (!args[0] || args[0] === '~') {
+                setCurrentPath(['~']);
+            } else {
+                const newPathParts = resolvePath(args[0]);
+                if (navigateTo(newPathParts) !== null && typeof navigateTo(newPathParts) === 'object') {
+                    setCurrentPath(newPathParts);
+                } else {
+                    writeToTerminal(`cd: ${args[0]}: No such file or directory`);
+                }
+            }
+        },
+         'cat': (args) => {
+            const fileContent = navigateTo(resolvePath(args[0]));
+            if (typeof fileContent === 'string') {
+                 writeToTerminal(fileContent.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+            } else {
+                 writeToTerminal(`cat: ${args[0]}: Not a file or not found`);
+            }
+        },
+        'pwd': () => {
+            writeToTerminal(currentPath.join('/'));
+        },
+        'mkdir': (args) => {
+            if (args[0]) createOrUpdate(resolvePath(args[0]), {}, true);
+        },
+        'touch': (args) => {
+            if (args[0]) createOrUpdate(resolvePath(args[0]), '');
+        },
+         'echo': (args) => {
+            const output = args.join(' ');
+            // Primitive redirection
+            if (output.includes('>')) {
+                const [content, file] = output.split('>').map(s => s.trim());
+                if (file) {
+                     createOrUpdate(resolvePath(file), content);
+                     writeToTerminal(`Wrote to ${file}`);
+                } else {
+                    writeToTerminal(content.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+                }
+            } else {
+                writeToTerminal(output.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
+            }
+        },
+        'clear': () => {
+            setOutput([]);
+        },
+        'browse': (args) => {
+             if (browserRef.current && args[0]) {
+                let formattedUrl = args[0].trim();
+                if (!/^(https?:\/\/)/i.test(formattedUrl) && formattedUrl.includes('.')) formattedUrl = `https://${formattedUrl}`;
+                else if (!/^(https?:\/\/)/i.test(formattedUrl)) formattedUrl = `https://www.google.com/search?q=${encodeURIComponent(formattedUrl)}`;
+                browserRef.current.src = formattedUrl;
+                if(browserInputRef.current) browserInputRef.current.value = formattedUrl;
+             }
+        },
+         'python': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">python ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'git': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">git ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'analyze': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">analyze ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'generate': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">generate ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'refactor': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">refactor ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'abuild': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">abuild ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'bootchartd': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">bootchartd ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+         'build:android': async (args) => {
+            writeToTerminal(`Simulating command: <span class="text-yellow-400">build:android ${args.join(' ')}</span>...`);
+            await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
+            writeToTerminal('Simulation complete.');
+         },
+        'default': (args: string[]) => {
+            if (args[0]) writeToTerminal(`${args[0]}: command not found`);
+        }
+    };
 
     const processCommand = useCallback(async (command: string) => {
         if (isBusy) return;
@@ -249,103 +364,14 @@ export function IDEMatrix() {
         const args = parts.slice(1);
 
         try {
-            switch (cmd) {
-                case 'help':
-                    writeToTerminal(helpText);
-                    break;
-                case 'ls': {
-                    const targetDir = navigateTo(currentPath);
-                    if (targetDir && typeof targetDir === 'object') {
-                        const contents = Object.keys(targetDir).map(key =>
-                            (typeof targetDir[key] === 'object') ? `<span class="text-blue-400 font-bold">${key}/</span>` : key
-                        ).join('&nbsp;&nbsp;&nbsp;');
-                        writeToTerminal(contents || '(empty)');
-                    } else {
-                        writeToTerminal('ls: cannot access directory.');
-                    }
-                    break;
-                }
-                case 'cd': {
-                    if (!args[0] || args[0] === '~') {
-                        setCurrentPath(['~']);
-                    } else {
-                        const newPathParts = resolvePath(args[0]);
-                        if (navigateTo(newPathParts) !== null && typeof navigateTo(newPathParts) === 'object') {
-                            setCurrentPath(newPathParts);
-                        } else {
-                            writeToTerminal(`cd: ${args[0]}: No such file or directory`);
-                        }
-                    }
-                    break;
-                }
-                 case 'cat': {
-                    const fileContent = navigateTo(resolvePath(args[0]));
-                    if (typeof fileContent === 'string') {
-                         writeToTerminal(fileContent.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                    } else {
-                         writeToTerminal(`cat: ${args[0]}: Not a file or not found`);
-                    }
-                    break;
-                }
-                case 'pwd':
-                    writeToTerminal(currentPath.join('/'));
-                    break;
-                case 'mkdir':
-                    if (args[0]) createOrUpdate(resolvePath(args[0]), {}, true);
-                    break;
-                case 'touch':
-                    if (args[0]) createOrUpdate(resolvePath(args[0]), '');
-                    break;
-                 case 'echo': {
-                    const output = args.join(' ');
-                    // Primitive redirection
-                    if (output.includes('>')) {
-                        const [content, file] = output.split('>').map(s => s.trim());
-                        if (file) {
-                             createOrUpdate(resolvePath(file), content);
-                             writeToTerminal(`Wrote to ${file}`);
-                        } else {
-                            writeToTerminal(content.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                        }
-                    } else {
-                        writeToTerminal(output.replace(/</g, '&lt;').replace(/>/g, '&gt;'));
-                    }
-                    break;
-                }
-                case 'clear':
-                    setOutput([]);
-                    break;
-                case 'browse':
-                     if (browserRef.current && args[0]) {
-                        let formattedUrl = args[0].trim();
-                        if (!/^(https?:\/\/)/i.test(formattedUrl) && formattedUrl.includes('.')) formattedUrl = `https://${formattedUrl}`;
-                        else if (!/^(https?:\/\/)/i.test(formattedUrl)) formattedUrl = `https://www.google.com/search?q=${encodeURIComponent(formattedUrl)}`;
-                        browserRef.current.src = formattedUrl;
-                        if(browserInputRef.current) browserInputRef.current.value = formattedUrl;
-                     }
-                     break;
-                 case 'python':
-                 case 'git':
-                 case 'analyze':
-                 case 'generate':
-                 case 'refactor':
-                 case 'abuild':
-                 case 'bootchartd':
-                 case 'build:android':
-                    writeToTerminal(`Simulating command: <span class="text-yellow-400">${cmd} ${args.join(' ')}</span>...`);
-                    await new Promise(res => setTimeout(res, 500 + Math.random() * 500));
-                    writeToTerminal('Simulation complete.');
-                    break;
-                default:
-                    if (command) writeToTerminal(`${command}: command not found`);
-                    break;
-            }
+            const action = commands[cmd] || commands['default'];
+            await action(cmd === 'default' ? [cmd] : args);
         } catch (e: any) {
             writeToTerminal(`<span class="text-red-400">Error: ${e.message}</span>`);
         } finally {
             setIsBusy(false);
         }
-    }, [isBusy, currentPath, writeToTerminal, navigateTo, resolvePath, createOrUpdate]);
+    }, [isBusy, currentPath, writeToTerminal, navigateTo, resolvePath, createOrUpdate, commands]);
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
@@ -385,6 +411,24 @@ export function IDEMatrix() {
 
     const pathString = currentPath.join('/') || '/';
 
+    useEffect(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, []);
+
+    useEffect(() => {
+        const promptSpan = document.getElementById('terminal-prompt');
+        if (promptSpan) {
+            const pathString = currentPath.join('/') || '/';
+            promptSpan.innerHTML = `<span class="text-teal-400">user@superlab</span>:<span class="text-violet-400">${pathString}</span><span class="text-stone-300">$</span>`;
+        }
+        if (!isBusy && inputRef.current) {
+            inputRef.current.value = '';
+            inputRef.current.focus();
+        }
+    }, [currentPath, isBusy]);
+
     return (
         <FsmViewWrapper
             title="IDE Matrix"
@@ -401,13 +445,12 @@ export function IDEMatrix() {
                     </div>
                 </div>
 
-                <div className="bg-stone-900 border border-stone-700 rounded-lg flex flex-col h-3/5">
+                <div className="bg-stone-900 border border-stone-700 rounded-lg flex flex-col h-3/5" onClick={() => inputRef.current?.focus()}>
                     <div ref={outputRef} className="flex-grow overflow-y-auto p-4 font-mono text-sm">
                         {output.map((line, i) => <div key={i} dangerouslySetInnerHTML={{ __html: line }} />)}
                     </div>
                     <div className="flex items-center p-2 bg-stone-950 border-t border-stone-700 rounded-b-lg">
-                        <span className="text-sm mr-2 font-mono">
-                            <span className="text-teal-400">user@superlab</span>:<span className="text-violet-400">{pathString}</span><span className="text-stone-300">$</span>
+                        <span id="terminal-prompt" className="text-sm mr-2 font-mono">
                         </span>
                         <input ref={inputRef} type="text" className="flex-grow bg-transparent border-none font-mono text-stone-200 caret-green-400 outline-none text-sm" onKeyDown={handleKeyDown} autoFocus />
                     </div>
