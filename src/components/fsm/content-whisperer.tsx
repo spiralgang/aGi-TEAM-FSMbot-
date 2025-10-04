@@ -3,10 +3,8 @@
 import React, { useState, useMemo } from 'react';
 import { FsmViewWrapper } from './view-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { AlertTriangle, Smile } from 'lucide-react';
-import { Textarea } from '../ui/textarea';
 
 const NAUGHTY_LIST = ['fuck', 'shit', 'damn', 'hell', 'bitch', 'crap'];
 const NICE_LIST = ['please', 'thank you', 'awesome', 'great', 'wonderful', 'amazing'];
