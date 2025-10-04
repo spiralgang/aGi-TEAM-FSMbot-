@@ -1,7 +1,9 @@
 'use server';
 
 /**
- * @fileOverview Code State Validation AI agent.
+ * @fileOverview Code State Validation AI agent. This FSM-based agent validates a code snippet against a given state machine definition,
+ * ensuring that the code adheres to the specified state transitions and logic. It's a core component for ensuring compliance
+ * and predictability in an agentic coding ecosystem.
  *
  * - codeStateValidation - A function that handles the code state validation process.
  * - CodeStateValidationInput - The input type for the codeStateValidation function.
@@ -35,9 +37,18 @@ const prompt = ai.definePrompt({
   name: 'codeStateValidationPrompt',
   input: {schema: CodeStateValidationInputSchema},
   output: {schema: CodeStateValidationOutputSchema},
-  prompt: `You are a code validation expert. You will receive a code snippet and an FSM definition. Your task is to determine if the code follows the state transitions defined in the FSM and is structurally sound according to it.\n\nCode:\n\n\`\`\`{{{code}}}
-\`\`\`\n\nFSM Definition:\n\n{{{fsmDefinition}}}
-\n\nBased on this, determine if the code is valid, and provide a detailed validation result.  Include specific details on which states it follows and which it violates. Set the 
+  prompt: `You are a code validation expert. You will receive a code snippet and an FSM definition. Your task is to determine if the code follows the state transitions defined in the FSM and is structurally sound according to it.
+
+Code:
+
+\`\`\`{{{code}}}
+\`\`\`
+
+FSM Definition:
+
+{{{fsmDefinition}}}
+
+Based on this, determine if the code is valid, and provide a detailed validation result.  Include specific details on which states it follows and which it violates. Set the 
 isValid output field appropriately.`,
 });
 

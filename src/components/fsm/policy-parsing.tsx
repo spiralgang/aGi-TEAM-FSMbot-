@@ -56,7 +56,7 @@ export function PolicyParsing() {
   return (
     <FsmViewWrapper
       title="Policy Parsing FSM"
-      description="Applies a parser implemented as an FSM to interpret policy files like YAML."
+      description="A deterministic FSM agent that interprets structured policy files (like YAML) to direct other AI agents."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>

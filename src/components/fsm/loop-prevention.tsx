@@ -76,8 +76,8 @@ export function LoopPrevention() {
 
   return (
     <FsmViewWrapper
-      title="Loop Prevention (Anti-Flail FSM)"
-      description="Controls agent behavior by escalating to a halt state if it repeats actions too often."
+      title="Anti-Flail FSM (Loop Prevention)"
+      description="An FSM agent that prevents another AI from 'thrashing' by escalating to a halt state if it repeats actions too often."
     >
       <Card>
         <CardContent className="pt-6 grid md:grid-cols-3 gap-6 items-center">

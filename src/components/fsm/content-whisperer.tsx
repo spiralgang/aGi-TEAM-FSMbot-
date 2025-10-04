@@ -76,8 +76,8 @@ export function ContentWhisperer() {
 
   return (
     <FsmViewWrapper
-      title="Stalk-Walk-Listen FSM (Content Whisperer)"
-      description="A bot that 'Santa Clauses' your text, checking it twice for words that might get you noticed and providing subtle 'whispers'."
+      title="Stalk-Watch-Listen FSM (Content Whisperer)"
+      description="A bot that 'Santa Clauses' your text, checking it for words that might get you noticed and providing subtle 'whispers'."
     >
       <Card>
         <CardContent className="pt-6">

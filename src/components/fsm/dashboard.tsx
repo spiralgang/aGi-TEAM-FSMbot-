@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -26,8 +25,8 @@ const features = [
 export function Dashboard() {
   return (
     <FsmViewWrapper
-      title="Welcome to FSMAssist"
-      description="An enterprise-grade toolkit for building disciplined, compliant, and production-ready AI agents using FSMs."
+      title="Welcome to the aGi²TEAM³FSMbot¹ Factory"
+      description="This is the factory floor, an enterprise-grade toolkit for building disciplined, compliant, and production-ready AI agents using FSMs."
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature, index) => (

@@ -71,8 +71,8 @@ export function TodoManager() {
 
   return (
     <FsmViewWrapper
-      title="TODO Task Manager"
-      description="An FSM-driven task manager to organize AI-assisted coding workflows."
+      title="TODO Manager FSM"
+      description="An FSM-driven task manager to organize and track the state of an AI-assisted coding workflow."
     >
       <Card>
         <CardHeader>

@@ -128,7 +128,7 @@ export function DraftSaver() {
   return (
     <FsmViewWrapper
       title="Recycling Bin FSM (Draft Saver)"
-      description="Automatically saves long-form content to a temporary 'bin' to prevent work loss from session timeouts."
+      description="An FSM-based agent that auto-saves long-form content to prevent work loss from session timeouts or accidental closures."
     >
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">

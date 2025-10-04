@@ -1,6 +1,9 @@
 'use server';
 /**
  * @fileOverview An AI agent that validates lucide-react icon imports in a code snippet.
+ * This FSM-based agent first performs deterministic checks (parsing imports and validating against a known list)
+ * and only delegates the fuzzy task of suggesting alternatives to an LLM, perfectly demonstrating the
+ * aGi²TEAM³FSMbot¹ principle of using FSMs for structured work.
  *
  * - lucidIconValidator - A function that handles the icon validation process.
  * - LucidIconValidatorInput - The input type for the lucidIconValidator function.

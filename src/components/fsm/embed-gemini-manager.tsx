@@ -170,8 +170,8 @@ if __name__ == "__main__":
 export function EmbedGeminiManager() {
   return (
     <FsmViewWrapper
-      title="Embed-Gemini FSM Manager"
-      description="This script bootstraps the entire aGi²TEAM³FSMbot¹ environment, acting as the central orchestrator. It sets up directories, creates default FSM configurations aligned with industry standards (Windows Bot Framework), and prepares the toolchain to avoid future incompatibilities."
+      title="FSM Manager (Embed-Gemini)"
+      description="The 'Factory Foreman' script that bootstraps the aGi²TEAM³FSMbot¹ environment, choosing between local or API models."
     >
       <Card>
         <CardContent className="pt-6">

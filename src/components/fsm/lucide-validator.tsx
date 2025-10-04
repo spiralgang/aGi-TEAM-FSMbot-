@@ -19,7 +19,7 @@ const exampleCode = `import {
   Code,
   FileCheck2,
   FileCode,
-  FileTree, // Invalid icon
+  FileTreee, // Invalid icon
   FolderTree,
   LayoutDashboard,
   ListTodo,
@@ -57,8 +57,8 @@ export function LucideValidator() {
 
   return (
     <FsmViewWrapper
-      title="Lucide Icon Validator"
-      description="An FSM-based agent to find invalid lucide-react icons in your code and suggest fixes."
+      title="Lucide Icon Validator FSM"
+      description="An FSM agent that finds invalid lucide-react icons and suggests fixes, handling the deterministic work before calling an LLM."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>

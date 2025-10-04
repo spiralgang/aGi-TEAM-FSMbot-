@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
@@ -106,7 +105,7 @@ export function SyntaxChecker() {
   return (
     <FsmViewWrapper
       title="Syntax Checker FSM"
-      description="A demonstration of a Finite State Machine's deterministic, mathematical logic for syntax validation."
+      description="A demonstration of an FSM's deterministic, mathematical logic for syntax validation."
     >
       <Card>
         <CardContent className="pt-6 grid md:grid-cols-2 gap-6">

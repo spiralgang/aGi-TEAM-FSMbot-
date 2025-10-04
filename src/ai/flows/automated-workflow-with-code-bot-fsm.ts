@@ -51,7 +51,8 @@ Your task is to assist in generating code based on the user provided description
 You are currently in state: {{{currentState}}}
 Task Description: {{{taskDescription}}}
 
-Previous Code (if any):\n{{{previousCode}}}
+Previous Code (if any):
+{{{previousCode}}}
 
 Based on the current state, determine the next appropriate state and the action to take. Ensure that each transition moves toward completion of the overall task.
 

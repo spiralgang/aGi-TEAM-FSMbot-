@@ -31,8 +31,8 @@ export function LintCompliance() {
 
   return (
     <FsmViewWrapper
-      title="Lint Compliance Verification"
-      description="Implement an FSM-like check to verify if generated code conforms to a set of rules."
+      title="Lint Compliance FSM"
+      description="A deterministic 'Mop Boy' FSM that verifies if generated code conforms to a given set of rules (e.g., keywords)."
     >
       <Card>
         <CardContent className="pt-6 grid md:grid-cols-2 gap-6">

@@ -89,8 +89,8 @@ const TreeNode: React.FC<{ node: FileSystemNode; level?: number }> = ({ node, le
 export function FileTree() {
   return (
     <FsmViewWrapper
-      title="File & Folder Management"
-      description="Organize and structure folders and layouts for AI and human developers."
+      title="File System Assimilator FSM"
+      description="An FSM that demonstrates assimilating raw hierarchical data (like from 'logcat') into a structured, interactive UI."
     >
       <Card>
         <CardContent className="pt-6">

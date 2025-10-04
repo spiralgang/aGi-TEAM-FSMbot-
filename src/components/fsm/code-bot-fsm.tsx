@@ -40,8 +40,8 @@ export function CodeBotFsm() {
 
   return (
     <FsmViewWrapper
-      title="Automated Workflow with Code Bot FSM"
-      description="Build and run an AI FSM agentic workflow assistant to perform a coding task."
+      title="Agentic AI Coder (Code Bot FSM)"
+      description="Demonstrates the 'Master Craftsman'—an AI agent guided by an FSM through a coding task from 'Input' to 'Done'."
     >
       <Card>
         <CardContent className="pt-6">

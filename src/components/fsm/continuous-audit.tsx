@@ -52,7 +52,7 @@ export function ContinuousAudit() {
 
   const resetSessionTimeout = useCallback(() => {
     if (sessionTimeoutRef.current) {
-      clearTimeout(sessionTimeout-ref.current);
+      clearTimeout(sessionTimeoutRef.current);
     }
     sessionTimeoutRef.current = setTimeout(() => {
       setPermissionState('expired');
@@ -250,5 +250,3 @@ export function ContinuousAudit() {
     </FsmViewWrapper>
   );
 }
-
-    

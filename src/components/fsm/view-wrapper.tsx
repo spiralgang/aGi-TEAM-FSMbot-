@@ -11,7 +11,7 @@ export function FsmViewWrapper({ title, description, children }: FsmViewWrapperP
     <div className="space-y-6">
       <div className="space-y-1">
         <h2 className="text-2xl font-bold tracking-tight font-headline">{title}</h2>
-        <p className="text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground max-w-3xl">{description}</p>
       </div>
       {children}
     </div>

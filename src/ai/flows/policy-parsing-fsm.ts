@@ -1,6 +1,8 @@
 'use server';
 /**
- * @fileOverview A Policy parsing AI agent implemented as a Finite State Machine (FSM).
+ * @fileOverview A Policy parsing AI agent implemented as a Finite State Machine (FSM). This agent
+ * is designed to deterministically parse and validate structured data formats like YAML,
+ * ensuring that policies are well-formed before they are used to direct other AI agents.
  *
  * - parsePolicyWithFSM - A function that parses Policy input using an FSM.
  * - PolicyParsingFSMInput - The input type for the parsePolicyWithFSM function.

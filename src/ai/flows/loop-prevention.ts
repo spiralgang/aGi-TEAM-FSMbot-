@@ -2,7 +2,9 @@
 
 /**
  * @fileOverview This file implements an Anti-Flail FSM to prevent AI agents from
- *   repeating code patterns excessively.
+ *   repeating code patterns excessively. It acts as a circuit-breaker, escalating
+ *   from a 'stable' state to 'monitor', 'correct', and finally 'halt' if an agent
+ *   thrashes, thus preserving system resources and preventing infinite loops.
  *
  * - antiFlailFlow - An exported wrapper function to call the antiFlailFSM flow.
  * - AntiFlailInput - The input type for the antiFlailFlow function.
