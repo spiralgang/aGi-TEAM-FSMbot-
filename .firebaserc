@@ -1,0 +1,43 @@
+
+# Comprehensive Whitelist for aGi²TEAM³FSMbot¹ Project
+# This file serves as a policy manifest for network requests.
+# It is used by the 'Supermax' compliance agent to ensure that only
+# approved domains are accessed during development and agentic workflows.
+
+{
+  "projects": {
+    "default": "your-firebase-project-id"
+  },
+  "targets": {},
+  "whitelist": {
+    "core_android": [
+      "dl.google.com",
+      "dl-ssl.google.com",
+      "maven.google.com"
+    ],
+    "maven_gradle": [
+      "repo1.maven.org",
+      "services.gradle.org",
+      "plugins.gradle.org",
+      "jcenter.bintray.com"
+    ],
+    "third_party_repos": [
+      "jitpack.io",
+      "maven.pkg.github.com"
+    ],
+    "google_cloud_firebase": [
+      "generativeai.api.google.com",
+      "firebaseinstallations.googleapis.com",
+      "www.googleapis.com",
+      "app-measurement.com",
+      "www.gstatic.com",
+      "ssl.gstatic.com",
+      "accounts.google.com"
+    ],
+    "github": [
+      "api.github.com",
+      "github.com",
+      "githubusercontent.com"
+    ]
+  }
+}
