@@ -11,6 +11,7 @@ import {
   ListTodo,
   RefreshCwOff,
   ScanLine,
+  ShieldCheck,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -37,6 +38,7 @@ const navItems = [
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
   { id: 'file-tree', label: 'File Tree', icon: FolderTree },
+  { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {

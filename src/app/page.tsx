@@ -12,6 +12,7 @@ import { TodoManager } from '@/components/fsm/todo-manager';
 import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { FileTree } from '@/components/fsm/file-tree';
+import { ContinuousAudit } from '@/components/fsm/continuous-audit';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -23,6 +24,7 @@ const views: Record<string, React.ReactNode> = {
   'loop-prevention': <LoopPrevention />,
   'code-bot-fsm': <CodeBotFsm />,
   'file-tree': <FileTree />,
+  'continuous-audit': <ContinuousAudit />,
 };
 
 export default function Home() {
