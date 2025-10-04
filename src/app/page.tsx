@@ -15,6 +15,9 @@ import { FileTree } from '@/components/fsm/file-tree';
 import { ContinuousAudit } from '@/components/fsm/continuous-audit';
 import { LucideValidator } from '@/components/fsm/lucide-validator';
 import { EmbedGeminiManager } from '@/components/fsm/embed-gemini-manager';
+import { DraftSaver } from '@/components/fsm/draft-saver';
+import { ContentWhisperer } from '@/components/fsm/content-whisperer';
+
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -29,6 +32,8 @@ const views: Record<string, React.ReactNode> = {
   'file-tree': <FileTree />,
   'continuous-audit': <ContinuousAudit />,
   'embed-gemini-manager': <EmbedGeminiManager />,
+  'draft-saver': <DraftSaver />,
+  'content-whisperer': <ContentWhisperer />,
 };
 
 export default function Home() {

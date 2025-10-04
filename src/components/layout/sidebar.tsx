@@ -13,6 +13,8 @@ import {
   ScanLine,
   ShieldCheck,
   FileCog,
+  Save,
+  Ear,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -42,6 +44,8 @@ const navItems = [
   { id: 'file-tree', label: 'File Tree', icon: FolderTree },
   { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
   { id: 'embed-gemini-manager', label: 'Gemini FSM Manager', icon: FileCog },
+  { id: 'draft-saver', label: 'Draft Saver', icon: Save },
+  { id: 'content-whisperer', label: 'Content Whisperer', icon: Ear },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {
