@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -61,20 +62,20 @@ export function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p>
-              This architecture relies on a clear separation of concerns between specialized, finite agents. An FSM is not a dynamic, all-powerful tool; it is a master of a single, well-defined task.
+              This architecture relies on a clear separation of concerns between an ecosystem of specialized, finite agents.
             </p>
             <ul className="space-y-2 list-disc pl-5">
               <li>
-                <strong className="text-foreground">FSMs for Specialized Tasks:</strong>
-                Each FSM is a specialist. One FSM validates icons. Another parses YAML. A third enforces file hygiene. They are finite, deterministic, and expert at their one job.
+                <strong className="text-foreground">FSMs for Repetitive Tasks:</strong>
+                 Each FSM is a specialist (a "Mop Boy"). One validates icons, another parses YAML, a third enforces file hygiene. They are finite, deterministic, and expert at their one job.
               </li>
               <li>
-                <strong className="text-foreground">Orchestrators for Delegation:</strong>
-                A higher-level FSM or an "Embedded AI Manager" acts as the dispatcher. It analyzes user intent and triggers the appropriate specialist FSM for the task at hand.
+                <strong className="text-foreground">AI for Creative Tasks:</strong>
+                The AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control.
               </li>
-               <li>
-                <strong className="text-foreground">AI for Creativity:</strong>
-                The AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control, ensuring the output is production-ready.
+              <li>
+                <strong className="text-foreground">The Virtuous Cycle:</strong>
+                This frees the human designer (the "super knowledgeable entity") to focus on higher-level architecture. These innovations then feed back into improving the FSMs themselves, creating a self-improving system that gets faster and more advanced with every loop.
               </li>
             </ul>
           </CardContent>
