@@ -44,14 +44,14 @@ export function Dashboard() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline">The Janitor Principle</CardTitle>
+            <CardTitle className="font-headline">The Assembly Line Principle</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p className="italic">
-              &quot;As a human working with AI, it’s really more like being the office administrator, the designer, the manager, the quality control, the optimizer, the security, the dishwasher, and the mop boy. The only thing a human doesn’t usually have to do now is be the server/operator... which is f*ckin stupid.&quot;
+              "One robot can build a car by itself, but it'll take a long time, and if that super-knowledgeable robot breaks, the entire line comes to a dead halt. That's why Henry Ford made the modern assembly line: breaking tasks down into small instances with clear manuals that anything which can follow exact repetition patterns can replicate continually, forever."
             </p>
             <p>
-              This system is built on that truth. An AI coder should write code. A human should design. The FSM automates the other six jobs. It is the manager, the QC, the optimizer, the security, and the cleanup crew. This is not a demonstration; it is a factory for production-ready code.
+              This system is built on that truth. An AI coder is a hyper-creative, but fallible, master craftsman. An FSM is a station on the assembly line—a tireless worker that perfectly executes one simple, structured task. This is not a demonstration; it is a factory for producing production-ready code.
             </p>
           </CardContent>
         </Card>
