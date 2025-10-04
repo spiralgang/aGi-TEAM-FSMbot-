@@ -58,7 +58,7 @@ export function SyntaxChecker() {
         const tokenType = getTokenType(receivedToken);
 
         // 2. Run the "algebraic function": Look up the transition in the table
-        const nextState = fsmDefinition[state].transitions[tokenType] || 'error';
+        const nextState: FSMState = fsmDefinition[state].transitions[tokenType] || 'error';
         state = nextState;
 
         setHistory(h => [...h, `[${previousState}] --'${receivedToken}' (${tokenType})--> [${state}]`]);
@@ -124,7 +124,7 @@ export function SyntaxChecker() {
                 <Button onClick={handleSendToken}>Send</Button>
                 <Button onClick={handleReset} variant="outline">Reset</Button>
               </div>
-               <p className="text-xs text-muted-foreground">This FSM validates the sequence: 'start' -> [identifier] -> 'End'.</p>
+               <p className="text-xs text-muted-foreground">This FSM validates the sequence: 'start' {'->'} [identifier] {'->'} 'End'.</p>
             </div>
             
             <div>

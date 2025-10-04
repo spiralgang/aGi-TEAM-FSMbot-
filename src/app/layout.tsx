@@ -2,19 +2,12 @@ import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 import { cn } from '@/lib/utils';
-import { Inter, Source_Code_Pro } from 'next/font/google';
+// Temporarily disabled Google Fonts due to network restrictions
+// import { Inter, Source_Code_Pro } from 'next/font/google';
 
-const fontBody = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-body',
-});
-
-const fontCode = Source_Code_Pro({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-code',
-});
+// Using fallback fonts for now
+const fontBody = { variable: '--font-body' };
+const fontCode = { variable: '--font-code' };
 
 export const metadata: Metadata = {
   title: 'FSMAssist',
