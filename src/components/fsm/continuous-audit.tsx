@@ -1,15 +1,18 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { FsmViewWrapper } from './view-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { CheckCircle2, XCircle, Loader2, Play, FileScan } from 'lucide-react';
+import { CheckCircle2, XCircle, Loader2, Play, FileScan, ShieldAlert, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Badge } from '../ui/badge';
+import { Switch } from '../ui/switch';
+import { Label } from '../ui/label';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 type AuditStatus = 'pending' | 'running' | 'pass' | 'fail';
+type PermissionState = 'needed' | 'granted' | 'expired';
 
 type ConfigFile = {
   id: string;
@@ -23,6 +26,8 @@ type AuditLog = {
   message: string;
   level: 'info' | 'success' | 'error';
 };
+
+const SESSION_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
 
 const knownConfigs: Omit<ConfigFile, 'status'>[] = [
   { id: 'npm', name: 'package.json', type: 'Dependency Manager' },
@@ -40,13 +45,43 @@ export function ContinuousAudit() {
   const [isAuditing, setIsAuditing] = useState(false);
   const [logs, setLogs] = useState<AuditLog[]>([{ timestamp: new Date().toLocaleTimeString(), message: 'Supermax Compliance Agent standing by.', level: 'info' }]);
   const [vaultHash, setVaultHash] = useState<string | null>(null);
+  
+  const [permissionState, setPermissionState] = useState<PermissionState>('needed');
+  const [rememberGrant, setRememberGrant] = useState(false);
+  const sessionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const resetSessionTimeout = useCallback(() => {
+    if (sessionTimeoutRef.current) {
+      clearTimeout(sessionTimeout-ref.current);
+    }
+    sessionTimeoutRef.current = setTimeout(() => {
+      setPermissionState('expired');
+    }, SESSION_TIMEOUT_MS);
+  }, []);
+
+  const handleGrantPermission = () => {
+    setPermissionState('granted');
+    resetSessionTimeout();
+  };
+
+  useEffect(() => {
+    // Clean up timeout on component unmount
+    return () => {
+      if (sessionTimeoutRef.current) {
+        clearTimeout(sessionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const addLog = (message: string, level: AuditLog['level']) => {
     const timestamp = new Date().toLocaleTimeString();
     setLogs(prev => [{ timestamp, message, level }, ...prev]);
+    resetSessionTimeout(); // User activity resets the timer
   };
 
   const runAudit = useCallback(async () => {
+    if (permissionState !== 'granted') return;
+
     setIsAuditing(true);
     setLogs([]);
     setVaultHash(null);
@@ -102,7 +137,7 @@ export function ContinuousAudit() {
     addLog(`State update committed. Vault signed with key: ${finalHash.substring(0, 24)}...`, 'info');
 
     setIsAuditing(false);
-  }, []);
+  }, [permissionState, resetSessionTimeout]);
 
   const getStatusIcon = (status: AuditStatus) => {
     switch (status) {
@@ -112,12 +147,50 @@ export function ContinuousAudit() {
       case 'pending': default: return <FileScan className="h-5 w-5 text-muted-foreground" />;
     }
   };
+  
+  if (permissionState !== 'granted') {
+    return (
+       <FsmViewWrapper
+        title="Supermax Universal Compliance Agent"
+        description="Scans and enforces discipline across all configs, manifests, and dependencies with a tamper-resistant audit vault."
+       >
+        <Card className="flex flex-col items-center justify-center p-8 text-center min-h-[400px]">
+          <ShieldAlert className="h-16 w-16 text-destructive mb-4" />
+          <h3 className="text-2xl font-bold font-headline mb-2">
+            {permissionState === 'needed' ? 'Full Permissions Required' : 'Session Expired'}
+          </h3>
+          <p className="text-muted-foreground max-w-md mb-6">
+            {permissionState === 'needed' 
+              ? 'To function, this utility requires elevated permissions to scan, modify, and enforce compliance across the file system. Access is temporary and recedes after the session ends.'
+              : 'Your session has expired due to inactivity. Please grant permissions again to continue.'
+            }
+          </p>
+          <div className="flex flex-col items-center gap-4">
+            <Button onClick={handleGrantPermission} size="lg">
+              Grant Full Permissions for Session
+            </Button>
+            <div className="flex items-center space-x-2">
+              <Switch id="remember-grant" checked={rememberGrant} onCheckedChange={setRememberGrant} />
+              <Label htmlFor="remember-grant" className="text-sm text-muted-foreground">Remember my choice for this workflow</Label>
+            </div>
+          </div>
+        </Card>
+      </FsmViewWrapper>
+    )
+  }
 
   return (
     <FsmViewWrapper
       title="Supermax Universal Compliance Agent"
       description="Scans and enforces discipline across all configs, manifests, and dependencies with a tamper-resistant audit vault."
     >
+      <Alert variant="default" className="mb-4 bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800">
+        <ShieldCheck className="h-4 w-4 text-green-600" />
+        <AlertTitle className="font-headline text-green-800 dark:text-green-300">Permissions Granted</AlertTitle>
+        <AlertDescription className="text-green-700 dark:text-green-400">
+          Full permissions are active for this session. The session will expire after 20 minutes of inactivity.
+        </AlertDescription>
+      </Alert>
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-4">
            <Card>
@@ -177,3 +250,5 @@ export function ContinuousAudit() {
     </FsmViewWrapper>
   );
 }
+
+    
