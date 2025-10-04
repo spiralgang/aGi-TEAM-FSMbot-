@@ -19,24 +19,26 @@ import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { CloudBackup } from '@/components/fsm/cloud-backup';
 import { XmlParserFsm } from '@/components/fsm/xml-parser';
+import { IDEMatrix } from '@/components/fsm/ide-matrix';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
-  'embed-gemini-manager': <EmbedGeminiManager />,
+  'ide-matrix': <IDEMatrix />,
   'continuous-audit': <ContinuousAudit />,
-  'policy-parsing': <PolicyParsing />,
+  'cloud-backup': <CloudBackup />,
+  'code-bot-fsm': <CodeBotFsm />,
   'lucide-validator': <LucideValidator />,
+  'code-state-validation': <CodeStateValidation />,
+  'policy-parsing': <PolicyParsing />,
+  'xml-parser': <XmlParserFsm />,
+  'lint-compliance': <LintCompliance />,
   'syntax-checker': <SyntaxChecker />,
+  'loop-prevention': <LoopPrevention />,
+  'todo-manager': <TodoManager />,
   'draft-saver': <DraftSaver />,
   'content-whisperer': <ContentWhisperer />,
   'file-tree': <FileTree />,
-  'code-state-validation': <CodeStateValidation />,
-  'lint-compliance': <LintCompliance />,
-  'todo-manager': <TodoManager />,
-  'loop-prevention': <LoopPrevention />,
-  'code-bot-fsm': <CodeBotFsm />,
-  'cloud-backup': <CloudBackup />,
-  'xml-parser': <XmlParserFsm />,
+  'embed-gemini-manager': <EmbedGeminiManager />,
 };
 
 export default function Home() {
