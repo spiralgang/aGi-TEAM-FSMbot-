@@ -2,6 +2,7 @@
 
 import {
   Bot,
+  Bug,
   ClipboardCheck,
   Code,
   FileCheck2,
@@ -42,6 +43,7 @@ const navItems = [
   { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
   { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
+  { id: 'fsm-debugging', label: 'FSM Debugging', icon: Bug },
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
   { id: 'todo-manager', label: 'TODO Manager', icon: ListTodo },
   { id: 'draft-saver', label: 'Draft Saver', icon: Save },

@@ -16,6 +16,14 @@ import {
   codeStateValidation,
   type CodeStateValidationInput,
 } from '@/ai/flows/code-state-validation';
+import {
+  antiFlailFlow,
+  type AntiFlailInput,
+} from '@/ai/flows/loop-prevention';
+import {
+  fsmDebugging,
+  type FSMDebuggingInput,
+} from '@/ai/flows/fsm-debugging';
 
 export async function runCodeBotWorkflowAction(
   input: AutomatedWorkflowWithCodeBotFSMInput
@@ -51,6 +59,28 @@ export async function validateCodeStateAction(
 ) {
   try {
     const result = await codeStateValidation(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function checkLoopPreventionAction(
+  input: AntiFlailInput
+) {
+  try {
+    const result = await antiFlailFlow(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function debugFSMAction(
+  input: FSMDebuggingInput
+) {
+  try {
+    const result = await fsmDebugging(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };

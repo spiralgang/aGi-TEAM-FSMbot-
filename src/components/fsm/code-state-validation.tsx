@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2 } from 'lucide-react';
+import { Loader2, CheckCircle, AlertCircle, Lightbulb } from 'lucide-react';
 import { validateCodeStateAction } from '@/app/actions';
 import type { CodeStateValidationOutput } from '@/ai/flows/code-state-validation';
 import { useToast } from '@/hooks/use-toast';
@@ -87,18 +87,87 @@ export function CodeStateValidation() {
           </form>
           
           {result && (
-            <div className="mt-6 space-y-4">
+            <div className="mt-6 space-y-6">
               <h3 className="text-lg font-semibold font-headline">Validation Result</h3>
-              <div className="flex items-center gap-2">
-                <span className="font-medium">Status:</span>
-                <Badge variant={result.isValid ? 'default' : 'destructive'} className={result.isValid ? 'bg-accent text-accent-foreground' : ''}>
-                  {result.isValid ? 'Valid' : 'Invalid'}
-                </Badge>
+              
+              {/* Status Overview */}
+              <div className="grid md:grid-cols-4 gap-4">
+                <Card>
+                  <CardContent className="pt-4">
+                    <div className="flex items-center space-x-2">
+                      {result.isValid ? <CheckCircle className="h-4 w-4 text-green-500" /> : <AlertCircle className="h-4 w-4 text-red-500" />}
+                      <div>
+                        <p className="text-sm text-muted-foreground">Status</p>
+                        <Badge variant={result.isValid ? 'default' : 'destructive'} className={result.isValid ? 'bg-accent text-accent-foreground' : ''}>
+                          {result.isValid ? 'Valid' : 'Invalid'}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="pt-4">
+                    <p className="text-sm text-muted-foreground">Syntax Score</p>
+                    <p className="text-2xl font-bold">{result.syntaxScore || 0}/100</p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="pt-4">
+                    <p className="text-sm text-muted-foreground">State Compliance</p>
+                    <p className="text-2xl font-bold">{result.stateCompliance || 0}/100</p>
+                  </CardContent>
+                </Card>
+                
+                <Card>
+                  <CardContent className="pt-4">
+                    <p className="text-sm text-muted-foreground">Detected States</p>
+                    <p className="text-2xl font-bold">{result.detectedStates?.length || 0}</p>
+                  </CardContent>
+                </Card>
               </div>
-              <div>
-                <Label>Details:</Label>
-                <div className="mt-2 p-4 rounded-md border bg-secondary/50">
-                  <p className="text-sm whitespace-pre-wrap">{result.validationResult}</p>
+              
+              {/* Detailed Results */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <Label>Validation Details</Label>
+                    <div className="mt-2 p-4 rounded-md border bg-secondary/50">
+                      <p className="text-sm whitespace-pre-wrap">{result.validationResult}</p>
+                    </div>
+                  </div>
+                  
+                  {result.detectedStates && result.detectedStates.length > 0 && (
+                    <div>
+                      <Label>Detected States</Label>
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {result.detectedStates.map((state, i) => (
+                          <Badge key={i} variant="outline">{state}</Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div>
+                  {result.suggestions && result.suggestions.length > 0 && (
+                    <div>
+                      <Label>Improvement Suggestions</Label>
+                      <Card>
+                        <CardContent className="pt-4">
+                          <ul className="space-y-2">
+                            {result.suggestions.map((suggestion, i) => (
+                              <li key={i} className="text-sm flex items-start">
+                                <Lightbulb className="h-3 w-3 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" />
+                                {suggestion}
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
