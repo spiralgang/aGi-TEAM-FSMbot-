@@ -60,17 +60,21 @@ export function Dashboard() {
             <CardTitle className="font-headline">Core Design Philosophy</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
-             <p>
-              A clear separation of concerns is critical for building powerful and reliable automated systems.
+            <p>
+              This architecture relies on a clear separation of concerns between specialized, finite agents. An FSM is not a dynamic, all-powerful tool; it is a master of a single, well-defined task.
             </p>
             <ul className="space-y-2 list-disc pl-5">
               <li>
-                <strong className="text-foreground">FSMs for Structure:</strong>
-                Anything with well-documented, strict parameters is handled by a deterministic Finite State Machine. This includes parsing configs, validating schemas, and managing predefined workflows.
+                <strong className="text-foreground">FSMs for Specialized Tasks:</strong>
+                Each FSM is a specialist. One FSM validates icons. Another parses YAML. A third enforces file hygiene. They are finite, deterministic, and expert at their one job.
               </li>
               <li>
+                <strong className="text-foreground">Orchestrators for Delegation:</strong>
+                A higher-level FSM or an "Embedded AI Manager" acts as the dispatcher. It analyzes user intent and triggers the appropriate specialist FSM for the task at hand.
+              </li>
+               <li>
                 <strong className="text-foreground">AI for Creativity:</strong>
-                Tasks requiring inference, creativity, novel ideas, or code writing are delegated to an AI Agent. The FSM acts as the orchestrator, feeding the agent the structured data it needs.
+                The AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control, ensuring the output is production-ready.
               </li>
             </ul>
           </CardContent>
