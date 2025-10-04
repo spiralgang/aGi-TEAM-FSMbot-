@@ -20,6 +20,10 @@ import {
   xmlParserWorkflow,
   type XmlParserWorkflowInput,
 } from '@/ai/flows/xml-parser-fsm';
+import {
+  cloudBackupFSM,
+  type CloudBackupFSMInput,
+} from '@/ai/flows/cloud-backup-fsm';
 
 export async function runCodeBotWorkflowAction(
   input: AutomatedWorkflowWithCodeBotFSMInput
@@ -66,6 +70,15 @@ export async function runXmlParserWorkflowAction(
 ) {
   try {
     const result = await xmlParserWorkflow(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function runCloudBackupAction(input: CloudBackupFSMInput) {
+  try {
+    const result = await cloudBackupFSM(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };

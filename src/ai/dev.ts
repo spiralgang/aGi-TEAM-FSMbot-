@@ -8,3 +8,4 @@ import '@/ai/flows/loop-prevention.ts';
 import '@/ai/flows/lucide-icon-validator.ts';
 import '@/ai/flows/code-state-validation.ts';
 import '@/ai/flows/xml-parser-fsm.ts';
+import '@/ai/flows/cloud-backup-fsm.ts';
