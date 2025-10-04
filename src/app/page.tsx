@@ -4,36 +4,35 @@ import { useState } from 'react';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/sidebar';
 import { Dashboard } from '@/components/fsm/dashboard';
-import { CodeStateValidation } from '@/components/fsm/code-state-validation';
+import { EmbedGeminiManager } from '@/components/fsm/embed-gemini-manager';
+import { ContinuousAudit } from '@/components/fsm/continuous-audit';
 import { PolicyParsing } from '@/components/fsm/policy-parsing';
+import { LucideValidator } from '@/components/fsm/lucide-validator';
 import { SyntaxChecker } from '@/components/fsm/syntax-checker';
+import { DraftSaver } from '@/components/fsm/draft-saver';
+import { ContentWhisperer } from '@/components/fsm/content-whisperer';
+import { FileTree } from '@/components/fsm/file-tree';
+import { CodeStateValidation } from '@/components/fsm/code-state-validation';
 import { LintCompliance } from '@/components/fsm/lint-compliance';
 import { TodoManager } from '@/components/fsm/todo-manager';
 import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
-import { FileTree } from '@/components/fsm/file-tree';
-import { ContinuousAudit } from '@/components/fsm/continuous-audit';
-import { LucideValidator } from '@/components/fsm/lucide-validator';
-import { EmbedGeminiManager } from '@/components/fsm/embed-gemini-manager';
-import { DraftSaver } from '@/components/fsm/draft-saver';
-import { ContentWhisperer } from '@/components/fsm/content-whisperer';
-
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
-  'code-state-validation': <CodeStateValidation />,
+  'embed-gemini-manager': <EmbedGeminiManager />,
+  'continuous-audit': <ContinuousAudit />,
   'policy-parsing': <PolicyParsing />,
-  'syntax-checker': <SyntaxChecker />,
-  'lint-compliance': <LintCompliance />,
   'lucide-validator': <LucideValidator />,
+  'syntax-checker': <SyntaxChecker />,
+  'draft-saver': <DraftSaver />,
+  'content-whisperer': <ContentWhisperer />,
+  'file-tree': <FileTree />,
+  'code-state-validation': <CodeStateValidation />,
+  'lint-compliance': <LintCompliance />,
   'todo-manager': <TodoManager />,
   'loop-prevention': <LoopPrevention />,
   'code-bot-fsm': <CodeBotFsm />,
-  'file-tree': <FileTree />,
-  'continuous-audit': <ContinuousAudit />,
-  'embed-gemini-manager': <EmbedGeminiManager />,
-  'draft-saver': <DraftSaver />,
-  'content-whisperer': <ContentWhisperer />,
 };
 
 export default function Home() {

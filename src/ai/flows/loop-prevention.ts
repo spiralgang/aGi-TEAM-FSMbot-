@@ -32,7 +32,11 @@ export async function antiFlailFlow(input: AntiFlailInput): Promise<AntiFlailOut
 const antiFlailFSMPrompt = ai.definePrompt({
   name: 'antiFlailFSMPrompt',
   input: {
-    schema: AntiFlailInputSchema,
+    schema: z.object({
+      action: z.string(),
+      status: z.string(),
+      loopCount: z.number(),
+    }),
   },
   output: {
     schema: AntiFlailOutputSchema,
