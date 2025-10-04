@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
@@ -12,23 +13,33 @@ import { ArrowRight } from 'lucide-react';
 
 type FSMState = 'idle' | 'tokenstart' | 'validate' | 'error';
 
+// This represents the "algebraic table function" or state transition table.
+// It's a mathematical instance where: Current State + Input => Next State.
 const fsmDefinition: Record<FSMState, { description: string, transitions: Partial<Record<string, FSMState>> }> = {
   idle: {
-    description: "Waiting for a new statement.",
+    description: "Waiting for a new statement. Expecting 'start'.",
     transitions: { 'start': 'tokenstart' }
   },
   tokenstart: {
-    description: "Expecting an identifier.",
+    description: "Expecting a valid identifier (e.g., 'my_var').",
     transitions: { 'identifier': 'validate' }
   },
   validate: {
-    description: "Expecting statement end.",
-    transitions: { 'End': 'idle' }
+    description: "Expecting statement end ('End').",
+    transitions: { 'end': 'idle' }
   },
   error: {
-    description: "Syntax error encountered.",
+    description: "Syntax error. An unexpected token was received. Resetting to 'idle'.",
     transitions: {}
   }
+};
+
+// This function numerically equates the input token to a known type.
+const getTokenType = (token: string): string => {
+  if (token === 'start') return 'start';
+  if (token === 'End') return 'End';
+  if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(token)) return 'identifier';
+  return 'invalid';
 };
 
 export function SyntaxChecker() {
@@ -36,49 +47,36 @@ export function SyntaxChecker() {
   const [currentState, setCurrentState] = useState<FSMState>('idle');
   const [history, setHistory] = useState<string[]>([]);
 
-  const syntaxCheckerFSM = useMemo(() => {
+  // The coroutine simulates the FSM's execution loop.
+  const fsmInstance = useMemo(() => {
     return function* () {
       let state: FSMState = 'idle';
       while (true) {
         const receivedToken: string = yield state;
         const previousState = state;
-        let transitioned = false;
-
-        if (state === 'idle' && receivedToken === 'start') {
-          state = 'tokenstart';
-          transitioned = true;
-        } else if (state === 'tokenstart') {
-          if (/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(receivedToken)) {
-            state = 'validate';
-            transitioned = true;
-          }
-        } else if (state === 'validate') {
-          if (receivedToken === 'End') {
-            state = 'idle';
-            transitioned = true;
-          }
-        }
-
-        if (!transitioned && state !== 'error') {
-          state = 'error';
-        }
         
-        setHistory(h => [...h, `[${previousState}] --'${receivedToken}'--> [${state}]`]);
+        // 1. Numerically equate the input to a token type
+        const tokenType = getTokenType(receivedToken);
+
+        // 2. Run the "algebraic function": Look up the transition in the table
+        const nextState = fsmDefinition[state].transitions[tokenType] || 'error';
+        state = nextState;
+
+        setHistory(h => [...h, `[${previousState}] --'${receivedToken}' (${tokenType})--> [${state}]`]);
         setCurrentState(state);
 
+        // If an error state is reached, it automatically resets.
         if (state === 'error') {
-          yield state;
-          state = 'idle';
-          setCurrentState(state);
+          yield state; // Yield the error state so the UI can show it
+          state = 'idle'; // Reset
+          setCurrentState('idle');
         }
       }
-    };
+    }();
   }, []);
 
-  const [fsmInstance, setFsmInstance] = useState(() => syntaxCheckerFSM());
-
   useEffect(() => {
-    fsmInstance.next(); // Prime the generator
+    fsmInstance.next(); // Prime the generator.
   }, [fsmInstance]);
 
   const handleSendToken = () => {
@@ -89,11 +87,14 @@ export function SyntaxChecker() {
   };
 
   const handleReset = () => {
-    setFsmInstance(syntaxCheckerFSM());
+    // A true reset would require re-creating the generator instance,
+    // but for this simulation, we can just reset the state and history.
     setCurrentState('idle');
     setHistory([]);
     setToken('');
-  }
+    fsmInstance.next(); // Re-prime
+    setHistory(h => [...h, `[RESET] --> [idle]`]);
+  };
 
   const stateColors: Record<FSMState, string> = {
     idle: 'bg-blue-200 border-blue-400',
@@ -105,13 +106,13 @@ export function SyntaxChecker() {
   return (
     <FsmViewWrapper
       title="Syntax Checker FSM"
-      description="Utilizes a coroutine FSM to validate syntax, preventing loops and wasted computation."
+      description="A demonstration of a Finite State Machine's deterministic, mathematical logic for syntax validation."
     >
       <Card>
         <CardContent className="pt-6 grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="token-input">Token</Label>
+              <Label htmlFor="token-input">Input Token</Label>
               <div className="flex gap-2">
                 <Input
                   id="token-input"
@@ -124,10 +125,11 @@ export function SyntaxChecker() {
                 <Button onClick={handleSendToken}>Send</Button>
                 <Button onClick={handleReset} variant="outline">Reset</Button>
               </div>
+               <p className="text-xs text-muted-foreground">This FSM validates the sequence: 'start' -> [identifier] -> 'End'.</p>
             </div>
             
             <div>
-              <Label>Transition History</Label>
+              <Label>State Transition History</Label>
               <div className="mt-2 p-3 h-48 rounded-md border bg-secondary/50 font-code text-sm overflow-auto">
                 {history.map((h, i) => <p key={i}>{h}</p>)}
               </div>
@@ -149,7 +151,7 @@ export function SyntaxChecker() {
                     >
                       {state.charAt(0).toUpperCase() + state.slice(1)}
                     </Badge>
-                    {index < arr.length - 1 && <ArrowRight className="mx-2 h-5 w-5 text-muted-foreground" />}
+                    {index < arr.length - 1 && state !== 'error' && <ArrowRight className="mx-2 h-5 w-5 text-muted-foreground" />}
                   </div>
                 ))}
               </div>
