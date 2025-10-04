@@ -14,6 +14,7 @@ import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { FileTree } from '@/components/fsm/file-tree';
 import { ContinuousAudit } from '@/components/fsm/continuous-audit';
 import { LucideValidator } from '@/components/fsm/lucide-validator';
+import { EmbedGeminiManager } from '@/components/fsm/embed-gemini-manager';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -27,6 +28,7 @@ const views: Record<string, React.ReactNode> = {
   'code-bot-fsm': <CodeBotFsm />,
   'file-tree': <FileTree />,
   'continuous-audit': <ContinuousAudit />,
+  'embed-gemini-manager': <EmbedGeminiManager />,
 };
 
 export default function Home() {

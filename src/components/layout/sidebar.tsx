@@ -12,6 +12,7 @@ import {
   RefreshCwOff,
   ScanLine,
   ShieldCheck,
+  FileCog,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -40,6 +41,7 @@ const navItems = [
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
   { id: 'file-tree', label: 'File Tree', icon: FolderTree },
   { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
+  { id: 'embed-gemini-manager', label: 'Gemini FSM Manager', icon: FileCog },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {
