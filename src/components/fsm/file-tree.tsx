@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { FsmViewWrapper } from './view-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Folder, File, ChevronRight, ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import {
   Collapsible,
   CollapsibleContent,
@@ -34,6 +33,8 @@ const fileSystemData: FileSystemNode[] = [
              children: [
                { name: 'code-bot-fsm.ts', type: 'file' },
                { name: 'lucide-validator.ts', type: 'file' },
+               { name: 'policy-parsing-fsm.ts', type: 'file'},
+               { name: 'cloud-backup-fsm.ts', type: 'file'},
              ]
            },
         ]
@@ -42,17 +43,24 @@ const fileSystemData: FileSystemNode[] = [
         name: 'components',
         type: 'folder',
         children: [
-          { name: 'dashboard.tsx', type: 'file' },
-          { name: 'continuous-audit.tsx', type: 'file' },
+          { name: 'fsm', type: 'folder', children: [{name: 'dashboard.tsx', type: 'file'}, {name: 'continuous-audit.tsx', type: 'file'}]},
+          { name: 'layout', type: 'folder', children: [{name: 'sidebar.tsx', type: 'file'}]},
+          { name: 'ui', type: 'folder', children: [{name: 'button.tsx', type: 'file'}]},
         ],
       },
       {
         name: 'lib',
         type: 'folder',
-        children: [{ name: 'utils.ts', type: 'file' }],
+        children: [{ name: 'utils.ts', type: 'file' }, {name: 'settings.json', type: 'file'}],
       },
-      { name: 'app.tsx', type: 'file' },
-      { name: 'index.css', type: 'file' },
+       { name: 'app',
+        type: 'folder',
+        children: [
+          { name: 'page.tsx', type: 'file' },
+          { name: 'layout.tsx', type: 'file' },
+          { name: 'actions.ts', type: 'file' },
+        ]
+      },
     ],
   },
   {
@@ -62,6 +70,8 @@ const fileSystemData: FileSystemNode[] = [
   },
   { name: 'package.json', type: 'file' },
   { name: 'README.md', type: 'file' },
+  { name: 'activity.xml', type: 'file' },
+  { name: 'TODO.md', type: 'file' },
 ];
 
 const TreeNode: React.FC<{ node: FileSystemNode; level?: number }> = ({ node, level = 0 }) => {
