@@ -31,7 +31,7 @@ interface AppSidebarProps {
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'code-state-validation', label: 'Code State Validation', icon: FileCheck2 },
-  { id: 'yaml-parsing', label: 'YAML Parser', icon: FileCode },
+  { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
   { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
   { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
@@ -39,7 +39,7 @@ const navItems = [
   { id: 'loop-prevention', label: 'Loop Prevention', icon: RefreshCwOff },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
   { id: 'file-tree', label: 'File Tree', icon: FolderTree },
-  { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
+  { id 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
 ];
 
 export function AppSidebar({ activeView, setActiveView }: AppSidebarProps) {

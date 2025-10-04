@@ -8,18 +8,36 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Loader2 } from 'lucide-react';
-import { parseYamlAction } from '@/app/actions';
-import type { YamlParsingFSMOutput } from '@/ai/flows/yaml-parsing-fsm';
+import { parsePolicyAction } from '@/app/actions';
+import type { PolicyParsingFSMOutput } from '@/ai/flows/policy-parsing-fsm';
 import { useToast } from '@/hooks/use-toast';
 
-export function YamlParsing() {
-  const [yamlInput, setYamlInput] = useState(
-`config:
-  key1: value1
-  nested:
-    subkey: subvalue`
-  );
-  const [result, setResult] = useState<YamlParsingFSMOutput | null>(null);
+const examplePolicy = `
+<!-- Universal Build & Behavior Enforcement Policy -->
+<enforcementPolicy>
+  <android>
+    <minSdkVersion>29</minSdkVersion>
+    <fileHygiene>true</fileHygiene>
+    <artifactTypes>apk,aar</artifactTypes>
+  </android>
+  <lint>
+    <enabled>true</enabled>
+    <tool>checkstyle</tool>
+    <config>checkstyle.xml</config>
+  </lint>
+  <test>
+    <enabled>true</enabled>
+    <frameworks>junit,pytest</frameworks>
+  </test>
+  <orgInstructions>
+    <copilotConfig>.github/copilot.yaml</copilotConfig>
+  </orgInstructions>
+</enforcementPolicy>
+`.trim();
+
+export function PolicyParsing() {
+  const [policyInput, setPolicyInput] = useState(examplePolicy);
+  const [result, setResult] = useState<PolicyParsingFSMOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -28,7 +46,7 @@ export function YamlParsing() {
     setIsLoading(true);
     setResult(null);
 
-    const response = await parseYamlAction(yamlInput);
+    const response = await parsePolicyAction(policyInput);
 
     if (response.success && response.data) {
       setResult(response.data);
@@ -38,6 +56,7 @@ export function YamlParsing() {
         title: "Parsing Failed",
         description: response.error || "An unknown error occurred.",
       });
+      setResult({ isValid: false, errorMessage: response.error || "An unknown error occurred." });
     }
 
     setIsLoading(false);
@@ -45,26 +64,26 @@ export function YamlParsing() {
 
   return (
     <FsmViewWrapper
-      title="YAML Parsing FSM"
-      description="Applies a YAML parser implemented as an FSM to catch syntax and structural errors."
+      title="Policy Parsing FSM"
+      description="Applies a parser implemented as an FSM to interpret policy files like XML or YAML."
     >
       <div className="grid md:grid-cols-2 gap-6">
         <Card>
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="yaml-input">YAML Input</Label>
+                <Label htmlFor="policy-input">Policy (XML) Input</Label>
                 <Textarea
-                  id="yaml-input"
-                  value={yamlInput}
-                  onChange={(e) => setYamlInput(e.target.value)}
-                  className="font-code h-64"
-                  placeholder="Enter YAML to parse..."
+                  id="policy-input"
+                  value={policyInput}
+                  onChange={(e) => setPolicyInput(e.target.value)}
+                  className="font-code h-96"
+                  placeholder="Enter XML policy to parse..."
                 />
               </div>
               <Button type="submit" disabled={isLoading} className="w-full">
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Parse YAML
+                Parse Policy
               </Button>
             </form>
           </CardContent>
@@ -86,11 +105,11 @@ export function YamlParsing() {
                   </Badge>
                 </div>
                 <div>
-                  <Label>Output:</Label>
-                  <div className="mt-2 p-4 rounded-md border bg-secondary/50 font-code text-sm overflow-auto h-64">
+                  <Label>Output (JSON):</Label>
+                  <div className="mt-2 p-4 rounded-md border bg-secondary/50 font-code text-sm overflow-auto h-96">
                     <pre>
                       {result.isValid 
-                        ? JSON.stringify(result.parsedYaml, null, 2) 
+                        ? JSON.stringify(result.parsedPolicy, null, 2) 
                         : result.errorMessage}
                     </pre>
                   </div>

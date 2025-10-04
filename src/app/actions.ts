@@ -5,9 +5,9 @@ import {
   type CodeStateValidationInput,
 } from '@/ai/flows/code-state-validation';
 import {
-  parseYamlWithFSM,
-  type YamlParsingFSMInput,
-} from '@/ai/flows/yaml-parsing-fsm';
+  parsePolicyWithFSM,
+  type PolicyParsingFSMInput,
+} from '@/ai/flows/policy-parsing-fsm';
 import {
   automatedWorkflowWithCodeBotFSM,
   type AutomatedWorkflowWithCodeBotFSMInput,
@@ -28,9 +28,9 @@ export async function validateCodeStateAction(
   }
 }
 
-export async function parseYamlAction(input: YamlParsingFSMInput) {
+export async function parsePolicyAction(input: PolicyParsingFSMInput) {
   try {
-    const result = await parseYamlWithFSM(input);
+    const result = await parsePolicyWithFSM(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };

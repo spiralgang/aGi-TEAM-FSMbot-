@@ -5,7 +5,7 @@ import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/layout/sidebar';
 import { Dashboard } from '@/components/fsm/dashboard';
 import { CodeStateValidation } from '@/components/fsm/code-state-validation';
-import { YamlParsing } from '@/components/fsm/yaml-parsing';
+import { PolicyParsing } from '@/components/fsm/policy-parsing';
 import { SyntaxChecker } from '@/components/fsm/syntax-checker';
 import { LintCompliance } from '@/components/fsm/lint-compliance';
 import { TodoManager } from '@/components/fsm/todo-manager';
@@ -18,7 +18,7 @@ import { LucideValidator } from '@/components/fsm/lucide-validator';
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
   'code-state-validation': <CodeStateValidation />,
-  'yaml-parsing': <YamlParsing />,
+  'policy-parsing': <PolicyParsing />,
   'syntax-checker': <SyntaxChecker />,
   'lint-compliance': <LintCompliance />,
   'lucide-validator': <LucideValidator />,
