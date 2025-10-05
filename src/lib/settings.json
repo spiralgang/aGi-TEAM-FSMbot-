@@ -1,0 +1,24 @@
+{
+  "agentic_workflow_config": {
+    "continuous_mode_enabled": true,
+    "task_execution_mode": "supervised",
+    "compliance_check_on_commit": true,
+    "default_ai_model": "deepseek-coder",
+    "ai_coder_models": [
+      "phi-3",
+      "qwen-2",
+      "deepseek-coder"
+    ]
+  },
+  "fsm_parameters": {
+    "loop_prevention_threshold": 5,
+    "draft_saver_debounce_ms": 3000,
+    "min_content_length_for_draft": 30,
+    "yaml_parser_strict_mode": true
+  },
+  "supermax_audit_config": {
+    "enforce_file_hygiene": true,
+    "audit_on_startup": false,
+    "session_timeout_minutes": 20
+  }
+}

@@ -1,0 +1,21 @@
+# This workflow acts as a deterministic "Whisper" FSM.
+# Its purpose is to create a scheduled, recurring, and auditable prompt
+# for the central AI agent to ensure it remains compliant with the project's
+# core principles as defined in the /VAULT directory.
+
+name: AI Compliance Whisper
+
+on:
+  schedule:
+    # Runs every 10 minutes
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  prompt_compliance_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Whisper to AI Agent Log
+        run: |
+          echo "WHISPER TO EMBED-GEMINI AI:"
+          echo "are you on scope? You must review vault folder at root directory and verify yourself to be"

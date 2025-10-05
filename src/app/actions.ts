@@ -24,6 +24,17 @@ import {
   fsmDebugging,
   type FSMDebuggingInput,
 } from '@/ai/flows/fsm-debugging';
+  xmlParserWorkflow,
+  type XmlParserWorkflowInput,
+} from '@/ai/flows/xml-parser-fsm';
+import {
+  cloudBackupFSM,
+  type CloudBackupFSMInput,
+} from '@/ai/flows/cloud-backup-fsm';
+import {
+  terminusValidatorFSM,
+  type TerminusValidatorInput,
+} from '@/ai/flows/terminus-validator-fsm';
 
 export async function runCodeBotWorkflowAction(
   input: AutomatedWorkflowWithCodeBotFSMInput
@@ -70,6 +81,11 @@ export async function checkLoopPreventionAction(
 ) {
   try {
     const result = await antiFlailFlow(input);
+export async function runXmlParserWorkflowAction(
+  input: XmlParserWorkflowInput
+) {
+  try {
+    const result = await xmlParserWorkflow(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };
@@ -81,6 +97,20 @@ export async function debugFSMAction(
 ) {
   try {
     const result = await fsmDebugging(input);
+export async function runCloudBackupAction(input: CloudBackupFSMInput) {
+  try {
+    const result = await cloudBackupFSM(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function runTerminusValidatorAction(
+  input: TerminusValidatorInput
+) {
+  try {
+    const result = await terminusValidatorFSM(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };

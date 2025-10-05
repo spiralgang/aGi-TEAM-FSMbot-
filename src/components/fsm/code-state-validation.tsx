@@ -53,7 +53,7 @@ export function CodeStateValidation() {
   return (
     <FsmViewWrapper
       title="Code State Validation FSM"
-      description="Verifies code structure and state transitions against a defined FSM, acting as a 'pluggable' entry point for new agents."
+      description="Verifies code structure and state transitions against a defined FSM, acting as a 'pluggable' entry point for new validation logic."
     >
       <Card>
         <CardContent className="pt-6">

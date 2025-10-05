@@ -1,7 +1,7 @@
 'use server';
 
 /**
- * @fileOverview Code State Validation AI agent. This FSM-based agent validates a code snippet against a given state machine definition,
+ * @fileOverview Code State Validation FSM. This deterministic FSM validates a code snippet against a given state machine definition,
  * ensuring that the code adheres to the specified state transitions and logic. It's a core component for ensuring compliance
  * and predictability in an agentic coding ecosystem.
  *

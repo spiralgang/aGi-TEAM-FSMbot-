@@ -43,7 +43,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export function ContinuousAudit() {
   const [scannedFiles, setScannedFiles] = useState<ConfigFile[]>([]);
   const [isAuditing, setIsAuditing] = useState(false);
-  const [logs, setLogs] = useState<AuditLog[]>([{ timestamp: new Date().toLocaleTimeString(), message: 'Supermax Compliance Agent standing by.', level: 'info' }]);
+  const [logs, setLogs] = useState<AuditLog[]>([{ timestamp: new Date().toLocaleTimeString(), message: 'Supermax Compliance FSM standing by.', level: 'info' }]);
   const [vaultHash, setVaultHash] = useState<string | null>(null);
   
   const [permissionState, setPermissionState] = useState<PermissionState>('needed');
@@ -85,7 +85,7 @@ export function ContinuousAudit() {
     setIsAuditing(true);
     setLogs([]);
     setVaultHash(null);
-    addLog('Initializing Supermax Universal Compliance Agent...', 'info');
+    addLog('Initializing Supermax Universal Compliance FSM...', 'info');
     await sleep(300);
     addLog('Ensuring hardened audit vault...', 'info');
     await sleep(200);
@@ -129,7 +129,7 @@ export function ContinuousAudit() {
     if (allPassed) {
       addLog('SUPERMAX AUDIT: FULL COMPLIANCE ACHIEVED.', 'success');
     } else {
-      addLog('SUPERMAX AUDIT: COMPLIANCE FAILURE. AGENT DISCIPLINED.', 'error');
+      addLog('SUPERMAX AUDIT: COMPLIANCE FAILURE. WORKFLOW DISCIPLINED.', 'error');
     }
     
     const finalHash = '0x' + Array(64).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
@@ -151,7 +151,7 @@ export function ContinuousAudit() {
   if (permissionState !== 'granted') {
     return (
        <FsmViewWrapper
-        title="Supermax Universal Compliance Agent"
+        title="Supermax Universal Compliance FSM"
         description="Scans and enforces discipline across all configs, manifests, and dependencies with a tamper-resistant audit vault."
        >
         <Card className="flex flex-col items-center justify-center p-8 text-center min-h-[400px]">
@@ -181,7 +181,7 @@ export function ContinuousAudit() {
 
   return (
     <FsmViewWrapper
-      title="Supermax Universal Compliance Agent"
+      title="Supermax Universal Compliance FSM"
       description="Scans and enforces discipline across all configs, manifests, and dependencies with a tamper-resistant audit vault."
     >
       <Alert variant="default" className="mb-4 bg-green-50 border-green-200 dark:bg-green-950 dark:border-green-800">

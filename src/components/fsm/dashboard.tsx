@@ -6,18 +6,18 @@ import { Bot, FileCheck2, ShieldCheck } from 'lucide-react';
 
 const features = [
   {
-    title: 'Supermax Compliance Agent',
+    title: 'Supermax Compliance FSM',
     description: 'Enforces discipline via a tamper-resistant audit vault, scanning all configs and dependencies.',
     icon: ShieldCheck,
   },
   {
     title: 'Policy-Driven Control',
-    description: 'Parse YAML/JSON policy files to direct agent behavior and enforce organizational standards.',
+    description: 'Parse YAML/JSON policy files using a deterministic FSM to direct behavior and enforce standards.',
     icon: FileCheck2,
   },
   {
-    title: 'Agentic FSM Workflows',
-    description: 'Build robust, multi-step AI coding assistants with FSMs to guide them from task to completion.',
+    title: 'Creative AI Workflows',
+    description: 'Build robust, multi-step AI coding assistants with FSMs to guide the creative process from task to completion.',
     icon: Bot,
   },
 ];
@@ -26,7 +26,7 @@ export function Dashboard() {
   return (
     <FsmViewWrapper
       title="Welcome to the aGi²TEAM³FSMbot¹ Factory"
-      description="This is the factory floor, an enterprise-grade toolkit for building disciplined, compliant, and production-ready AI agents using FSMs."
+      description="This is the factory floor, an enterprise-grade toolkit for building disciplined, compliant, and production-ready applications with a central AI and deterministic FSMs."
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {features.map((feature, index) => (
@@ -51,7 +51,7 @@ export function Dashboard() {
               "One robot can build a car by itself, but it'll take a long time, and if that super-knowledgeable robot breaks, the entire line comes to a dead halt. That's why Henry Ford made the modern assembly line: breaking tasks down into small instances with clear manuals that anything which can follow exact repetition patterns can replicate continually, forever."
             </p>
             <p>
-              This system is built on that truth. An AI coder is a hyper-creative, but fallible, master craftsman. An FSM is a station on the assembly line—a tireless worker that perfectly executes one simple, structured task. This is not a demonstration; it is a factory for producing production-ready code.
+              This system is built on that truth. A creative AI is a hyper-creative, but fallible, master craftsman. An FSM is a station on the assembly line—a tireless worker that perfectly executes one simple, structured task. This is not a demonstration; it is a factory for producing production-ready code.
             </p>
           </CardContent>
         </Card>
@@ -61,7 +61,7 @@ export function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p>
-              This architecture relies on a clear separation of concerns between an ecosystem of specialized, finite agents.
+              This architecture relies on a clear separation of concerns between a single creative AI and an ecosystem of specialized, deterministic FSMs.
             </p>
             <ul className="space-y-2 list-disc pl-5">
               <li>
@@ -70,7 +70,7 @@ export function Dashboard() {
               </li>
               <li>
                 <strong className="text-foreground">AI for Creative Tasks:</strong>
-                The AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control.
+                The single AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control.
               </li>
               <li>
                 <strong className="text-foreground">The Virtuous Cycle:</strong>

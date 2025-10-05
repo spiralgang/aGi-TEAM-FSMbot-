@@ -1,0 +1,17 @@
+// aGi²TEAM³FSMbot¹ Shell Index
+// This file serves as the root configuration anchor for the agentic ecosystem.
+
+{
+  "version": "1.0.0",
+  "agents": [
+    "EmbedGeminiManager",
+    "SupermaxAgent",
+    "CodeBotFsm"
+  ],
+  "fsm_library": [
+    "PolicyParser",
+    "LucideValidator",
+    "SyntaxChecker",
+    "AntiFlailFsm"
+  ]
+}

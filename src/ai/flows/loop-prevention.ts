@@ -1,9 +1,9 @@
 'use server';
 
 /**
- * @fileOverview This file implements an Anti-Flail FSM to prevent AI agents from
- *   repeating code patterns excessively. It acts as a circuit-breaker, escalating
- *   from a 'stable' state to 'monitor', 'correct', and finally 'halt' if an agent
+ * @fileOverview This file implements an Anti-Flail FSM to prevent the main AI
+ *   from repeating code patterns excessively. It acts as a circuit-breaker, escalating
+ *   from a 'stable' state to 'monitor', 'correct', and finally 'halt' if the AI
  *   thrashes, thus preserving system resources and preventing infinite loops.
  *
  * - antiFlailFlow - An exported wrapper function to call the antiFlailFSM flow.
@@ -18,11 +18,12 @@ const AntiFlailInputSchema = z.object({
   action: z.string().describe('The action performed by the AI agent.'),
   previousActions: z.array(z.string()).optional().describe('History of previous actions for loop detection.'),
   contextId: z.string().optional().describe('Unique identifier to track action sequences across calls.'),
+  action: z.string().describe('The action performed by the AI.'),
 });
 export type AntiFlailInput = z.infer<typeof AntiFlailInputSchema>;
 
 const AntiFlailOutputSchema = z.object({
-  status: z.string().describe('The status of the agent (stable, monitor, correct, halt).'),
+  status: z.string().describe('The status of the AI (stable, monitor, correct, halt).'),
   message: z.string().describe('A message indicating the current state and loop count.'),
   shouldIntervene: z.boolean().describe('Whether intervention is needed to break the loop.'),
   recommendedAction: z.string().optional().describe('Suggested action to break the loop pattern.'),
@@ -51,6 +52,11 @@ You act as a circuit-breaker that escalates intervention based on repetitive beh
 CURRENT MONITORING STATE: {{{status}}}
 REPETITION COUNT: {{{loopCount}}}
 CURRENT ACTION: {{{action}}}
+  prompt: `You are an FSM that monitors and limits the actions of a creative AI to prevent it from getting stuck in infinite loops or "thrashing". You will maintain a state that reflects the current status of the AI, track the number of loops, and escalate to a halt state if the AI repeats actions too many times.
+
+The current state is: {{{status}}}
+The current loop count is: {{{loopCount}}}
+The action performed by the AI is: {{{action}}}
 
 FSM STATE DEFINITIONS:
 - STABLE: Normal operation, no intervention needed

@@ -17,6 +17,9 @@ import {
   Save,
   Ear,
   UploadCloud,
+  FileJson,
+  Laptop,
+  AlertOctagon,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -35,12 +38,15 @@ interface AppSidebarProps {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'ide-matrix', label: 'IDE Matrix', icon: Laptop },
   { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
   { id: 'cloud-backup', label: 'Cloud Backup', icon: UploadCloud },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
+  { id: 'terminus-validator', label: 'Terminus Validator', icon: AlertOctagon },
   { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
   { id: 'code-state-validation', label: 'Code State Validation', icon: FileCheck2 },
   { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
+  { id: 'xml-parser', label: 'XML Parser', icon: FileJson },
   { id: 'lint-compliance', label: 'Lint Compliance', icon: ClipboardCheck },
   { id: 'syntax-checker', label: 'Syntax Checker', icon: ScanLine },
   { id: 'fsm-debugging', label: 'FSM Debugging', icon: Bug },

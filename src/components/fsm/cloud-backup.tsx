@@ -11,17 +11,8 @@ import { Progress } from '@/components/ui/progress';
 import { Play, CheckCircle, Shield, Archive, UploadCloud, Loader2, FileScan } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-
-type BackupState = 'idle' | 'scanning' | 'archiving' | 'encrypting' | 'uploading' | 'done' | 'error';
-
-const hotspots = [
-  'README.md',
-  'package.json',
-  'src/app/page.tsx',
-  'src/ai/genkit.ts',
-  '.github/workflows/main.yml',
-  'docs/chckpt1-a2.t3.fb1.md',
-];
+import { runCloudBackupAction } from '@/app/actions';
+import type { CloudBackupFSMOutput, BackupState } from '@/ai/flows/cloud-backup-fsm';
 
 const stateConfig: Record<Exclude<BackupState, 'idle' | 'error'>, { text: string; icon: React.ElementType; progress: number }> = {
   scanning: { text: 'Scanning for high-value files...', icon: FileScan, progress: 20 },
@@ -32,15 +23,11 @@ const stateConfig: Record<Exclude<BackupState, 'idle' | 'error'>, { text: string
 };
 
 export function CloudBackup() {
-  const [state, setState] = useState<BackupState>('idle');
-  const [logs, setLogs] = useState<string[]>([]);
+  const [result, setResult] = useState<CloudBackupFSMOutput | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [passphrase, setPassphrase] = useState('');
   const [remote, setRemote] = useState('b2:my-secure-bucket/backups');
   const { toast } = useToast();
-
-  const addLog = (message: string) => {
-    setLogs(prev => [message, ...prev]);
-  };
 
   const runBackup = useCallback(async () => {
     if (!passphrase || !remote) {
@@ -51,39 +38,37 @@ export function CloudBackup() {
       });
       return;
     }
+    
+    setIsLoading(true);
+    setResult(null);
 
-    setState('scanning');
-    addLog('Initializing backup sequence...');
-    await new Promise(res => setTimeout(res, 500));
+    const response = await runCloudBackupAction({ passphrase, remoteTarget: remote });
 
-    addLog(`Scanning ${hotspots.length} hotspots...`);
-    hotspots.forEach(hp => addLog(`  [FOUND] ${hp}`));
-    setState('archiving');
-    await new Promise(res => setTimeout(res, 1000));
+    if (response.success && response.data) {
+      setResult(response.data);
+      if (response.data.state === 'done') {
+        toast({
+          title: 'Backup Successful',
+          description: 'Your encrypted snapshot has been securely uploaded.',
+        });
+      }
+    } else {
+      toast({
+        variant: 'destructive',
+        title: 'Backup Failed',
+        description: response.error || 'An unknown error occurred.',
+      });
+      setResult({ state: 'error', logs: [response.error || 'An unknown error occurred.'] });
+    }
 
-    addLog('Creating TAR.GZ archive...');
-    setState('encrypting');
-    await new Promise(res => setTimeout(res, 1500));
-
-    addLog('Encrypting with AES-256-CBC...');
-    setState('uploading');
-    await new Promise(res => setTimeout(res, 2000));
-
-    addLog(`Uploading to rclone remote: ${remote}`);
-    await new Promise(res => setTimeout(res, 1500));
-
-    addLog('Upload complete. Cleaning up temporary files...');
-    setState('done');
-    toast({
-      title: 'Backup Successful',
-      description: 'Your encrypted snapshot has been securely uploaded.',
-    });
+    setIsLoading(false);
   }, [passphrase, remote, toast]);
 
+  const state = result?.state || 'idle';
+  const logs = result?.logs || [];
   const CurrentIcon = state in stateConfig ? stateConfig[state as keyof typeof stateConfig].icon : Play;
   const currentProgress = state in stateConfig ? stateConfig[state as keyof typeof stateConfig].progress : 0;
-  const isLoading = state !== 'idle' && state !== 'done' && state !== 'error';
-
+  
   return (
     <FsmViewWrapper
       title="Cloud Backup & Encryption FSM"
@@ -135,11 +120,11 @@ export function CloudBackup() {
             <div className="space-y-4">
               <div className="flex items-center gap-4 p-4 rounded-lg bg-secondary/50">
                 <div className="p-3 bg-primary/10 rounded-full">
-                    <CurrentIcon className={cn("h-6 w-6 text-primary", isLoading && 'animate-spin')} />
+                    <CurrentIcon className={cn("h-6 w-6 text-primary", isLoading && state !== 'done' && 'animate-spin')} />
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-primary-foreground/90">
-                    {state in stateConfig ? stateConfig[state as keyof typeof stateConfig].text : 'Awaiting command...'}
+                    {state in stateConfig ? stateConfig[state as keyof typeof stateConfig].text : (state === 'error' ? 'Error Occurred' : 'Awaiting command...')}
                   </p>
                   <Progress value={currentProgress} className="mt-2 h-2" />
                 </div>
@@ -148,7 +133,7 @@ export function CloudBackup() {
                 {logs.length > 0 ? (
                   logs.map((log, i) => <p key={i} className="whitespace-pre-wrap leading-relaxed">{`> ${log}`}</p>)
                 ) : (
-                  <p className="text-muted-foreground">Logs will appear here...</p>
+                  <p className="text-muted-foreground">{isLoading ? "Running..." : "Logs will appear here..."}</p>
                 )}
               </ScrollArea>
             </div>

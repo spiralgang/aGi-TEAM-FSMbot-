@@ -19,14 +19,25 @@ import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { CloudBackup } from '@/components/fsm/cloud-backup';
 import { FSMDebugging } from '@/components/fsm/fsm-debugging';
+import { XmlParserFsm } from '@/components/fsm/xml-parser';
+import { IDEMatrix } from '@/components/fsm/ide-matrix';
+import { TerminusValidator } from '@/components/fsm/terminus-validator';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
-  'embed-gemini-manager': <EmbedGeminiManager />,
+  'ide-matrix': <IDEMatrix />,
   'continuous-audit': <ContinuousAudit />,
-  'policy-parsing': <PolicyParsing />,
+  'cloud-backup': <CloudBackup />,
+  'code-bot-fsm': <CodeBotFsm />,
+  'terminus-validator': <TerminusValidator />,
   'lucide-validator': <LucideValidator />,
+  'code-state-validation': <CodeStateValidation />,
+  'policy-parsing': <PolicyParsing />,
+  'xml-parser': <XmlParserFsm />,
+  'lint-compliance': <LintCompliance />,
   'syntax-checker': <SyntaxChecker />,
+  'loop-prevention': <LoopPrevention />,
+  'todo-manager': <TodoManager />,
   'draft-saver': <DraftSaver />,
   'content-whisperer': <ContentWhisperer />,
   'file-tree': <FileTree />,
@@ -37,6 +48,7 @@ const views: Record<string, React.ReactNode> = {
   'code-bot-fsm': <CodeBotFsm />,
   'cloud-backup': <CloudBackup />,
   'fsm-debugging': <FSMDebugging />,
+  'embed-gemini-manager': <EmbedGeminiManager />,
 };
 
 export default function Home() {

@@ -22,14 +22,14 @@ const stateConfig: Record<FsmState, { icon: React.ElementType, title: string, de
   stable: {
     icon: ShieldCheck,
     title: 'Stable',
-    description: 'Agent is operating normally. Loop count is low.',
+    description: 'AI is operating normally. Loop count is low.',
     variant: null,
     colorClass: 'text-green-500'
   },
   monitor: {
     icon: Shield,
     title: 'Monitor',
-    description: 'Agent action is being monitored. Loop count is increasing.',
+    description: 'AI action is being monitored. Loop count is increasing.',
     variant: null,
     colorClass: 'text-blue-500'
   },
@@ -43,7 +43,7 @@ const stateConfig: Record<FsmState, { icon: React.ElementType, title: string, de
 halt: {
     icon: ShieldX,
     title: 'Halted',
-    description: 'Thrashing detected. Agent has been halted to prevent infinite loops.',
+    description: 'Thrashing detected. AI has been halted to prevent infinite loops.',
     variant: 'destructive',
     colorClass: 'text-red-500'
   }
@@ -57,6 +57,7 @@ export function LoopPrevention() {
   const [result, setResult] = useState<AntiFlailOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const [message, setMessage] = useState('Ready to monitor AI actions.');
 
   const processAction = async () => {
     if (state === 'halt') return;
@@ -104,6 +105,7 @@ export function LoopPrevention() {
     setState('stable');
     setMessage('Ready to monitor agent actions.');
     setResult(null);
+    setMessage('Ready to monitor AI actions.');
   };
 
   const CurrentIcon = stateConfig[state].icon;
@@ -111,7 +113,7 @@ export function LoopPrevention() {
   return (
     <FsmViewWrapper
       title="Anti-Flail FSM (Loop Prevention)"
-      description="An FSM agent that prevents another AI from 'thrashing' by escalating to a halt state if it repeats actions too often."
+      description="An FSM that prevents the creative AI from 'thrashing' by escalating to a halt state if it repeats actions too often."
     >
       <Card>
         <CardContent className="pt-6 space-y-6">
@@ -145,6 +147,8 @@ export function LoopPrevention() {
               <Button onClick={processAction} disabled={state === 'halt' || isLoading} className="w-full md:w-auto">
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Process Action
+              <Button onClick={processAction} disabled={state === 'halt'} className="w-full">
+                Process AI Action
               </Button>
               <Button onClick={resetFsm} variant="outline" className="w-full md:w-auto">
                 <RotateCcw className="mr-2 h-4 w-4" /> Reset FSM
