@@ -20,6 +20,7 @@ import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { CloudBackup } from '@/components/fsm/cloud-backup';
 import { XmlParserFsm } from '@/components/fsm/xml-parser';
 import { IDEMatrix } from '@/components/fsm/ide-matrix';
+import { TerminusValidator } from '@/components/fsm/terminus-validator';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -27,6 +28,7 @@ const views: Record<string, React.ReactNode> = {
   'continuous-audit': <ContinuousAudit />,
   'cloud-backup': <CloudBackup />,
   'code-bot-fsm': <CodeBotFsm />,
+  'terminus-validator': <TerminusValidator />,
   'lucide-validator': <LucideValidator />,
   'code-state-validation': <CodeStateValidation />,
   'policy-parsing': <PolicyParsing />,

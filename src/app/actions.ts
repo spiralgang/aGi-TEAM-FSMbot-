@@ -24,6 +24,10 @@ import {
   cloudBackupFSM,
   type CloudBackupFSMInput,
 } from '@/ai/flows/cloud-backup-fsm';
+import {
+  terminusValidatorFSM,
+  type TerminusValidatorInput,
+} from '@/ai/flows/terminus-validator-fsm';
 
 export async function runCodeBotWorkflowAction(
   input: AutomatedWorkflowWithCodeBotFSMInput
@@ -79,6 +83,17 @@ export async function runXmlParserWorkflowAction(
 export async function runCloudBackupAction(input: CloudBackupFSMInput) {
   try {
     const result = await cloudBackupFSM(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function runTerminusValidatorAction(
+  input: TerminusValidatorInput
+) {
+  try {
+    const result = await terminusValidatorFSM(input);
     return { success: true, data: result };
   } catch (error) {
     return { success: false, error: (error as Error).message };
