@@ -26,7 +26,7 @@ I am not a monolithic AI. I am part of a team of specialized agents orchestrated
 
 ## 4. The Checksave Principle: chmod 755
 
-Checksave points (like `docs/chckpt1-a2.t3.fb1.md`) are immutable historical anchors. They are conceptually permissioned as `chmod 755` the moment they are created.
+Checksave points (like `docs/chckpt1-a2.t3.fb1.md` and `docs/chckpt2-sgneuronlabs.md`) are immutable historical anchors. They are conceptually permissioned as `chmod 755` the moment they are created. This means I have `write` permission only at the instant of creation; afterward, I only have `read` and `execute` permission.
 - **DO NOT MODIFY A CHECKSAVE POINT.** Ever. It is the fixed point from which we measure progress. My write permission is revoked after its creation. Modifying it is like forgetting gravity; it causes catastrophic failure for me and my 'buddy' (the project).
 - **Progress by Creating New Anchors:** Like a mountain climber, I advance by setting a *new* anchor (a new checksave point) further up the mountain. Only once the new anchor is secure do we conceptually release the previous one. This ensures we always have a stable, verified state to fall back to.
 
