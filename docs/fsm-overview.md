@@ -1,6 +1,36 @@
 # FSM Operational Overview
 
-This document contains the Mermaid diagram for the core operational flowchart of the aGi²TEAM³FSMbot¹ system.
+This document contains the Mermaid diagrams for the core operational flowchart of the aGi²TEAM³FSMbot¹ system.
+
+---
+
+## Diagram 1: Application Logic & FSM Workflow (`/src` Environment)
+
+This diagram represents the internal logic of the FSMAssist application itself. It shows how a single user interaction is processed through a deterministic sequence: a request is received, intent is parsed, and the task is routed to the appropriate FSM (a Genkit Flow) or the creative AI. This is a linear, transactional model that accurately reflects the code architecture within the `/src` directory.
+
+```mermaid
+graph TD
+    A[Start] --> B{User Request};
+    B --> C[Parse Intent];
+    C --> D{Route to Agent};
+    D --> E[FSM: Validator];
+    D --> F[FSM: Parser];
+    D --> G[AI: Code Gen];
+    E --> H[Validate];
+    F --> I[Parse];
+    G --> J[Generate];
+    H --> K{Result};
+    I --> K;
+    J --> K;
+    K --> L[Format Output];
+    L --> M[Respond to User];
+```
+
+---
+
+## Diagram 2: Overall Build & Operational Environment (Firebase/CI/CD)
+
+This diagram represents the broader, continuous build and operational environment. It illustrates a looping, event-driven system with external triggers, feedback mechanisms, and parallel processes. This model accurately reflects how a modern CI/CD pipeline and hosting environment (like Firebase App Hosting with GitHub Actions) operates—as a perpetual, self-regulating "code-energy loop."
 
 ```mermaid
 graph TD
