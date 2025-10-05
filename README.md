@@ -9,6 +9,7 @@ Our core mission is to build a powerful and disciplined **software assembly line
 - [The Core Philosophy: A Modern Assembly Line](#the-core-philosophy-a-modern-assembly-line)
 - [System Architecture: Meet the Team](#system-architecture-meet-the-team)
 - [How It Works: The Virtuous Cycle](#how-it-works-the-virtuous-cycle)
+- [Operational Reality: How Agents Execute Tasks](#operational-reality-how-agents-execute-tasks)
 - [Component Reference Matrix](#component-reference-matrix)
 
 ---
@@ -59,6 +60,26 @@ This system is designed to be self-improving. The efficiency you gain from the a
 4.  **The System Learns:** Your innovations and the AI's creative solutions are fed back into the system. This allows us to build even better FSMs and refine the AI's instructions, making the entire assembly line faster, smarter, and more powerful with every loop.
 
 This is the virtuous cycle that drives our progress.
+
+[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
+
+---
+
+## Operational Reality: How Agents Execute Tasks
+
+The "magic" of this environment comes from a clear understanding of how commands are executed.
+
+### AI Agent Execution (Declarative Control)
+
+The creative AI does not have an interactive shell. Its "terminal" is the entire CI/CD and automation system.
+- **Commands are Declarative:** The AI executes "commands" by writing or modifying configuration files (e.g., `package.json`, `.github/workflows/ci.yml`).
+- **Execution is Asynchronous:** These changes are then acted upon by external, event-driven runners (e.g., GitHub Actions, `npm` scripts). The AI programs the factory's automation; it does not pull the levers itself.
+
+### FSM Execution (Dev vs. Prod)
+
+A Finite State Machine is a pure algorithm, not an AI. How it runs depends on the context.
+- **In Development:** For complex, asynchronous, or multi-step tasks (like validating code against a server or backing up files), FSMs are implemented as server-side **Genkit flows**. We test and trigger these using UI components that call these backend flows.
+- **In Production:** For self-contained, synchronous tasks (like UI state validation or simple syntax checks), the FSM logic is written directly in the application's source code (e.g., TypeScript). This logic is **compiled directly into the application bundle** (`.js`, `.apk`, etc.) and runs natively on the client device without any need for a backend or YAML runner. The `SyntaxChecker` component is a perfect proof of this principle in action.
 
 [Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
 
