@@ -21,11 +21,9 @@ import { CloudBackup } from '@/components/fsm/cloud-backup';
 import { XmlParserFsm } from '@/components/fsm/xml-parser';
 import { IDEMatrix } from '@/components/fsm/ide-matrix';
 import { TerminusValidator } from '@/components/fsm/terminus-validator';
-import { TerminusPrime } from '@/components/fsm/terminus-prime';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
-  'terminus-prime': <TerminusPrime />,
   'ide-matrix': <IDEMatrix />,
   'continuous-audit': <ContinuousAudit />,
   'cloud-backup': <CloudBackup />,

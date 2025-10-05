@@ -1,0 +1,85 @@
+# This workflow acts as the "Terminus Prime Dispatch" FSM.
+# It is the master router for the entire aGi²TEAM³FSMbot¹ factory,
+# triaging incoming events and dispatching the correct specialized agent.
+
+name: Terminus Prime Dispatch FSM
+
+on:
+  workflow_dispatch:
+    inputs:
+      trigger_type:
+        description: 'The type of event that triggered the workflow'
+        required: true
+        type: choice
+        options:
+          - user_command
+          - ci_cd_webhook
+          - self_correction_loop
+      payload:
+        description: 'JSON payload for the event'
+        required: false
+        type: string
+        default: '{}'
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    name: Triage Incoming Event
+    outputs:
+      target_agent: ${{ steps.determine_agent.outputs.agent }}
+    steps:
+      - name: Determine Target Agent
+        id: determine_agent
+        run: |
+          TRIGGER_TYPE="${{ github.event.inputs.trigger_type }}"
+          AGENT=""
+          if [[ "$TRIGGER_TYPE" == "user_command" ]]; then
+            AGENT="creative_ai"
+          elif [[ "$TRIGGER_TYPE" == "ci_cd_webhook" ]]; then
+            AGENT="continuous_audit"
+          elif [[ "$TRIGGER_TYPE" == "self_correction_loop" ]];2
+            AGENT="validator_fsm"
+          else
+            AGENT="error_handler"
+          fi
+          echo "Trigger: $TRIGGER_TYPE -> Dispatching to: $AGENT"
+          echo "agent=$AGENT" >> $GITHUB_OUTPUT
+
+  # FSM State: Creative AI (CodeBot)
+  run_creative_ai:
+    needs: triage
+    if: needs.triage.outputs.target_agent == 'creative_ai'
+    uses: ./.github/workflows/ci.yml
+    name: Dispatch to Creative AI
+    with:
+      # This would be where you pass parameters to your reusable build/lint workflow
+      run_build: true
+    secrets: inherit
+
+  # FSM State: Continuous Audit (Supermax)
+  run_continuous_audit:
+    needs: triage
+    if: needs.triage.outputs.target_agent == 'continuous_audit'
+    name: Dispatch to Supermax Audit FSM
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Supermax FSM is running a full compliance scan..."
+
+  # FSM State: Validator
+  run_validator_fsm:
+    needs: triage
+    if: needs.triage.outputs.target_agent == 'validator_fsm'
+    name: Dispatch to Validator FSM
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Validator FSM is checking for compliance violations..."
+
+  # FSM State: Error
+  run_error_handler:
+    needs: triage
+    if: needs.triage.outputs.target_agent == 'error_handler'
+    name: Error Handler
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ERROR: Unknown trigger type. Halting workflow."
+        exit 1

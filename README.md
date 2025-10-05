@@ -91,6 +91,7 @@ The table below maps each core function of our system to the exact script or com
 
 | Function / Principle | Component Name | Script Location |
 | :--- | :--- | :--- |
+| **Master Dispatch FSM** | Terminus Prime Dispatch | `.github/workflows/terminus-prime.yml` |
 | **Central Orchestrator (AI)** | FSM Manager | `src/components/fsm/embed-gemini-manager.tsx` |
 | **Compliance & Audit FSM** | Supermax FSM | `src/components/fsm/continuous-audit.tsx` |
 | **Creative Coder Workflow** | Code Bot FSM | `src/ai/flows/automated-workflow-with-code-bot-fsm.ts` |
