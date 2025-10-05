@@ -26,7 +26,7 @@ The `aGi²TEAM³FSMbot¹` is a system of three distinct actors:
 
 1.  **The Human Designer ("Chief Architect"):** The "super knowledgeable entity" at the top of the command chain. Their role is high-level architectural design, creative direction, and innovating the assembly line itself.
 2.  **The Embedded AI ("Master Craftsman" / "Factory Foreman"):** This is the single, creative AI agent (Gemini) that both orchestrates the workflow and writes novel code. It fills the roles of both the **`EmbedGeminiManager`** (dispatching FSMs) and the **`CodeBotFsm`** (generating code).
-3.  **The FSMs ("Mop Boys" / Assembly Line Workers):** This is an army of highly specialized, single-task deterministic algorithms. Each is a Finite State Machine built to perfectly execute one structured job (e.g., `LucideValidator`, `PolicyParser`, `SyntaxChecker`). They are the disciplined, non-AI backbone of the factory.
+3.  **The FSMs ("Mop Boys" / Assembly Line Workers):** This is an army of highly specialized, single-task deterministic algorithms. Each is a Finite State Machine built to perfectly execute one structured job (e.g., `LucideValidator`, `PolicyParser`, `SyntaxChecker`). They are not AI.
 
 ---
 
@@ -81,6 +81,13 @@ The system is event-driven and state-based, activating precisely when needed.
 The system works by translating abstract principles into concrete, deterministic algorithms (FSMs) and creative generation (AI).
 
 *   **The FSM Algorithm:** As demonstrated by the `SyntaxChecker`, an FSM is a mathematical instance. An input token's numerical equivalent (`*`) is passed into an algebraic table function along with the current state's value. The function's output determines the next state with 100% predictability. It's a system of pure numbers.
+
+*   **FSMs in Development vs. Production:**
+    *   **In Development:** FSMs for complex, asynchronous, or multi-step tasks (like validating code against a server or backing up files) are implemented as server-side **Genkit flows**. We test and trigger these using CI workflows (like GitHub Actions) and UI components that call these backend flows.
+    *   **In Production:** For self-contained, synchronous tasks (like UI state validation or simple syntax checks), the FSM logic is written directly in the application's source code (e.g., TypeScript). This logic is **compiled directly into the application bundle** (`.js`, `.apk`, etc.) and runs natively on the client device without any need for a backend or YAML runner. The `SyntaxChecker` component is a perfect proof of this principle in action.
+
 *   **Implementation via Genkit Flows:** FSMs are implemented as Genkit flows (`*.ts` files in `src/ai/flows/`). These flows define the states and the logic for transitioning between them, calling on libraries (`js-yaml` for parsing) as needed. The single AI also uses Genkit to generate creative text and code.
+
 *   **UI as Proof:** Each component in `src/components/fsm/` is a direct, interactive proof of a specific FSM's function within the `aGi²TEAM³FSMbot¹` ecosystem. By using the app, one can see the entire assembly line in action.
+
 *   **The Virtuous Cycle:** The efficiency gained allows the Human Designer to create better FSMs. These FSMs, in turn, create a more stable environment for the AI Coder, which produces better code. This higher-quality output inspires new architectural innovations, completing the loop.

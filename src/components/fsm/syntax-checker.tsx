@@ -104,8 +104,8 @@ export function SyntaxChecker() {
 
   return (
     <FsmViewWrapper
-      title="Syntax Checker FSM"
-      description="A demonstration of an FSM's deterministic, mathematical logic for syntax validation."
+      title="Syntax Checker FSM (Client-Side)"
+      description="A proof of a client-side FSM. This component's logic is compiled directly into the application's JavaScript bundle. It runs entirely in the browser, demonstrating how FSMs can operate in a final product without any backend."
     >
       <Card>
         <CardContent className="pt-6 grid md:grid-cols-2 gap-6">
