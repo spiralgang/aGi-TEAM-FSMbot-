@@ -19,6 +19,7 @@ import {
   FileJson,
   Laptop,
   AlertOctagon,
+  Cpu,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -37,6 +38,7 @@ interface AppSidebarProps {
 
 const navItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { id: 'terminus-prime', label: 'Terminus Prime', icon: Cpu },
   { id: 'ide-matrix', label: 'IDE Matrix', icon: Laptop },
   { id: 'continuous-audit', label: 'Continuous Audit', icon: ShieldCheck },
   { id: 'cloud-backup', label: 'Cloud Backup', icon: UploadCloud },
