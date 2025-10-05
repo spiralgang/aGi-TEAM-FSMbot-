@@ -70,15 +70,12 @@ const lucidIconValidatorFlow = ai.defineFlow(
     }
 
     // State: GENERATE_RECOMMENDATIONS (using an LLM for fuzzy matching)
-    const { output } = await ai.generate({
-      prompt: `Given a list of invalid lucide-react icon names, suggest valid alternatives from the official list. For each invalid icon, suggest the closest valid icon name.
+    const { output } = await ai.generate(`Given a list of invalid lucide-react icon names, suggest valid alternatives from the official list. For each invalid icon, suggest the closest valid icon name.
 
 Invalid Icons: ${invalidIcons.join(', ')}
 Valid Icons list (sample): FolderTree, Folder, File, FileCode, Bot, ShieldCheck
 
-Return a JSON object mapping the invalid icon to its recommended replacement. For example: { "FileTreee": "FolderTree", "ClipbordCheck": "ClipboardCheck" }. If no good alternative exists, suggest a reasonable replacement like 'HelpCircle'.`,
-      format: 'json',
-    });
+Return a JSON object mapping the invalid icon to its recommended replacement. For example: { "FileTreee": "FolderTree", "ClipbordCheck": "ClipboardCheck" }. If no good alternative exists, suggest a reasonable replacement like 'HelpCircle'.`);
     
     const recommendations = output ?? {};
 

@@ -26,6 +26,10 @@ const CodeStateValidationOutputSchema = z.object({
   validationResult: z
     .string()
     .describe('A description of the validation result, including any errors found.'),
+  syntaxScore: z.number().min(0).max(100).describe('Syntax compliance score (0-100).'),
+  stateCompliance: z.number().min(0).max(100).describe('FSM state compliance score (0-100).'),
+  suggestions: z.array(z.string()).describe('Specific suggestions for improvement.'),
+  detectedStates: z.array(z.string()).describe('FSM states detected in the code.'),
 });
 export type CodeStateValidationOutput = z.infer<typeof CodeStateValidationOutputSchema>;
 
@@ -37,19 +41,36 @@ const prompt = ai.definePrompt({
   name: 'codeStateValidationPrompt',
   input: {schema: CodeStateValidationInputSchema},
   output: {schema: CodeStateValidationOutputSchema},
-  prompt: `You are a code validation expert. You will receive a code snippet and an FSM definition. Your task is to determine if the code follows the state transitions defined in the FSM and is structurally sound according to it.
+  prompt: `You are an expert FSM-aware code validator. Your role is to analyze code against finite state machine definitions, ensuring both syntactic correctness and adherence to defined state transitions and behaviors.
 
-Code:
-
-\`\`\`{{{code}}}
+CODE TO VALIDATE:
+\`\`\`
+{{{code}}}
 \`\`\`
 
-FSM Definition:
-
+FSM DEFINITION:
 {{{fsmDefinition}}}
 
-Based on this, determine if the code is valid, and provide a detailed validation result.  Include specific details on which states it follows and which it violates. Set the 
-isValid output field appropriately.`,
+VALIDATION CRITERIA:
+1. **Syntax Compliance**: Check for proper syntax, structure, and basic code quality
+2. **State Compliance**: Verify the code follows FSM state definitions and transitions
+3. **Logic Flow**: Ensure state transitions are logically sound and deterministic
+4. **Error Handling**: Check for proper error state management
+
+ANALYSIS REQUIREMENTS:
+- Identify which FSM states are referenced or implemented in the code
+- Validate state transition logic matches the FSM definition
+- Check for missing states, invalid transitions, or logic errors
+- Provide specific, actionable improvement suggestions
+- Score syntax compliance (0-100) and state compliance (0-100)
+
+OUTPUT DETAILED VALIDATION:
+- Set isValid to true only if code passes both syntax and state compliance checks
+- Provide comprehensive validation results with specific line references when possible
+- List detected states and explain how they relate to the FSM definition
+- Offer concrete suggestions for fixing any identified issues
+
+Focus on helping developers write FSM-compliant code that follows deterministic patterns.`,
 });
 
 const codeStateValidationFlow = ai.defineFlow(
@@ -59,7 +80,33 @@ const codeStateValidationFlow = ai.defineFlow(
     outputSchema: CodeStateValidationOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
-    return output!;
+    // Enhanced validation with pre-processing and fallback handling
+    try {
+      const {output} = await prompt(input);
+      
+      if (!output) {
+        // Fallback validation if AI prompt fails
+        return {
+          isValid: false,
+          validationResult: 'Validation failed: Unable to process code through AI validator',
+          syntaxScore: 0,
+          stateCompliance: 0,
+          suggestions: ['Retry validation', 'Check code syntax manually', 'Verify FSM definition format'],
+          detectedStates: [],
+        };
+      }
+
+      return output;
+    } catch (error) {
+      // Error handling with meaningful feedback
+      return {
+        isValid: false,
+        validationResult: `Validation error: ${(error as Error).message}`,
+        syntaxScore: 0,
+        stateCompliance: 0,
+        suggestions: ['Fix syntax errors', 'Simplify code structure', 'Check FSM definition'],
+        detectedStates: [],
+      };
+    }
   }
 );

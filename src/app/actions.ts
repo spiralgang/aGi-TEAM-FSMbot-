@@ -17,6 +17,13 @@ import {
   type CodeStateValidationInput,
 } from '@/ai/flows/code-state-validation';
 import {
+  antiFlailFlow,
+  type AntiFlailInput,
+} from '@/ai/flows/loop-prevention';
+import {
+  fsmDebugging,
+  type FSMDebuggingInput,
+} from '@/ai/flows/fsm-debugging';
   xmlParserWorkflow,
   type XmlParserWorkflowInput,
 } from '@/ai/flows/xml-parser-fsm';
@@ -69,6 +76,11 @@ export async function validateCodeStateAction(
   }
 }
 
+export async function checkLoopPreventionAction(
+  input: AntiFlailInput
+) {
+  try {
+    const result = await antiFlailFlow(input);
 export async function runXmlParserWorkflowAction(
   input: XmlParserWorkflowInput
 ) {
@@ -80,6 +92,11 @@ export async function runXmlParserWorkflowAction(
   }
 }
 
+export async function debugFSMAction(
+  input: FSMDebuggingInput
+) {
+  try {
+    const result = await fsmDebugging(input);
 export async function runCloudBackupAction(input: CloudBackupFSMInput) {
   try {
     const result = await cloudBackupFSM(input);

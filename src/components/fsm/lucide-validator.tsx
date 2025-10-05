@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, AlertCircle, CheckCircle, Lightbulb } from 'lucide-react';
+import { Loader2, AlertCircle, CheckCircle, Lightbulb, ShieldCheck } from 'lucide-react';
 import { validateIconsAction } from '@/app/actions';
 import type { LucidIconValidatorOutput } from '@/ai/flows/lucide-icon-validator';
 import { useToast } from '@/hooks/use-toast';

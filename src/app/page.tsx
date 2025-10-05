@@ -18,6 +18,7 @@ import { TodoManager } from '@/components/fsm/todo-manager';
 import { LoopPrevention } from '@/components/fsm/loop-prevention';
 import { CodeBotFsm } from '@/components/fsm/code-bot-fsm';
 import { CloudBackup } from '@/components/fsm/cloud-backup';
+import { FSMDebugging } from '@/components/fsm/fsm-debugging';
 import { XmlParserFsm } from '@/components/fsm/xml-parser';
 import { IDEMatrix } from '@/components/fsm/ide-matrix';
 import { TerminusValidator } from '@/components/fsm/terminus-validator';
@@ -40,6 +41,13 @@ const views: Record<string, React.ReactNode> = {
   'draft-saver': <DraftSaver />,
   'content-whisperer': <ContentWhisperer />,
   'file-tree': <FileTree />,
+  'code-state-validation': <CodeStateValidation />,
+  'lint-compliance': <LintCompliance />,
+  'todo-manager': <TodoManager />,
+  'loop-prevention': <LoopPrevention />,
+  'code-bot-fsm': <CodeBotFsm />,
+  'cloud-backup': <CloudBackup />,
+  'fsm-debugging': <FSMDebugging />,
   'embed-gemini-manager': <EmbedGeminiManager />,
 };
 
