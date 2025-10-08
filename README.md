@@ -34,7 +34,7 @@ This environment is built on that exact principle.
 
 ## System Architecture: Meet the Team
 
-Our `aGi²TEAM³FSMbot¹` is not a team of multiple AIs; it's a single AI working in harmony with deterministic FSMs. Here are the key players:
+Our `aGi²TEAM³FSMbot¹` is not a team of agents; it's a two AI small local AI (one an embed), working in harmony with deterministic FSMs. Here are the key players:
 
 1.  **Specialized FSM Bots (The "Mop Boys")**: This is our army of tireless, deterministic workers. Each bot is an FSM designed for one purpose:
     *   **Policy Parser**: Reads and validates structured `YAML` or `JSON` configuration files.
