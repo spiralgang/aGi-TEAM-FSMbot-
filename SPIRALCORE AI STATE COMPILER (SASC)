@@ -212,7 +212,7 @@ END_PROMPT
 
     # For interactive use, we launch the LLM API here (Example only)
     # The true script would involve a continuous conversation loop (e.g., using gh chat or curl to vLLM)
-    # Example: curl -X POST "$LLM_API_ENDPOINT" -H "Content-Type: application/json" -d "{'prompt': '$BOOT_PROMPT'}"
+    # Example: curl -X POST "$LLM_API_ENDPOINT" -H "Content-Type: application/json" -d "{\"prompt\": \"$BOOT_PROMPT\"}"
     
     echo "🤖 AI is live. State loaded from $STATE_XML_SOURCE."
 }
