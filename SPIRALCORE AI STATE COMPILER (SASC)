@@ -169,7 +169,12 @@ compile_state() {
     echo "⚙️ Compiling and compressing AI state kernel..."
     
     # Gzip for maximum compression, then Base64 for safe transport
+    set -o pipefail
     gzip -c "$STATE_XML_SOURCE" | base64 > "$BOOT_IMAGE_FILE"
+    if [ $? -ne 0 ]; then
+        echo "❌ Error: Failed to compress and encode the state kernel. Boot image may be corrupted." >&2
+        return 1
+    fi
     
     echo "✅ State Compiled. Boot image size: $(stat -c%s "$BOOT_IMAGE_FILE") bytes."
 }
