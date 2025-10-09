@@ -711,7 +711,7 @@ CONVERSATION_HISTORY="${SASC_ROOT}/session_history.log"
 LLM_API_ENDPOINT="http://localhost:11434/v1/chat/completions" # Example: Ollama/vLLM
 
 # Ensure environment is ready
-mkdir -p "$SASC_ROOT"
+mkdir -m 700 -p "$SASC_ROOT"
 
 # --- CORE FUNCTIONS ---
 
