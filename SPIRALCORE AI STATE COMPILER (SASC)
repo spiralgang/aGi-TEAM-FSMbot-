@@ -804,7 +804,7 @@ sasc_save_state() {
     # we simulate an update of the XML source file.
 
     # Example simulation: Updating the version and tool registry
-    sed -i 's/version=".*"/version="4.3"/' "$STATE_XML_SOURCE"
+    xmlstarlet ed -L -u '/*/@version' -v "4.3" "$STATE_XML_SOURCE"
     echo "New directive added to state XML based on session history."
     
     # Recompile the new state
