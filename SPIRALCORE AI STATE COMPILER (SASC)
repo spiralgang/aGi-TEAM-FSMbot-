@@ -708,7 +708,7 @@ SASC_ROOT="${HOME}/.sasc"
 STATE_XML_SOURCE="${SASC_ROOT}/current_state.xml"
 BOOT_IMAGE_FILE="${SASC_ROOT}/sasc_boot_image.b64"
 CONVERSATION_HISTORY="${SASC_ROOT}/session_history.log"
-LLM_API_ENDPOINT="http://localhost:11434/v1/chat/completions" # Example: Ollama/vLLM
+LLM_API_ENDPOINT="${LLM_API_ENDPOINT:-http://localhost:11434/v1/chat/completions}" # Example: Ollama/vLLM
 
 # Ensure environment is ready
 mkdir -m 700 -p "$SASC_ROOT"
