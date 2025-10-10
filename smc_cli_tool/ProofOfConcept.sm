@@ -1,0 +1,26 @@
+%class ProofOfConcept
+%package smc_cli_tool
+%start ProofOfConceptMap::Idle
+%map ProofOfConceptMap
+%%
+Idle
+{
+  start Processing { start_processing(); }
+}
+
+Processing
+{
+  succeed Success { process_succeeded(); }
+  fail    Failure { process_failed(); }
+}
+
+Success
+{
+  reset Idle { reset_to_idle(); }
+}
+
+Failure
+{
+  reset Idle { reset_to_idle(); }
+}
+%%
