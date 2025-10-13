@@ -5,8 +5,6 @@ from ProofOfConcept_sm import ProofOfConcept_sm
 class CliContext:
     def __init__(self):
         self._fsm = ProofOfConcept_sm(self)
-        self._state = self._fsm.getState()
-
     def get_state(self):
         return self._fsm.getState().getName()
 
