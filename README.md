@@ -2,103 +2,109 @@
 
 This document is your guide to the pre-configured, agentic development environment you are about to use. Think of this as the "pre-made preset"—a foundational setup designed to maximize efficiency and reliability in AI-assisted software development.
 
-Our core mission is to build a powerful and disciplined **software assembly line**. This is not about creating a single, monolithic AI that does everything. Instead, we have engineered an ecosystem where a creative AI is supported by specialized, deterministic FSMs, managed by a small embedded AI. Hence the name; aGi²TEAM³FSMbot¹, because of the way each FSM bot work flows singularly through and from those points of confluence. We like to employ the 5W + 1H principality just slightly augment to our task specific for this novel sequence.
-
-## Table of Contents
-
-- [The Core Philosophy: A Modern Assembly Line](#the-core-philosophy-a-modern-assembly-line)
-- [System Architecture: Meet the Team](#system-architecture-meet-the-team)
-- [How It Works: The Virtuous Cycle](#how-it-works-the-virtuous-cycle)
-- [Operational Reality: How Agents Execute Tasks](#operational-reality-how-agents-execute-tasks)
-- [Component Reference Matrix](#component-reference-matrix)
-
----
-
-## The Core Philosophy: A Modern Assembly Line
-
-One person, or one robot, can build a car by themselves. However, that process is slow, inefficient, and creates a single point of failure. If that one hyper-knowledgeable entity breaks down, the entire factory comes to a halt.
-
-That is why Henry Ford created the modern assembly line, a system still used by every manufacturer a century later. The principle is simple but powerful: break down complex tasks into small, repeatable steps with clear, structured instructions.
-
-This environment is built on that exact principle.
-
--   **The FSM Manager (`Embed-Gemini`)**: This is the factory foreman, a role filled by the core Gemini AI. It is responsible for orchestrating the entire workflow. It understands the master plan, assigns tasks to the correct FSM workers, and ensures seamless communication across the assembly line.
-
--   **Finite State Machines (FSMs) are the Assembly Line Workers.** We call them the "Mop Boys." Each FSM is a simple, reliable expert at one specific, structured task. One validates file names, another parses configuration, and a third enforces compliance. They are the disciplined backbone of our factory. They don't think; they *do*, perfectly, every time.
--   **The AI Coder is the Master Craftsman.** This is the single, creative AI agent (Gemini). Freed from the mundane and repetitive "six jobs" (management, quality control, optimization, security, and cleanup), it can focus on what it does best: high-level design and writing novel, innovative code.
+Our core mission is to build a powerful and disciplined **software assembly line**. This is not about creating a single, monolithic AI that does everything. Instead, we have engineered an ecosystem where a creative AI is supported by specialized, deterministic FSMs, managed by a small embedded AI. Hence the name; aGi²TEAM³FSMbot¹, because of the way each FSM bot work flows singularly through and from those points of confluence. We like to employ the 5W + 1H principality just slightly augment to our task specific for this sequence.
 
 
-[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
+> We've implemented a comprehensive enhancement to the FSM-based code building system that assists AI agents, following the 5W+1H framework outlined in issue #X. The implementation transforms the existing system into a production-ready toolkit for building reliable, debuggable AI-assisted coding workflows.
+> 
+> ## Problem Statement
+> The original system lacked robust state management, loop prevention, and debugging capabilities needed for reliable AI-assisted coding. AI agents could get stuck in infinite loops, state transitions were not properly validated, and developers had limited visibility into FSM behavior.
+> 
+> ## Solution Overview
+> ### 🔧 Core FSM Enhancements
+> **Enhanced Automated Workflow FSM**: Completely redesigned the main coding workflow with:
+> 
+> * Strict state transition validation using predefined transition tables
+> * Advanced loop detection with pattern recognition
+> * Automatic error recovery mechanisms
+> * Comprehensive logging with step-by-step reasoning
+> * Timeout protection (max 15 steps, 3 errors) to prevent runaway processes
+> 
+> ```ts
+> // Example: Enhanced state validation
+> const validTransitions: Record<string, string[]> = {
+>   'Input': ['Draft', 'Planning'],
+>   'Planning': ['Draft', 'Input'], 
+>   'Draft': ['Correct', 'Validate', 'Done'],
+>   'Correct': ['Draft', 'Validate', 'Planning'],
+>   'Validate': ['Done', 'Correct', 'Draft'],
+>   'Done': []
+> };
+> ```
+> 
+> **Advanced Loop Prevention System**: Rebuilt from ground up with:
+> 
+> * Sophisticated pattern detection for both repetitive and alternating sequences
+> * Context-aware action history tracking across sessions
+> * Graduated intervention system (STABLE → MONITOR → CORRECT → HALT)
+> * Actionable recommendations for breaking loop patterns
+> 
+> **Enhanced Code State Validation**: Added comprehensive analysis with:
+> 
+> * Numerical scoring system (0-100) for syntax and state compliance
+> * Automatic FSM state detection in code
+> * Specific improvement suggestions with actionable feedback
+> * Graceful fallback handling when AI analysis fails
+> 
+> ### 🆕 New FSM Debugging System
+> Created a comprehensive FSM analysis tool (`src/ai/flows/fsm-debugging.ts`) that provides:
+> 
+> * **Complete State Analysis**: Detects all states, identifies unreachable states, validates initial/final states
+> * **Transition Validation**: Maps all transitions, identifies invalid paths, finds missing connections
+> * **Visual Representation**: ASCII diagrams and textual FSM structure visualization
+> * **Severity Assessment**: Automatic issue classification (Critical, High, Medium, Low)
+> * **Actionable Insights**: Specific recommendations for FSM improvements
+> 
+> ### 🎨 Enhanced User Interface
+> **New FSM Debugging Component**: Interactive tool for comprehensive FSM analysis with real-time visualization
+> 
+> ![FSM Debugging Interface](https://private-user-images.githubusercontent.com/193139510/497498826-4d7f9b2a-89f9-405d-86e3-057cd7024663.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA1NTU1OTQsIm5iZiI6MTc2MDU1NTI5NCwicGF0aCI6Ii8xOTMxMzk1MTAvNDk3NDk4ODI2LTRkN2Y5YjJhLTg5ZjktNDA1ZC04NmUzLTA1N2NkNzAyNDY2My5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxNVQxOTA4MTRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zMDllZTU2ZmU3OWZjMDZhZjFjMmMzODBjZDliZmJlOGYxYjVhMTVkMmRmZDI2NDM3NzhlNDQxODc5YzAzMTBmJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.30MbfVNWD8XhYH0LfYPbDt9yN67i2zSTVscBnrEt8x0)
+> 
+> **Enhanced Loop Prevention Interface**: Redesigned with action history tracking and pattern visualization
+> 
+> ![Enhanced Loop Prevention]()
+> 
+> **Improved Code Bot Workflow**: Streamlined interface for the enhanced FSM-driven coding workflow
+> 
+> ![Code Bot FSM](https://private-user-images.githubusercontent.com/193139510/497498860-38509946-5d17-4a47-bd3a-5a83d3650906.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjA1NTU1OTQsIm5iZiI6MTc2MDU1NTI5NCwicGF0aCI6Ii8xOTMxMzk1MTAvNDk3NDk4ODYwLTM4NTA5OTQ2LTVkMTctNGE0Ny1iZDNhLTVhODNkMzY1MDkwNi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDE1JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxNVQxOTA4MTRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02NmFmZjU4NWQ2ODgzNGRmYzk1OTdhMjI3YjJhYzBkMTUzODhlYmMyMGRkMDQxZDdmMzE4MDY1NmVjZjI2NjU2JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.pnybEVEwYwbTxOxxBuvpGOZgQ__-lOFoECHSOiz6qp8)
+> 
+> ## Technical Implementation
+> ### Architecture Improvements
+> * **Circuit Breaker Pattern**: Loop prevention FSM acts as a circuit breaker for runaway AI processes
+> * **Modular Design**: Each FSM component is independently testable and maintainable
+> * **Type Safety**: Full TypeScript implementation with comprehensive input/output schemas
+> * **Error Boundaries**: Graceful error handling with meaningful user feedback
+> 
+> ### Reliability Features
+> * **State Persistence**: Action history and context maintained across sessions
+> * **Input Validation**: All user inputs validated and sanitized using Zod schemas
+> * **Deterministic Behavior**: FSMs provide predictable control over complex multi-step processes
+> * **Security**: Zero security vulnerabilities confirmed by CodeQL analysis
+> 
+> ### Integration Enhancements
+> All FSM components now work seamlessly together:
+> 
+> * Syntax checker integrates with main workflow validation
+> * Loop prevention monitors all FSM state transitions
+> * Code validation provides feedback to debugging system
+> * Enhanced error recovery across all components
+> 
+> ## Impact
+> This implementation achieves the core goals of the 5W+1H framework:
+> 
+> * **WHO**: AI-agentic coders now have reliable, transparent FSM assistance
+> * **WHAT**: Comprehensive FSM enhancements with advanced debugging capabilities
+> * **WHEN**: Event-driven improvements with robust timeout and error handling
+> * **WHERE**: Better architecture with seamless component integration
+> * **WHY**: Prevents error cascades and provides deterministic control
+> * **HOW**: Production-ready implementation with extensive testing and documentation
+> 
+> The system now follows the "assembly line principle" where specialized FSM workers handle structured tasks while AI agents focus on creative code generation, creating a more reliable and maintainable AI-assisted development environment.
+> 
+> ## Testing
+> * ✅ All existing functionality preserved and enhanced
+> * ✅ New components tested with comprehensive examples
+> * ✅ TypeScript compilation with zero errors
+> * ✅ Security analysis passed (0 vulnerabilities)
+> * ✅ Manual testing of all UI components and workflows
 
----
-
-## System Architecture: Meet the Team
-
-Our `aGi²TEAM³FSMbot¹` is not a team of agents; it's a two AI small local AI (one an embed), working in harmony with deterministic FSMs. Here are the key players:
-
-1.  **Specialized FSM Bots (The "Mop Boys")**: This is our army of tireless, deterministic workers. Each bot is an FSM designed for one purpose:
-    *   **Policy Parser**: Reads and validates structured `YAML` or `JSON` configuration files.
-    *   **Syntax Checker**: Validates code syntax using a coroutine FSM to prevent wasted cycles.
-    - **Icon Validator**: Ensures all UI icons are valid and suggests corrections.
-    *   And many more, each handling a small, crucial part of the development process.
-
-2.  **The FSM Manager (`Embed-Gemini`)**: This is the factory foreman, a role filled by the core Gemini AI. It is responsible for orchestrating the entire workflow. It understands the master plan, assigns tasks to the correct FSM workers, and ensures seamless communication across the assembly line.
-
-3.  **The Creative Coder (`Coder-Qwen` / AI Agent)**: This is the Master Craftsman role, also filled by the Gemini AI. It receives tasks and operates within the clean, structured, and compliant environment maintained by the FSMs.
-
-[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
-
----
-
-## How It Works: The Virtuous Cycle
-
-This system is designed to be self-improving. The efficiency you gain from the automated assembly line allows you to focus your brilliant mind on higher-level architectural designs and new features.
-
-1.  **You Innovate:** You provide the high-level vision and creative direction.
-2.  **The AI Codes:** The single AI Coder translates your vision into novel code, unburdened by mundane checks.
-3.  **FSMs Enforce:** The deterministic FSM bots validate, clean, secure, and structure the output, ensuring production-ready quality.
-4.  **The System Learns:** Your innovations and the AI's creative solutions are fed back into the system. This allows us to build even better FSMs and refine the AI's instructions, making the entire assembly line faster, smarter, and more powerful with every loop.
-
-This is the virtuous cycle that drives our progress.
-
-[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
-
----
-
-## Operational Reality: How Agents Execute Tasks
-
-The "magic" of this environment comes from a clear understanding of how commands are executed.
-
-### AI Agent Execution (Declarative Control)
-
-The creative AI does not have an interactive shell. Its "terminal" is the entire CI/CD and automation system.
-- **Commands are Declarative:** The AI executes "commands" by writing or modifying configuration files (e.g., `package.json`, `.github/workflows/ci.yml`).
-- **Execution is Asynchronous:** These changes are then acted upon by external, event-driven runners (e.g., GitHub Actions, `npm` scripts). The AI programs the factory's automation; it does not pull the levers itself.
-
-### FSM Execution (Dev vs. Prod)
-
-A Finite State Machine is a pure algorithm, not an AI. How it runs depends on the context.
-- **In Development:** For complex, asynchronous, or multi-step tasks (like validating code against a server or backing up files), FSMs are implemented as server-side **Genkit flows**. We test and trigger these using UI components that call these backend flows.
-- **In Production:** For self-contained, synchronous tasks (like UI state validation or simple syntax checks), the FSM logic is written directly in the application's source code (e.g., TypeScript). This logic is **compiled directly into the application bundle** (`.js`, `.apk`, etc.) and runs natively on the client device without any need for a backend or YAML runner. The `SyntaxChecker` component is a perfect proof of this principle in action.
-
-[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
-
----
-
-## Component Reference Matrix
-
-The table below maps each core function of our system to the exact script or component that implements it. Use this as your reference to understand the codebase.
-
-| Function / Principle | Component Name | Script Location |
-| :--- | :--- | :--- |
-| **Master Dispatch FSM** | Terminus Prime Dispatch | `.github/workflows/terminus-prime.yml` |
-| **Central Orchestrator (AI)** | FSM Manager | `src/components/fsm/embed-gemini-manager.tsx` |
-| **Compliance & Audit FSM** | Supermax FSM | `src/components/fsm/continuous-audit.tsx` |
-| **Creative Coder Workflow** | Code Bot FSM | `src/ai/flows/automated-workflow-with-code-bot-fsm.ts` |
-| **Structured Policy Parsing FSM** | Policy Parsing FSM | `src/ai/flows/policy-parsing-fsm.ts` |
-| **Code State Validation FSM** | FSM Validator | `src/ai/flows/code-state-validation.ts` |
-| **Icon Validation FSM**| Lucide Validator | `src/ai/flows/lucide-icon-validator.ts` |
-| **Loop Prevention FSM** | Anti-Flail FSM | `src/ai/flows/loop-prevention.ts` |
-| **Core Philosophy Manifesto** | Dashboard | `src/components/fsm/dashboard.tsx` |
-
-[Back to Top](#welcome-to-the-agi²team³fsmbot¹-environment)
