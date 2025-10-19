@@ -57,7 +57,6 @@ export function LoopPrevention() {
   const [result, setResult] = useState<AntiFlailOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const [message, setMessage] = useState('Ready to monitor AI actions.');
 
   const processAction = async () => {
     if (state === 'halt') return;
@@ -105,7 +104,6 @@ export function LoopPrevention() {
     setState('stable');
     setMessage('Ready to monitor agent actions.');
     setResult(null);
-    setMessage('Ready to monitor AI actions.');
   };
 
   const CurrentIcon = stateConfig[state].icon;
@@ -147,8 +145,6 @@ export function LoopPrevention() {
               <Button onClick={processAction} disabled={state === 'halt' || isLoading} className="w-full md:w-auto">
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Process Action
-              <Button onClick={processAction} disabled={state === 'halt'} className="w-full">
-                Process AI Action
               </Button>
               <Button onClick={resetFsm} variant="outline" className="w-full md:w-auto">
                 <RotateCcw className="mr-2 h-4 w-4" /> Reset FSM
