@@ -7,11 +7,14 @@ How It Works: The Virtuous Cycle
 
 This system is designed to be self-improving. The efficiency you gain from the automated assembly line allows you to focus your brilliant mind on higher-level architectural designs and new features.
 
-You Innovate: You provide the high-level vision and creative direction.The AI Codes: The single AI Coder translates your vision into novel code, unburdened by mundane checks.FSMs Enforce: The deterministic FSM bots validate, clean, secure, and structure the output, ensuring production-ready quality.The System Learns: Your innovations and the AI's creative solutions are fed back into the system. This allows us to build even better FSMs and refine the AI's instructions, making the entire assembly line faster, smarter, and more powerful with every loop.
+You Innovate: You provide the high-level vision and creative direction.
+The AI Codes: The single AI Coder translates your vision into novel code, unburdened by mundane checks.
+FSMs Enforce: The deterministic FSM bots validate, clean, secure, and structure the output, ensuring production-ready quality.
+The System Learns: Your innovations and the AI's creative solutions are fed back into the system. 
+
+This allows us to build even better FSMs and refine the AI's instructions, making the entire assembly line faster, smarter, and more powerful with every loop.
 
 This is the virtuous cycle that drives our progress.
-
-Back to Top
 
 Operational Reality: How Agents Execute Tasks
 
@@ -35,7 +38,15 @@ Component Reference Matrix
 
 The table below maps each core function of our system to the exact script or component that implements it. Use this as your reference to understand the codebase.
 
-Function / PrincipleComponent NameScript LocationMaster Dispatch FSMTerminus Prime Dispatch.github/workflows/terminus-prime.ymlCentral Orchestrator (AI)FSM Managersrc/components/fsm/embed-gemini-manager.tsxCompliance & Audit FSMSupermax FSMsrc/components/fsm/continuous-audit.tsxCreative Coder WorkflowCode Bot FSMsrc/ai/flows/automated-workflow-with-code-bot-fsm.tsStructured Policy Parsing FSMPolicy Parsing FSMsrc/ai/flows/policy-parsing-fsm.tsCode State Validation FSMFSM Validatorsrc/ai/flows/code-state-validation.tsIcon Validation FSMLucide Validatorsrc/ai/flows/lucide-icon-validator.tsLoop Prevention FSMAnti-Flail FSMsrc/ai/flows/loop-prevention.tsCore Philosophy ManifestoDashboardsrc/components/fsm/dashboard.tsx
+Function / PrincipleComponent NameScript LocationMaster Dispatch FSMTerminus Prime Dispatch.github/workflows/terminus-prime.yml
+Central Orchestrator (AI)FSM Managersrc/components/fsm/embed-gemini-manager.ts
+Compliance & Audit FSMSupermax FSMsrc/components/fsm/continuous-audit.tsx
+Creative Coder WorkflowCode Bot FSMsrc/ai/flows/automated-workflow-with-code-bot-fsm.ts
+Structured Policy Parsing FSMPolicy Parsing FSMsrc/ai/flows/policy-parsing-fsm.ts
+Code State Validation FSMFSM Validatorsrc/ai/flows/code-state-validation.ts
+Icon Validation FSMLucide Validatorsrc/ai/flows/lucide-icon-validator.ts
+Loop Prevention FSMAnti-Flail FSMsrc/ai/flows/loop-prevention.ts
+Core Philosophy ManifestoDashboardsrc/components/fsm/dashboard.tsx
 
 
 > We've implemented a comprehensive enhancement to the FSM-based code building system that assists AI agents, following the 5W+1H framework outlined in issue #X. The implementation transforms the existing system into a production-ready toolkit for building reliable, debuggable AI-assisted coding workflows.
