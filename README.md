@@ -2,6 +2,42 @@
 
 This document is your guide to the pre-configured, agentic development environment you are about to use. Think of this as the "pre-made preset"—a foundational setup designed to maximize efficiency and reliability in AI-assisted software development.
 
+## System Architecture at a Glance
+
+| Layer | Purpose | Key Files |
+| --- | --- | --- |
+| **Next.js 15 App Router UI** | Presents the FSM workstation with a sidebar-driven dashboard of specialist tools. | `src/app/page.tsx`, components in `src/components/fsm/` |
+| **Deterministic FSM Library** | TypeScript finite-state machines that police loops, policy compliance, syntax quality, and more. | `src/ai/flows/*`, `src/app/actions.ts` |
+| **Shared UI Kit** | Reusable cards, alerts, tables, and layout primitives tailored for the factory aesthetic. | `src/components/ui/*` |
+| **Operational Tooling** | Scripts, Nix shells, Firebase/Genkit hooks that keep the assembly line reproducible. | `dev.nix`, `scripts/*`, `docs/*` |
+
+Each workstation view in the web experience is a focused FSM assistant: loop prevention, code state validation, policy parsing, embed management, auditing, and more. The single creative AI remains the orchestrator, but these deterministic teammates guarantee policy adherence and production readiness before any change is marked done.
+
+## Mobile Companion Console
+
+To keep the factory floor observable from anywhere, the repository now ships with an Expo/React Native companion under `mobile-app/`. The mobile build exposes:
+
+* An **overview screen** that highlights the assembly-line philosophy and quick links to priority FSMs.
+* A **module directory** where each specialist FSM lists responsibilities, handoffs, and the signals it emits into the workflow.
+* An **operations timeline** that outlines the intake → execution → release cadence so on-call staff can track deliverables.
+
+### Running the Mobile App
+
+```bash
+cd mobile-app
+npm install
+npm run start  # choose iOS, Android, or web target via Expo CLI
+```
+
+> ℹ️ The mobile client uses Expo SDK 51 with the new architecture and Hermes. Expo automatically shares code updates to a simulator or a connected device via QR code.
+
+### Developing Both Surfaces
+
+* **Web**: `npm install && npm run dev` from the repository root (runs Next.js on port 9002).
+* **Mobile**: `cd mobile-app && npm run start` for Expo developer tools.
+
+Because both experiences describe the same FSM factory, the copy and metrics in the mobile data file (`mobile-app/app/data/content.ts`) mirror the responsibilities implemented inside the web components (for example, the Anti-Flail FSM escalations and the code-state validator scoring rubric).
+
 Our core mission is to build a powerful and disciplined **software assembly line**. This is not about creating a single, monolithic AI that does everything. Instead, we have engineered an ecosystem where a creative AI is supported by specialized, deterministic FSMs, managed by a small embedded AI. Hence the name; aGi²TEAM³FSMbot¹, because of the way each FSM bot work flows singularly through and from those points of confluence. We like to employ the 5W + 1H principality just slightly augment to our task specific for this sequence.
 
 

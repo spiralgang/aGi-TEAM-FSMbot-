@@ -1,0 +1,6 @@
+node_modules
+.expo
+.expo-shared
+*.log
+*.lock
+.DS_Store
