@@ -1,40 +1,3 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { QuickAccessPanel } from '../../components/overlay/QuickAccessPanel';
-
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Control Center</Text>
-        <Text style={styles.subtitle}>Use the shell for low-level diagnostics.</Text>
-      </View>
-      <QuickAccessPanel />
-import React from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
-
-const HomeScreen = () => (
-  <ScrollView contentContainerStyle={styles.container}>
-    <Text style={styles.title}>FSM Tab App</Text>
-    <Text style={styles.subtitle}>Use the floating console from the settings tab to issue commands.</Text>
-  </ScrollView>
-);
-
-export default HomeScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 24,
-    gap: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: "#555",
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Link } from 'expo-router';
@@ -86,25 +49,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0f172a',
     padding: 24,
-    justifyContent: 'space-between',
-  },
-  content: {
-    gap: 8,
-  },
-  title: {
-    color: '#f8fafc',
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  subtitle: {
-    color: '#cbd5f5',
-    fontSize: 16,
-    backgroundColor: '#0B1120',
   },
   scroll: {
     paddingHorizontal: 20,
     paddingBottom: 48,
     paddingTop: 60,
+    gap: 32,
   },
   kicker: {
     color: '#60A5FA',
@@ -117,30 +67,27 @@ const styles = StyleSheet.create({
     color: '#F9FAFB',
     fontSize: 28,
     fontWeight: '700',
-    marginBottom: 12,
   },
   body: {
     color: '#CBD5F5',
     fontSize: 16,
     lineHeight: 22,
-    marginBottom: 24,
   },
   section: {
-    marginBottom: 32,
+    gap: 16,
   },
   sectionTitle: {
     color: '#F9FAFB',
     fontSize: 20,
     fontWeight: '600',
-    marginBottom: 12,
   },
   card: {
     backgroundColor: '#111827',
     borderRadius: 16,
     padding: 16,
-    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#1F2937',
+    gap: 8,
   },
   linkCard: {
     borderColor: '#2563EB',
@@ -149,7 +96,6 @@ const styles = StyleSheet.create({
     color: '#F9FAFB',
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 8,
   },
   cardBody: {
     color: '#CBD5F5',

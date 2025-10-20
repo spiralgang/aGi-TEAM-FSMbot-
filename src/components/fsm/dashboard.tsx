@@ -48,7 +48,7 @@ export function Dashboard() {
           </CardHeader>
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p className="italic">
-              "One robot can build a car by itself, but it'll take a long time, and if that super-knowledgeable robot breaks, the entire line comes to a dead halt. That's why Henry Ford made the modern assembly line: breaking tasks down into small instances with clear manuals that anything which can follow exact repetition patterns can replicate continually, forever."
+              &ldquo;One robot can build a car by itself, but it&rsquo;ll take a long time, and if that super-knowledgeable robot breaks, the entire line comes to a dead halt. That&rsquo;s why Henry Ford made the modern assembly line: breaking tasks down into small instances with clear manuals that anything which can follow exact repetition patterns can replicate continually, forever.&rdquo;
             </p>
             <p>
               This system is built on that truth. A creative AI is a hyper-creative, but fallible, master craftsman. An FSM is a station on the assembly line—a tireless worker that perfectly executes one simple, structured task. This is not a demonstration; it is a factory for producing production-ready code.
@@ -66,15 +66,15 @@ export function Dashboard() {
             <ul className="space-y-2 list-disc pl-5">
               <li>
                 <strong className="text-foreground">FSMs for Repetitive Tasks:</strong>
-                 Each FSM is a specialist (a "Mop Boy"). One validates icons, another parses YAML, a third enforces file hygiene. They are finite, deterministic, and expert at their one job.
+                Each FSM is a specialist (a &ldquo;Mop Boy&rdquo;). One validates icons, another parses YAML, a third enforces file hygiene. They are finite, deterministic, and expert at their one job.
               </li>
               <li>
                 <strong className="text-foreground">AI for Creative Tasks:</strong>
-                The single AI Coder is freed to do what it does best—write novel code—because its FSM "workflow buddies" handle the validation, compliance, and quality control.
+                The single AI Coder is freed to do what it does best—write novel code—because its FSM &ldquo;workflow buddies&rdquo; handle the validation, compliance, and quality control.
               </li>
               <li>
                 <strong className="text-foreground">The Virtuous Cycle:</strong>
-                This frees the human designer (the "super knowledgeable entity") to focus on higher-level architecture. These innovations then feed back into improving the FSMs themselves, creating a self-improving system that gets faster and more advanced with every loop.
+                This frees the human designer (the &ldquo;super knowledgeable entity&rdquo;) to focus on higher-level architecture. These innovations then feed back into improving the FSMs themselves, creating a self-improving system that gets faster and more advanced with every loop.
               </li>
             </ul>
           </CardContent>
