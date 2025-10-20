@@ -37,7 +37,7 @@ jobs:
             AGENT="creative_ai"
           elif [[ "$TRIGGER_TYPE" == "ci_cd_webhook" ]]; then
             AGENT="continuous_audit"
-          elif [[ "$TRIGGER_TYPE" == "self_correction_loop" ]];2
+          elif [[ "$TRIGGER_TYPE" == "self_correction_loop" ]]; then
             AGENT="validator_fsm"
           else
             AGENT="error_handler"
