@@ -24,6 +24,7 @@ import {
   fsmDebugging,
   type FSMDebuggingInput,
 } from '@/ai/flows/fsm-debugging';
+import {
   xmlParserWorkflow,
   type XmlParserWorkflowInput,
 } from '@/ai/flows/xml-parser-fsm';
@@ -81,6 +82,12 @@ export async function checkLoopPreventionAction(
 ) {
   try {
     const result = await antiFlailFlow(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
 export async function runXmlParserWorkflowAction(
   input: XmlParserWorkflowInput
 ) {
@@ -97,6 +104,12 @@ export async function debugFSMAction(
 ) {
   try {
     const result = await fsmDebugging(input);
+    return { success: true, data: result };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
 export async function runCloudBackupAction(input: CloudBackupFSMInput) {
   try {
     const result = await cloudBackupFSM(input);
