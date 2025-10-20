@@ -81,5 +81,6 @@ jobs:
     name: Error Handler
     runs-on: ubuntu-latest
     steps:
-      - run: echo "ERROR: Unknown trigger type. Halting workflow."
-        exit 1
+      - run: |
+          echo "ERROR: Unknown trigger type. Halting workflow."
+          exit 1
