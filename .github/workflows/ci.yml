@@ -2,6 +2,13 @@
 name: FSMAssist CI
 
 on:
+  workflow_call:
+    inputs:
+      run_build:
+        description: "Whether to run the production build step"
+        required: false
+        type: boolean
+        default: true
   push:
     branches: [ "main" ]
   pull_request:
@@ -34,4 +41,5 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
+      if: ${{ inputs.run_build != false }}
       run: npm run build
