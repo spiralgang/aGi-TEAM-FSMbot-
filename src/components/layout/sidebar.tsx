@@ -20,6 +20,7 @@ import {
   FileJson,
   Laptop,
   AlertOctagon,
+  Siren,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -43,6 +44,7 @@ const navItems = [
   { id: 'cloud-backup', label: 'Cloud Backup', icon: UploadCloud },
   { id: 'code-bot-fsm', label: 'Code Bot Workflow', icon: Bot },
   { id: 'terminus-validator', label: 'Terminus Validator', icon: AlertOctagon },
+  { id: 'terminus-prime', label: 'Terminus Prime', icon: Siren },
   { id: 'lucide-validator', label: 'Lucide Validator', icon: ShieldCheck },
   { id: 'code-state-validation', label: 'Code State Validation', icon: FileCheck2 },
   { id: 'policy-parsing', label: 'Policy Parser', icon: FileCode },
