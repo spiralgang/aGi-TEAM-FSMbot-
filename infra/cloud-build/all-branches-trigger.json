@@ -2,6 +2,7 @@
   "filename": "cloudbuild.yaml",
   "name": "fsm-factory-all-branches",
   "description": "Run npm ci, lint, typecheck, and build with Node 22 for every branch push.",
+  "description": "Run lint, typecheck, and build for every branch push.",
   "serviceAccount": "245281223959-compute@developer.gserviceaccount.com",
   "tags": ["gemma"],
   "github": {
