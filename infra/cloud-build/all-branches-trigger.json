@@ -1,0 +1,15 @@
+{
+  "filename": "cloudbuild.yaml",
+  "name": "fsm-factory-all-branches",
+  "description": "Run lint, typecheck, and build for every branch push.",
+  "serviceAccount": "245281223959-compute@developer.gserviceaccount.com",
+  "tags": ["gemma"],
+  "github": {
+    "owner": "spiralgang",
+    "name": "aGi-TEAM-FSMbot-",
+    "push": {
+      "branch": ".*"
+    }
+  },
+  "includeBuildLogs": "INCLUDE_BUILD_LOGS_WITH_STATUS"
+}

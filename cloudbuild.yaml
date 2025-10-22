@@ -1,0 +1,22 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_MEDIUM
+  substitutionOption: ALLOW_LOOSE
+steps:
+  - name: 'gcr.io/cloud-builders/npm'
+    id: Install dependencies
+    args: ['ci']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: Lint
+    args: ['run', 'lint']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: Type check
+    args: ['run', 'typecheck']
+  - name: 'gcr.io/cloud-builders/npm'
+    id: Build
+    args: ['run', 'build']
+artifacts:
+  objects:
+    location: 'gs://$PROJECT_ID-build-artifacts/$REPO_NAME/$BRANCH_NAME'
+    paths: ['.next/**']
+timeout: 1800s
