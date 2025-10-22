@@ -1,0 +1,73 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_MEDIUM
+  substitutionOption: ALLOW_LOOSE
+  env:
+    - 'NEXT_TELEMETRY_DISABLED=1'
+steps:
+  - name: 'gcr.io/cloud-builders/npm:node-22.11.0'
+    id: Install dependencies
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        npm ci
+    env:
+      - 'NPM_CONFIG_CACHE=/workspace/.npm'
+      - 'NPM_CONFIG_AUDIT=false'
+      - 'NPM_CONFIG_FUND=false'
+    volumes:
+      - name: npm-cache
+        path: /workspace/.npm
+  - name: 'gcr.io/cloud-builders/npm:node-22.11.0'
+    id: Lint
+    args: ['run', 'lint']
+    env:
+      - 'NPM_CONFIG_CACHE=/workspace/.npm'
+    volumes:
+      - name: npm-cache
+        path: /workspace/.npm
+    waitFor: ['Install dependencies']
+  - name: 'gcr.io/cloud-builders/npm:node-22.11.0'
+    id: Type check
+    args: ['run', 'typecheck']
+    env:
+      - 'NPM_CONFIG_CACHE=/workspace/.npm'
+    volumes:
+      - name: npm-cache
+        path: /workspace/.npm
+    waitFor: ['Install dependencies']
+  - name: 'gcr.io/cloud-builders/npm:node-22.11.0'
+    id: Build
+    args: ['run', 'build']
+    env:
+      - 'NPM_CONFIG_CACHE=/workspace/.npm'
+    volumes:
+      - name: npm-cache
+        path: /workspace/.npm
+    waitFor: ['Lint', 'Type check']
+  - name: 'gcr.io/cloud-builders/gsutil'
+    id: Archive build output
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -euo pipefail
+        if [[ ! -d .next ]]; then
+          echo "Expected Next.js build output in .next but none was found" >&2
+          exit 1
+        fi
+        tar -czf /workspace/.next-standalone.tar.gz -C . .next package.json package-lock.json
+        gsutil cp /workspace/.next-standalone.tar.gz "gs://$PROJECT_ID-build-artifacts/$REPO_NAME/$BRANCH_NAME/$(date -u +%Y%m%dT%H%M%SZ)-next-build.tar.gz"
+    waitFor: ['Build']
+artifacts:
+  objects:
+    location: 'gs://$PROJECT_ID-build-artifacts/$REPO_NAME/$BRANCH_NAME/latest'
+    paths:
+      - '.next/**'
+      - 'package.json'
+      - 'package-lock.json'
+volumes:
+  - name: npm-cache
+    path: /workspace/.npm
+timeout: 3600s
