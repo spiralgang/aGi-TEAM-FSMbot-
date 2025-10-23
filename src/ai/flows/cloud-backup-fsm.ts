@@ -75,17 +75,19 @@ const cloudBackupFSMFlow = ai.defineFlow(
 
       // State: done
       logs.push('Upload complete. Cleaning up temporary files...');
-      return {
+      const success: CloudBackupFSMOutput = {
         state: 'done',
-        logs: logs,
+        logs,
       };
+      return success;
 
     } catch (error: any) {
       logs.push(`Error during backup: ${error.message}`);
-      return {
+      const failure: CloudBackupFSMOutput = {
         state: 'error',
-        logs: logs,
+        logs,
       };
+      return failure;
     }
   }
 );
