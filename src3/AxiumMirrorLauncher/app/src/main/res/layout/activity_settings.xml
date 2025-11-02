@@ -1,0 +1,23 @@
+<!-- res/layout/activity_settings.xml -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="vertical" android:padding="16dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TextView android:text="Axium Profile" android:textStyle="bold" android:textSize="18sp"/>
+
+        <EditText android:id="@+id/fieldEnv" android:hint="env (e.g., android10-galaxyS9)"/>
+        <EditText android:id="@+id/fieldTask" android:hint="task"/>
+        <EditText android:id="@+id/fieldRequiredResult" android:hint="required result"/>
+        <EditText android:id="@+id/fieldMandatoryIncludes" android:hint="mandatory includes (comma-separated)"/>
+        <EditText android:id="@+id/fieldFunctionality" android:hint="functionality"/>
+        <EditText android:id="@+id/fieldTools" android:hint="tools (comma-separated)"/>
+        <EditText android:id="@+id/fieldAxium" android:hint="axium compulsion requirum"/>
+
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+            <Button android:id="@+id/btnSave" android:text="Save" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+            <Button android:id="@+id/btnReset" android:text="Reset" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

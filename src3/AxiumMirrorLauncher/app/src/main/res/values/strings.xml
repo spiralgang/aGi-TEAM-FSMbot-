@@ -1,0 +1,5 @@
+<!-- res/values/strings.xml -->
+<resources>
+    <string name="app_name">Axium Mirror Launcher</string>
+    <string name="access_desc">Axium observes app transitions to raise compliance overlays.</string>
+</resources>

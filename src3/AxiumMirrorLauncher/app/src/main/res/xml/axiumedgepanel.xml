@@ -1,0 +1,5 @@
+<!-- res/xml/axiumedgepanel.xml (optional Samsung Edge Panel) -->
+<cocktail-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="Axium Mirror Panel"
+    android:updatePeriodMillis="0"
+    android:previewImage="@mipmap/ic_launcher"/>

@@ -1,0 +1,72 @@
+<!-- app/src/main/AndroidManifest.xml -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.spiralgang.axiumlauncher">
+
+    <uses-sdk android:minSdkVersion="29" android:targetSdkVersion="33"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:label="Axium Mirror Launcher"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:supportsRtl="true">
+
+        <!-- Default home launcher -->
+        <activity
+            android:name=".ui.LauncherActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:stateNotNeeded="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.HOME"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Settings editor for the seven fields -->
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:exported="true"
+            android:launchMode="singleTop"/>
+
+        <!-- Overlay and enforcement services -->
+        <service
+            android:name=".core.OverlayService"
+            android:exported="false"/>
+        <service
+            android:name=".core.EnforcerService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"/>
+
+        <!-- Optional Termux bridge -->
+        <receiver
+            android:name=".bridge.TermuxReceiver"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.spiralgang.axium.TARGET.ENFORCE"/>
+                <action android:name="com.spiralgang.axium.TARGET.PROFILE_APPLY"/>
+                <action android:name="com.spiralgang.axium.TARGET.OVERRIDE_OPEN"/>
+            </intent-filter>
+        </receiver>
+
+        <!-- Optional Edge Panel provider -->
+        <service
+            android:name=".panel.AxiumEdgePanelService"
+            android:enabled="false"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.samsung.android.app.cocktailbarservice.COCKTAIL_SERVICE"/>
+            </intent-filter>
+            <meta-data android:name="com.samsung.android.app.cocktailbarservice.COCKTAIL_PROVIDER"
+                android:resource="@xml/axiumedgepanel"/>
+        </service>
+
+    </application>
+</manifest>
