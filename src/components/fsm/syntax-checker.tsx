@@ -124,7 +124,7 @@ export function SyntaxChecker() {
                 <Button onClick={handleSendToken}>Send</Button>
                 <Button onClick={handleReset} variant="outline">Reset</Button>
               </div>
-               <p className="text-xs text-muted-foreground">This FSM validates the sequence: 'start' {'->'} [identifier] {'->'} 'End'.</p>
+              <p className="text-xs text-muted-foreground">This FSM validates the sequence: &apos;start&apos; {'->'} [identifier] {'->'} &apos;End&apos;.</p>
             </div>
             
             <div>

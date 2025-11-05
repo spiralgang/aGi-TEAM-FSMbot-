@@ -43,12 +43,6 @@ const views: Record<string, React.ReactNode> = {
   'draft-saver': <DraftSaver />,
   'content-whisperer': <ContentWhisperer />,
   'file-tree': <FileTree />,
-  'code-state-validation': <CodeStateValidation />,
-  'lint-compliance': <LintCompliance />,
-  'todo-manager': <TodoManager />,
-  'loop-prevention': <LoopPrevention />,
-  'code-bot-fsm': <CodeBotFsm />,
-  'cloud-backup': <CloudBackup />,
   'fsm-debugging': <FSMDebugging />,
   'embed-gemini-manager': <EmbedGeminiManager />,
 };
