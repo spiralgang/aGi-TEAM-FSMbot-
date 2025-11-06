@@ -1,0 +1,31 @@
+%class CodeGenerationFSM
+%header CodeGenerationFSM.h
+%start MainMap::Idle
+
+%map MainMap
+%%
+Idle
+  Start(job: string)  Planning  { start_planning(job); }
+
+Planning
+  Success  Coding  { generate_code(); }
+  Failure  Error   { log_error("Planning failed"); }
+
+Coding
+  Success  Testing  { run_tests(); }
+  Failure  Error    { log_error("Coding failed"); }
+
+Testing
+  Success  Done      { log_success("Job complete"); }
+  Failure  Debugging { start_debugging(); }
+
+Debugging
+  Success  Coding  { generate_code(); }
+  Failure  Error   { log_error("Debugging failed"); }
+
+Error
+  Reset  Idle  { reset(); }
+
+Done
+  Reset  Idle  { reset(); }
+%%
