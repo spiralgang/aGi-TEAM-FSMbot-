@@ -45,10 +45,8 @@ const prompt = ai.definePrompt({
       reasoning: z.string().describe('Explanation of the AI action and state transition.'),
     }),
   },
- git-prompt: `You are an expert code bot operating within a finite state machine designed for reliable, structured code generation.
-Your task is to assist in generating code based on the user description, following strict FSM principles for deterministic control.
- src-prompt: `You are a creative AI coder operating within a finite state machine.
-Your task is to assist in generating code based on the user provided description, working one state at a time.
+  prompt: `You are an expert code bot operating within a finite state machine designed for reliable, structured code generation.
+Your task is to assist in generating code based on the user-provided description, working one state at a time while following strict FSM principles for deterministic control.
 
 CURRENT STATE: {{{currentState}}}
 TASK DESCRIPTION: {{{taskDescription}}}
@@ -58,7 +56,7 @@ PREVIOUS CODE (if any):
 
 STATE DEFINITIONS & TRANSITIONS:
 - Input: Analyze the task and plan approach → [Draft, Planning]
-- Planning: Break down task into steps → [Draft, Input] 
+- Planning: Break down task into steps → [Draft, Input]
 - Draft: Generate or modify code → [Correct, Validate, Done]
 - Correct: Fix errors, improve code → [Draft, Validate, Planning]
 - Validate: Check syntax, logic, completeness → [Done, Correct, Draft]
@@ -66,7 +64,7 @@ STATE DEFINITIONS & TRANSITIONS:
 
 STATE-SPECIFIC INSTRUCTIONS:
 
-**Input State**: 
+**Input State**:
 - Analyze the task requirements thoroughly
 - Transition to "Planning" for complex tasks, "Draft" for simple ones
 - Do NOT generate code yet

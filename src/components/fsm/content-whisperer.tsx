@@ -97,7 +97,7 @@ export function ContentWhisperer() {
               />
             </div>
             <p className="text-xs text-muted-foreground">
-              Click on a highlighted word to see the 'whisper'. This FSM checks for words like 'damn' (bad) or 'wonderful' (good).
+              Click on a highlighted word to see the &apos;whisper&apos;. This FSM checks for words like &apos;damn&apos; (bad) or &apos;wonderful&apos; (good).
             </p>
           </div>
         </CardContent>
