@@ -5,10 +5,21 @@ on:
   workflow_call:
     inputs:
       run_build:
+<<<<<<< HEAD
         description: "Whether to run the production build step"
         required: false
         type: boolean
         default: true
+=======
+        description: "Whether to execute the npm build step."
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      npm_token:
+        description: "Token for authenticating with the npm registry when required."
+        required: false
+>>>>>>> codex-update-ci
   push:
     branches: [ "main" ]
   pull_request:
@@ -30,9 +41,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
     - name: Install Dependencies
       run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
     - name: Run Lint Check
       run: npm run lint
@@ -41,5 +56,9 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
+<<<<<<< HEAD
       if: ${{ inputs.run_build != false }}
+=======
+      if: ${{ github.event_name != 'workflow_call' || inputs.run_build }}
+>>>>>>> codex-update-ci
       run: npm run build
