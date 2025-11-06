@@ -15,24 +15,9 @@ export default function TabLayout() {
         tabBarLabelStyle: { fontSize: 12, fontWeight: '600' },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Overview',
-        }}
-      />
-      <Tabs.Screen
-        name="modules"
-        options={{
-          title: 'FSM Modules',
-        }}
-      />
-      <Tabs.Screen
-        name="operations"
-        options={{
-          title: 'Operations',
-        }}
-      />
+      <Tabs.Screen name="index" options={{ title: 'Overview' }} />
+      <Tabs.Screen name="modules" options={{ title: 'FSM Modules' }} />
+      <Tabs.Screen name="operations" options={{ title: 'Operations' }} />
     </Tabs>
   );
 }
