@@ -22,6 +22,7 @@ import { FSMDebugging } from '@/components/fsm/fsm-debugging';
 import { XmlParserFsm } from '@/components/fsm/xml-parser';
 import { IDEMatrix } from '@/components/fsm/ide-matrix';
 import { TerminusValidator } from '@/components/fsm/terminus-validator';
+import { TerminusPrime } from '@/components/fsm/terminus-prime';
 
 const views: Record<string, React.ReactNode> = {
   dashboard: <Dashboard />,
@@ -30,6 +31,7 @@ const views: Record<string, React.ReactNode> = {
   'cloud-backup': <CloudBackup />,
   'code-bot-fsm': <CodeBotFsm />,
   'terminus-validator': <TerminusValidator />,
+  'terminus-prime': <TerminusPrime />,
   'lucide-validator': <LucideValidator />,
   'code-state-validation': <CodeStateValidation />,
   'policy-parsing': <PolicyParsing />,
@@ -41,12 +43,6 @@ const views: Record<string, React.ReactNode> = {
   'draft-saver': <DraftSaver />,
   'content-whisperer': <ContentWhisperer />,
   'file-tree': <FileTree />,
-  'code-state-validation': <CodeStateValidation />,
-  'lint-compliance': <LintCompliance />,
-  'todo-manager': <TodoManager />,
-  'loop-prevention': <LoopPrevention />,
-  'code-bot-fsm': <CodeBotFsm />,
-  'cloud-backup': <CloudBackup />,
   'fsm-debugging': <FSMDebugging />,
   'embed-gemini-manager': <EmbedGeminiManager />,
 };

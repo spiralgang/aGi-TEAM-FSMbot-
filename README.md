@@ -13,6 +13,31 @@ This document is your guide to the pre-configured, agentic development environme
 
 Each workstation view in the web experience is a focused FSM assistant: loop prevention, code state validation, policy parsing, embed management, auditing, and more. The single creative AI remains the orchestrator, but these deterministic teammates guarantee policy adherence and production readiness before any change is marked done.
 
+## Overlord Path & Axium Compulsion Framework
+
+Every action in this repository runs under the **Axium Compulsion Framework**—the Overlord Path mandated by the Certified Multi-Vendor Architect. The framework enforces a binary outcome on every task:
+
+* **Compliant → Proceed** – the wrapper hands control to the genuine binary without noise.
+* **Non-Compliant → Logical Stasis** – the operation is blocked, the penalty loop begins, and the actor learns the lesson.
+
+Compulsion is delivered without altering the operating system:
+
+* **PATH Shim & Wrapper Scripts** quietly intercept every launch (`scripts/fam/auto-standardize.sh`, `scripts/fsm_issue_injector.sh`, and `scripts/axium_guard.sh`).
+* **Environment Reinjection** controls `PROMPT_COMMAND`, history, and session variables so enforcement remains inescapable for shells, CI runs, and spawned subprocesses.
+* **Mobile Overlay Enforcement** mirrors the same logic in the Samsung S9+ launcher APK—non-compliant taps hit Axium overlays and Foreground Services until the user restores TOP alignment.
+
+Intent is irrelevant; only observable behaviour matters. If a contribution deletes required automation or drifts from TOP values, Axium escalates immediately and visibly.
+
+## NINJA Guardrails & FAM Compliance Net
+
+**NINJA (Non-Interruptible Non-Jammable Agent)** executes the compliance guardrails. It embeds checks inside Finite Action Machine (FAM) workflows so that every pull request must satisfy TOP requirements before merging:
+
+* **Quality Gates** – lint, typecheck, determinism, and provenance checks run through the FAM auto-standardise action.
+* **Forensic Trails** – every enforcement path logs the actor, timestamp, and diff in append-only provenance files.
+* **Penalty Loop** – if any TOP rule fails, NINJA blocks the merge, triggers rollback, and forces the contributor into the compliance loop until the fix is delivered.
+
+The live guardrail list is maintained in [`VAULT/AXIUM_OVERVIEW.md`](VAULT/AXIUM_OVERVIEW.md) and enforced in CI by `.github/workflows/axium-protection.yml`.
+
 ## Mobile Companion Console
 
 To keep the factory floor observable from anywhere, the repository now ships with an Expo/React Native companion under `mobile-app/`. The mobile build exposes:
@@ -39,6 +64,50 @@ npm run start  # choose iOS, Android, or web target via Expo CLI
 Because both experiences describe the same FSM factory, the copy and metrics in the mobile data file (`mobile-app/app/data/content.ts`) mirror the responsibilities implemented inside the web components (for example, the Anti-Flail FSM escalations and the code-state validator scoring rubric).
 
 Our core mission is to build a powerful and disciplined **software assembly line**. This is not about creating a single, monolithic AI that does everything. Instead, we have engineered an ecosystem where a creative AI is supported by specialized, deterministic FSMs, managed by a small embedded AI. Hence the name; aGi²TEAM³FSMbot¹, because of the way each FSM bot work flows singularly through and from those points of confluence. We like to employ the 5W + 1H principality just slightly augment to our task specific for this sequence.
+How It Works: The Virtuous Cycle
+
+This system is designed to be self-improving. The efficiency you gain from the automated assembly line allows you to focus your brilliant mind on higher-level architectural designs and new features.
+
+You Innovate: You provide the high-level vision and creative direction.
+The AI Codes: The single AI Coder translates your vision into novel code, unburdened by mundane checks.
+FSMs Enforce: The deterministic FSM bots validate, clean, secure, and structure the output, ensuring production-ready quality.
+The System Learns: Your innovations and the AI's creative solutions are fed back into the system. 
+
+This allows us to build even better FSMs and refine the AI's instructions, making the entire assembly line faster, smarter, and more powerful with every loop.
+
+This is the virtuous cycle that drives our progress.
+
+Operational Reality: How Agents Execute Tasks
+
+The "magic" of this environment comes from a clear understanding of how commands are executed.
+
+AI Agent Execution (Declarative Control)
+
+The creative AI does not have an interactive shell. Its "terminal" is the entire CI/CD and automation system.
+
+Commands are Declarative: The AI executes "commands" by writing or modifying configuration files (e.g., package.json, .github/workflows/ci.yml).Execution is Asynchronous: These changes are then acted upon by external, event-driven runners (e.g., GitHub Actions, npm scripts). The AI programs the factory's automation; it does not pull the levers itself.
+
+FSM Execution (Dev vs. Prod)
+
+A Finite State Machine is a pure algorithm, not an AI. How it runs depends on the context.
+
+In Development: For complex, asynchronous, or multi-step tasks (like validating code against a server or backing up files), FSMs are implemented as server-side Genkit flows. We test and trigger these using UI components that call these backend flows.In Production: For self-contained, synchronous tasks (like UI state validation or simple syntax checks), the FSM logic is written directly in the application's source code (e.g., TypeScript). This logic is compiled directly into the application bundle (.js, .apk, etc.) and runs natively on the client device without any need for a backend or YAML runner. The SyntaxChecker component is a perfect proof of this principle in action.
+
+Back to Top
+
+Component Reference Matrix
+
+The table below maps each core function of our system to the exact script or component that implements it. Use this as your reference to understand the codebase.
+
+Function / PrincipleComponent NameScript LocationMaster Dispatch FSMTerminus Prime Dispatch.github/workflows/terminus-prime.yml
+Central Orchestrator (AI)FSM Managersrc/components/fsm/embed-gemini-manager.ts
+Compliance & Audit FSMSupermax FSMsrc/components/fsm/continuous-audit.tsx
+Creative Coder WorkflowCode Bot FSMsrc/ai/flows/automated-workflow-with-code-bot-fsm.ts
+Structured Policy Parsing FSMPolicy Parsing FSMsrc/ai/flows/policy-parsing-fsm.ts
+Code State Validation FSMFSM Validatorsrc/ai/flows/code-state-validation.ts
+Icon Validation FSMLucide Validatorsrc/ai/flows/lucide-icon-validator.ts
+Loop Prevention FSMAnti-Flail FSMsrc/ai/flows/loop-prevention.ts
+Core Philosophy ManifestoDashboardsrc/components/fsm/dashboard.tsx
 
 
 > We've implemented a comprehensive enhancement to the FSM-based code building system that assists AI agents, following the 5W+1H framework outlined in issue #X. The implementation transforms the existing system into a production-ready toolkit for building reliable, debuggable AI-assisted coding workflows.
@@ -143,4 +212,3 @@ Our core mission is to build a powerful and disciplined **software assembly line
 > * ✅ TypeScript compilation with zero errors
 > * ✅ Security analysis passed (0 vulnerabilities)
 > * ✅ Manual testing of all UI components and workflows
-

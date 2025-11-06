@@ -1,0 +1,15 @@
+name: Axium Guardrails
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  enforce-guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Axium guard script
+        run: scripts/axium_guard.sh

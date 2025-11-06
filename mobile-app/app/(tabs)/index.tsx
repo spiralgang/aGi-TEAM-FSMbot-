@@ -11,8 +11,7 @@ export default function OverviewScreen() {
         <Text style={styles.kicker}>aGi²TEAM³FSMbot¹</Text>
         <Text style={styles.title}>Mobile Command Overview</Text>
         <Text style={styles.body}>
-          The mobile console keeps the FSM factory transparent on the go. Review the guiding principles, inspect specialist
-          modules, and jump into the operational cadence from your phone or tablet.
+          The mobile console keeps the FSM factory transparent on the go. Review the guiding principles, inspect specialist modules, and jump into the operational cadence from your phone or tablet.
         </Text>
 
         <View style={styles.section}>
@@ -47,12 +46,14 @@ export default function OverviewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0B1120',
+    backgroundColor: '#0f172a',
+    padding: 24,
   },
   scroll: {
     paddingHorizontal: 20,
     paddingBottom: 48,
     paddingTop: 60,
+    gap: 32,
   },
   kicker: {
     color: '#60A5FA',
@@ -65,30 +66,27 @@ const styles = StyleSheet.create({
     color: '#F9FAFB',
     fontSize: 28,
     fontWeight: '700',
-    marginBottom: 12,
   },
   body: {
     color: '#CBD5F5',
     fontSize: 16,
     lineHeight: 22,
-    marginBottom: 24,
   },
   section: {
-    marginBottom: 32,
+    gap: 16,
   },
   sectionTitle: {
     color: '#F9FAFB',
     fontSize: 20,
     fontWeight: '600',
-    marginBottom: 12,
   },
   card: {
     backgroundColor: '#111827',
     borderRadius: 16,
     padding: 16,
-    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#1F2937',
+    gap: 8,
   },
   linkCard: {
     borderColor: '#2563EB',
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
     color: '#F9FAFB',
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 8,
   },
   cardBody: {
     color: '#CBD5F5',
