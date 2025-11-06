@@ -5,6 +5,14 @@ on:
   workflow_call:
     inputs:
       run_build:
+        description: "Whether to execute the npm build step."
+        required: false
+        default: true
+        type: boolean
+    secrets:
+      npm_token:
+        description: "Token for authenticating with the npm registry when required."
+        required: false
         description: "Whether to run the production build step"
         required: false
         type: boolean
@@ -30,9 +38,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
     - name: Install Dependencies
       run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
     - name: Run Lint Check
       run: npm run lint
@@ -41,5 +53,7 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
-      if: ${{ inputs.run_build != false }}
+      if: ${{ github.event_name != 'workflow_call' }}
+      if: ${{ inputs.run_build }} != 'no' }} 
+      then: | 
       run: npm run build
