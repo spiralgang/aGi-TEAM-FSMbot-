@@ -1,6 +1,6 @@
 'use client';
 
-import { FsmViewWrapper } from './view-wrapper';
+import { FsmViewWrapper } from '@/components/fsm/view-wrapper';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export function IDEMatrix() {

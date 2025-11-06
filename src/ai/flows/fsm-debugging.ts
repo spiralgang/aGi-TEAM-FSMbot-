@@ -122,10 +122,10 @@ const fsmDebuggingFlow = ai.defineFlow(
   async input => {
     try {
       const {output} = await fsmDebuggingPrompt(input);
-      
+
       if (!output) {
         // Fallback analysis if AI prompt fails
-        return {
+        const fallback: FSMDebuggingOutput = {
           analysisComplete: false,
           stateAnalysis: {
             detectedStates: [],
@@ -144,14 +144,17 @@ const fsmDebuggingFlow = ai.defineFlow(
           suggestions: ['Check FSM code syntax', 'Verify state definitions', 'Retry analysis'],
           severity: 'critical',
         };
+        return fallback;
       }
 
+      const parsedOutput = FSMDebuggingOutputSchema.parse(output);
+
       return {
-        ...output,
+        ...parsedOutput,
         analysisComplete: true,
       };
     } catch (error) {
-      return {
+      const fallback: FSMDebuggingOutput = {
         analysisComplete: false,
         stateAnalysis: {
           detectedStates: [],
@@ -170,6 +173,7 @@ const fsmDebuggingFlow = ai.defineFlow(
         suggestions: ['Fix syntax errors', 'Simplify FSM structure', 'Check input format'],
         severity: 'critical',
       };
+      return fallback;
     }
   }
 );
