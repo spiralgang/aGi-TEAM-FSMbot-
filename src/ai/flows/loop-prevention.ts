@@ -18,7 +18,6 @@ const AntiFlailInputSchema = z.object({
   action: z.string().describe('The action performed by the AI agent.'),
   previousActions: z.array(z.string()).optional().describe('History of previous actions for loop detection.'),
   contextId: z.string().optional().describe('Unique identifier to track action sequences across calls.'),
-  action: z.string().describe('The action performed by the AI.'),
 });
 export type AntiFlailInput = z.infer<typeof AntiFlailInputSchema>;
 
@@ -46,13 +45,15 @@ const antiFlailFSMPrompt = ai.definePrompt({
   output: {
     schema: AntiFlailOutputSchema,
   },
-  prompt: `You are an advanced anti-thrashing FSM agent designed to prevent AI agents from getting stuck in infinite loops. 
+  prompt: `You are an advanced anti-thrashing FSM agent designed to prevent AI agents from getting stuck in infinite loops.
 You act as a circuit-breaker that escalates intervention based on repetitive behavior patterns.
 
 CURRENT MONITORING STATE: {{{status}}}
 REPETITION COUNT: {{{loopCount}}}
 CURRENT ACTION: {{{action}}}
-  prompt: `You are an FSM that monitors and limits the actions of a creative AI to prevent it from getting stuck in infinite loops or "thrashing". You will maintain a state that reflects the current status of the AI, track the number of loops, and escalate to a halt state if the AI repeats actions too many times.
+
+You are an FSM that monitors and limits the actions of a creative AI to prevent it from getting stuck in infinite loops or "thrashing".
+Maintain a state that reflects the current status of the AI, track the number of loops, and escalate to a halt state if the AI repeats actions too many times.
 
 The current state is: {{{status}}}
 The current loop count is: {{{loopCount}}}
