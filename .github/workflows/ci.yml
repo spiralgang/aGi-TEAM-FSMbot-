@@ -13,6 +13,10 @@ on:
       npm_token:
         description: "Token for authenticating with the npm registry when required."
         required: false
+        description: "Whether to run the production build step"
+        required: false
+        type: boolean
+        default: true
   push:
     branches: [ "main" ]
   pull_request:
@@ -49,5 +53,7 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
-      if: ${{ github.event_name != 'workflow_call' || inputs.run_build }}
+      if: ${{ github.event_name != 'workflow_call' }}
+      if: ${{ inputs.run_build }} != 'no' }} 
+      then: | 
       run: npm run build
