@@ -5,21 +5,14 @@ on:
   workflow_call:
     inputs:
       run_build:
-<<<<<<< HEAD
         description: "Whether to run the production build step"
         required: false
         type: boolean
-        default: true
-=======
-        description: "Whether to execute the npm build step."
-        required: false
-        default: true
-        type: boolean
+        default: true 
     secrets:
       npm_token:
         description: "Token for authenticating with the npm registry when required."
         required: false
->>>>>>> codex-update-ci
   push:
     branches: [ "main" ]
   pull_request:
@@ -56,9 +49,5 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
-<<<<<<< HEAD
       if: ${{ inputs.run_build != false }}
-=======
-      if: ${{ github.event_name != 'workflow_call' || inputs.run_build }}
->>>>>>> codex-update-ci
       run: npm run build
