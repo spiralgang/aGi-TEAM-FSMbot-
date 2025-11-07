@@ -13,6 +13,31 @@ This document is your guide to the pre-configured, agentic development environme
 
 Each workstation view in the web experience is a focused FSM assistant: loop prevention, code state validation, policy parsing, embed management, auditing, and more. The single creative AI remains the orchestrator, but these deterministic teammates guarantee policy adherence and production readiness before any change is marked done.
 
+## Overlord Path & Axium Compulsion Framework
+
+Every action in this repository runs under the **Axium Compulsion Framework**—the Overlord Path mandated by the Certified Multi-Vendor Architect. The framework enforces a binary outcome on every task:
+
+* **Compliant → Proceed** – the wrapper hands control to the genuine binary without noise.
+* **Non-Compliant → Logical Stasis** – the operation is blocked, the penalty loop begins, and the actor learns the lesson.
+
+Compulsion is delivered without altering the operating system:
+
+* **PATH Shim & Wrapper Scripts** quietly intercept every launch (`scripts/fam/auto-standardize.sh`, `scripts/fsm_issue_injector.sh`, and `scripts/axium_guard.sh`).
+* **Environment Reinjection** controls `PROMPT_COMMAND`, history, and session variables so enforcement remains inescapable for shells, CI runs, and spawned subprocesses.
+* **Mobile Overlay Enforcement** mirrors the same logic in the Samsung S9+ launcher APK—non-compliant taps hit Axium overlays and Foreground Services until the user restores TOP alignment.
+
+Intent is irrelevant; only observable behaviour matters. If a contribution deletes required automation or drifts from TOP values, Axium escalates immediately and visibly.
+
+## NINJA Guardrails & FAM Compliance Net
+
+**NINJA (Non-Interruptible Non-Jammable Agent)** executes the compliance guardrails. It embeds checks inside Finite Action Machine (FAM) workflows so that every pull request must satisfy TOP requirements before merging:
+
+* **Quality Gates** – lint, typecheck, determinism, and provenance checks run through the FAM auto-standardise action.
+* **Forensic Trails** – every enforcement path logs the actor, timestamp, and diff in append-only provenance files.
+* **Penalty Loop** – if any TOP rule fails, NINJA blocks the merge, triggers rollback, and forces the contributor into the compliance loop until the fix is delivered.
+
+The live guardrail list is maintained in [`VAULT/AXIUM_OVERVIEW.md`](VAULT/AXIUM_OVERVIEW.md) and enforced in CI by `.github/workflows/axium-protection.yml`.
+
 ## Mobile Companion Console
 
 To keep the factory floor observable from anywhere, the repository now ships with an Expo/React Native companion under `mobile-app/`. The mobile build exposes:
@@ -187,6 +212,7 @@ Core Philosophy ManifestoDashboardsrc/components/fsm/dashboard.tsx
 > * ✅ TypeScript compilation with zero errors
 > * ✅ Security analysis passed (0 vulnerabilities)
 > * ✅ Manual testing of all UI components and workflows
+
 ---
 Direct answer: I can’t “google” something for you on command, but I can summarize what’s publicly available about the GitHub project you’ve been pointing me toward. The repository spiralgang/aGi-TEAM-FSMbot- is a public codebase on GitHub that focuses on building Finite State Machine (FSM) bots and state machine compilers (SMC) to assist AI agents in structured coding workflows.  
 
@@ -1647,3 +1673,4 @@ main
 
 ### Savage Verdict and Next Strike
 This transcript's a battlefield of ideas-my vision for a sovereign FSM empire clashing with Copilot's corporate restraint. Strengths: Forensic rigor, modular FAMs, QTI hooks for hardware dominance. 
+
