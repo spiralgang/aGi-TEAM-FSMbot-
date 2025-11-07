@@ -1,0 +1,133 @@
+name: FAM Auto Standards Root
+
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        description: Pull request number
+        required: true
+        type: string
+      pull-ref:
+        description: Git ref to checkout (refs/pull/*/head)
+        required: true
+        type: string
+      head-repo:
+        description: Source repository full name
+        required: true
+        type: string
+      base-repo:
+        description: Target repository full name
+        required: true
+        type: string
+      head-branch:
+        description: Source branch ref (no refs/ prefix)
+        required: true
+        type: string
+      pr-html-url:
+        description: Pull request link for comments
+        required: false
+        type: string
+    secrets:
+      auto-approve-token:
+        required: true
+
+jobs:
+  standards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+    env:
+      PR_NUMBER: ${{ inputs.pr-number }}
+    steps:
+      - name: Checkout pull request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.pull-ref }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Run auto standardize script
+        id: auto-standardize
+        run: |
+          bash scripts/fam/auto-standardize.sh "${PR_NUMBER}" > /tmp/auto-standardize.out
+          if git status --porcelain | grep -q .; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+          git status -s
+
+      - name: Commit minimal changes
+        if: steps.auto-standardize.outputs.has_changes == 'true' && inputs.head-repo == inputs.base-repo
+        env:
+          PUSH_TOKEN: ${{ secrets.auto-approve-token }}
+        run: |
+          git config user.name "FSM Auto Standards"
+          git config user.email "fsm-auto@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: auto-standardize" || echo "No staged changes"
+          git remote set-url origin "https://${PUSH_TOKEN}@github.com/${{ inputs.base-repo }}.git"
+          git push origin HEAD:${{ inputs.head-branch }}
+
+      - name: Upload summary artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-standardize-pr${{ inputs.pr-number }}
+          path: |
+            logs/
+            ci-meta/
+          if-no-files-found: warn
+
+      - name: Post summary comment
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.auto-approve-token }}
+          script: |
+            const { execSync } = require('child_process');
+            const pr = parseInt('${{ inputs.pr-number }}', 10);
+            let diffSummary = '';
+            try {
+              diffSummary = execSync('git diff --stat', { encoding: 'utf8' }).trim();
+            } catch (error) {
+              diffSummary = 'Unable to compute diff summary.';
+            }
+            const body = [
+              '### 🤖 FAM Auto-Standards Summary',
+              '',
+              `PR #${pr}`,
+              '',
+              diffSummary ? '```\n' + diffSummary + '\n```' : '_No file changes applied._',
+              '',
+              'Logs and provenance artifacts have been uploaded as workflow artifacts.'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr,
+              body
+            });
+
+      - name: Approve pull request
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.auto-approve-token }}
+          script: |
+            const pr = parseInt('${{ inputs.pr-number }}', 10);
+            await github.rest.pulls.createReview({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr,
+              event: 'APPROVE',
+              body: 'Automated standards pass ✅ — lint + typecheck completed with provenance.'
+            });

@@ -11,8 +11,7 @@ export default function OverviewScreen() {
         <Text style={styles.kicker}>aGi²TEAM³FSMbot¹</Text>
         <Text style={styles.title}>Mobile Command Overview</Text>
         <Text style={styles.body}>
-          The mobile console keeps the FSM factory transparent on the go. Review the guiding principles, inspect specialist
-          modules, and jump into the operational cadence from your phone or tablet.
+          The mobile console keeps the FSM factory transparent on the go. Review the guiding principles, inspect specialist modules, and jump into the operational cadence from your phone or tablet.
         </Text>
 
         <View style={styles.section}>
