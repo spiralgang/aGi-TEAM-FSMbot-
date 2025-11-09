@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/sh
+cmd="$1"; shift || true
+case "$cmd" in
+  enforce) am broadcast -a com.spiralgang.axium.TARGET.ENFORCE ;;
+  profile) am broadcast -a com.spiralgang.axium.TARGET.PROFILE_APPLY --es profile "$1" ;;
+  override) am broadcast -a com.spiralgang.axium.TARGET.OVERRIDE_OPEN --ei minutes "${1:-15}" ;;
+  *) echo "Usage: axiumctl {enforce|profile <name>|override [minutes]}"; exit 1 ;;
+esac
