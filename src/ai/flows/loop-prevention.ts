@@ -33,54 +33,6 @@ export async function antiFlailFlow(input: AntiFlailInput): Promise<AntiFlailOut
   return antiFlailFSM(input);
 }
 
-const antiFlailFSMPrompt = ai.definePrompt({
-  name: 'antiFlailFSMPrompt',
-  input: {
-    schema: z.object({
-      action: z.string(),
-      status: z.string(),
-      loopCount: z.number(),
-    }),
-  },
-  output: {
-    schema: AntiFlailOutputSchema,
-  },
-  prompt: `You are an advanced anti-thrashing FSM agent designed to prevent AI agents from getting stuck in infinite loops.
-You act as a circuit-breaker that escalates intervention based on repetitive behavior patterns.
-
-CURRENT MONITORING STATE: {{{status}}}
-REPETITION COUNT: {{{loopCount}}}
-CURRENT ACTION: {{{action}}}
-
-You are an FSM that monitors and limits the actions of a creative AI to prevent it from getting stuck in infinite loops or "thrashing".
-Maintain a state that reflects the current status of the AI, track the number of loops, and escalate to a halt state if the AI repeats actions too many times.
-
-The current state is: {{{status}}}
-The current loop count is: {{{loopCount}}}
-The action performed by the AI is: {{{action}}}
-
-FSM STATE DEFINITIONS:
-- STABLE: Normal operation, no intervention needed
-- MONITOR: Repetitive actions detected, increasing vigilance  
-- CORRECT: Loop pattern confirmed, corrective action required
-- HALT: Critical thrashing detected, immediate intervention required
-
-INTERVENTION ESCALATION RULES:
-- 1-2 repetitions: STABLE → MONITOR (watch closely)
-- 3-4 repetitions: MONITOR → CORRECT (suggest alternative approach)  
-- 5+ repetitions: CORRECT → HALT (force circuit break)
-
-Your role is to provide intelligent feedback that helps break unproductive patterns while allowing legitimate iterative refinement.
-
-Analyze the current situation and provide appropriate state transition and guidance.
-
-Output format:
-{
-  "status": "<appropriate_fsm_state>",
-  "message": "<clear_guidance_message_with_specific_recommendations>"
-}`,
-});
-
 const antiFlailFSM = ai.defineFlow(
   {
     name: 'antiFlailFSM',
@@ -132,15 +84,9 @@ const antiFlailFSM = ai.defineFlow(
       message = `✅ STABLE: Action diversity maintained. No loops detected.`;
     }
 
-    const {output} = await antiFlailFSMPrompt({
-      action: currentAction,
-      status: state,
-      loopCount: maxRepetitions,
-    });
-
     return {
-      status: output?.status || state,
-      message: output?.message || message,
+      status: state,
+      message: message,
       shouldIntervene,
       recommendedAction,
     };
