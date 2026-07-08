@@ -14,6 +14,9 @@ import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import * as allIcons from 'lucide-react';
 
+const IMPORT_REGEX = /import\s+{([^}]+)}\s+from\s+['"]lucide-react['"]/g;
+const VALID_ICON_SET = new Set(Object.keys(allIcons));
+
 const LucidIconValidatorInputSchema = z.object({
   code: z.string().describe('The code snippet to validate for lucide-react icons.'),
 });
@@ -39,11 +42,16 @@ const lucidIconValidatorFlow = ai.defineFlow(
   },
   async ({ code }) => {
     // State: PARSE_IMPORTS
-    const importRegex = /import\s+{([^}]+)}\s+from\s+['"]lucide-react['"]/g;
     const allImportedIcons: string[] = [];
     let match;
-    while ((match = importRegex.exec(code)) !== null) {
-      const icons = match[1].split(',').map(name => name.trim()).filter(name => name && !name.includes(' '));
+    for (const match of code.matchAll(IMPORT_REGEX)) {
+      const cleanIconsString = match[1]
+        .replace(/\/\/[^\n]*/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      const icons = cleanIconsString
+        .split(',')
+        .map(name => name.trim())
+        .filter(name => name && !name.includes(' '));
       allImportedIcons.push(...icons);
     }
 
@@ -51,14 +59,12 @@ const lucidIconValidatorFlow = ai.defineFlow(
       return { validIcons: [], invalidIcons: [], recommendations: {} };
     }
     
-    const validIconSet = new Set(Object.keys(allIcons));
-    
     // State: VALIDATE_ICONS
     const validIcons: string[] = [];
     const invalidIcons: string[] = [];
 
     for (const icon of allImportedIcons) {
-      if (validIconSet.has(icon)) {
+      if (VALID_ICON_SET.has(icon)) {
         validIcons.push(icon);
       } else {
         invalidIcons.push(icon);
