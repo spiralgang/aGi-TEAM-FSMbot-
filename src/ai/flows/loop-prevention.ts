@@ -86,7 +86,7 @@ const antiFlailFSM = ai.defineFlow(
 
     return {
       status: state,
-      message: message,
+      message,
       shouldIntervene,
       recommendedAction,
     };
