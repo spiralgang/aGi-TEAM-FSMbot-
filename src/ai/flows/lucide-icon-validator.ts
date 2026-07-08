@@ -44,9 +44,14 @@ const lucidIconValidatorFlow = ai.defineFlow(
     // State: PARSE_IMPORTS
     const allImportedIcons: string[] = [];
     let match;
-    IMPORT_REGEX.lastIndex = 0;
-    while ((match = IMPORT_REGEX.exec(code)) !== null) {
-      const icons = match[1].split(',').map(name => name.trim()).filter(name => name && !name.includes(' '));
+    for (const match of code.matchAll(IMPORT_REGEX)) {
+      const cleanIconsString = match[1]
+        .replace(/\/\/[^\n]*/g, '')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      const icons = cleanIconsString
+        .split(',')
+        .map(name => name.trim())
+        .filter(name => name && !name.includes(' '));
       allImportedIcons.push(...icons);
     }
 
