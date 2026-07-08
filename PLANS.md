@@ -77,9 +77,9 @@ For infrastructure agents (Nimbus, ARGOS equivalents), the FSM governs the self-
 
 · State: ANOMALY_DETECTION. Update() polls observability metrics. When a threshold is breached, End() triggers MoveTo(ISOLATION).
 · State: ISOLATION. Begin() executes kubectl cordon or equivalent network segmentation commands.
-· **State: ROOT_CAUSE. Load() collects logs and traces. The Update()` method runs a diagnostic LLM chain.
-· **State: REMEDIATION. Executes the fix (e.g., scaling replicas, restarting pods). End() moves to VERIFICATION`.
-· **State: VERIFICATION. Monitors recovery metrics. If recovery fails, the system moves to ESCALATION` (creating a GitHub Issue for human review, effectively closing the autonomous loop).
+· **State: ROOT_CAUSE.** Load() collects logs and traces. The `Update()` method runs a diagnostic LLM chain.
+· **State: REMEDIATION.** Executes the fix (e.g., scaling replicas, restarting pods). End() moves to `VERIFICATION`.
+· **State: VERIFICATION.** Monitors recovery metrics. If recovery fails, the system moves to `ESCALATION` (creating a GitHub Issue for human review, effectively closing the autonomous loop).
 
 ---
 
