@@ -97,30 +97,59 @@ export function ContinuousAudit() {
 
     // 2. Enforce hygiene
     const hygieneIndex = knownConfigs.findIndex(c => c.id === 'hygiene');
-    setScannedFiles(prev => prev.map((file, index) => index === hygieneIndex ? { ...file, status: 'running' } : file));
+    if (hygieneIndex !== -1) {
+      setScannedFiles(prev => {
+        if (hygieneIndex < 0 || hygieneIndex >= prev.length) return prev;
+        const next = [...prev];
+        next[hygieneIndex] = { ...next[hygieneIndex], status: 'running' };
+        return next;
+      });
+    }
     addLog('[ENFORCE] File Hygiene: Normalizing names, removing empty dirs...', 'info');
     await sleep(400);
     addLog('[PASS] File hygiene enforced.', 'success');
-    setScannedFiles(prev => prev.map((file, index) => index === hygieneIndex ? { ...file, status: 'pass' } : file));
+    if (hygieneIndex !== -1) {
+      setScannedFiles(prev => {
+        if (hygieneIndex < 0 || hygieneIndex >= prev.length) return prev;
+        const next = [...prev];
+        next[hygieneIndex] = { ...next[hygieneIndex], status: 'pass' };
+        return next;
+      });
+    }
 
     // 3. Enforce subsystems
     let allPassed = true;
     for (let i = 0; i < knownConfigs.length; i++) {
       if (knownConfigs[i].id === 'hygiene') continue;
 
-      setScannedFiles(prev => prev.map((file, index) => index === i ? { ...file, status: 'running' } : file));
+      setScannedFiles(prev => {
+        if (i < 0 || i >= prev.length) return prev;
+        const next = [...prev];
+        next[i] = { ...next[i], status: 'running' };
+        return next;
+      });
       addLog(`[ENFORCE] Subsystem: ${knownConfigs[i].name}`, 'info');
       await sleep(350);
 
       const isSuccess = Math.random() > 0.2; // 80% chance of compliance
       if (isSuccess) {
         addLog(`[PASS] ${knownConfigs[i].name} is compliant.`, 'success');
-        setScannedFiles(prev => prev.map((file, index) => index === i ? { ...file, status: 'pass' } : file));
+        setScannedFiles(prev => {
+          if (i < 0 || i >= prev.length) return prev;
+          const next = [...prev];
+          next[i] = { ...next[i], status: 'pass' };
+          return next;
+        });
       } else {
         allPassed = false;
         const errorDetail = `Compliance violation in ${knownConfigs[i].name}. PENALTY APPLIED.`;
         addLog(`[FAIL] ${errorDetail}`, 'error');
-        setScannedFiles(prev => prev.map((file, index) => index === i ? { ...file, status: 'fail' } : file));
+        setScannedFiles(prev => {
+          if (i < 0 || i >= prev.length) return prev;
+          const next = [...prev];
+          next[i] = { ...next[i], status: 'fail' };
+          return next;
+        });
         break;
       }
     }
