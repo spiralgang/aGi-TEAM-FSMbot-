@@ -7,13 +7,15 @@ on:
 jobs:
   trigger-auto-standards:
     if: contains(github.event.pull_request.labels.*.name, 'auto-standards')
-    uses: ./.github/workflows/fam-auto-approve-root.yml
-    with:
-      pr-number: ${{ github.event.pull_request.number }}
-      pull-ref: refs/pull/${{ github.event.pull_request.number }}/head
-      head-repo: ${{ github.event.pull_request.head.repo.full_name }}
-      base-repo: ${{ github.repository }}
-      head-branch: ${{ github.event.pull_request.head.ref }}
-      pr-html-url: ${{ github.event.pull_request.html_url }}
-    secrets:
-      auto-approve-token: ${{ secrets.AUTO_APPROVE_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/fam-auto-approve-root.yml
+        with:
+          pr-number: ${{ github.event.pull_request.number }}
+          pull-ref: refs/pull/${{ github.event.pull_request.number }}/head
+          head-repo: ${{ github.event.pull_request.head.repo.full_name }}
+          base-repo: ${{ github.repository }}
+          head-branch: ${{ github.event.pull_request.head.ref }}
+          pr-html-url: ${{ github.event.pull_request.html_url }}
+        secrets:
+          auto-approve-token: ${{ secrets.AUTO_APPROVE_TOKEN }}

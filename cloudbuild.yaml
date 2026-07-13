@@ -67,7 +67,4 @@ artifacts:
       - '.next/**'
       - 'package.json'
       - 'package-lock.json'
-volumes:
-  - name: npm-cache
-    path: /workspace/.npm
 timeout: 3600s
