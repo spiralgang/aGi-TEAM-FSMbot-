@@ -97,25 +97,19 @@ export function ContinuousAudit() {
 
     // 2. Enforce hygiene
     const hygieneIndex = knownConfigs.findIndex(c => c.id === 'hygiene');
-    if (hygieneIndex !== -1) {
-      setScannedFiles(prev => {
-        if (hygieneIndex < 0 || hygieneIndex >= prev.length) return prev;
-        const next = [...prev];
-        next[hygieneIndex] = { ...next[hygieneIndex], status: 'running' };
-        return next;
-      });
-    }
+    setScannedFiles(prev => {
+      const next = [...prev];
+      next[hygieneIndex] = { ...next[hygieneIndex], status: 'running' };
+      return next;
+    });
     addLog('[ENFORCE] File Hygiene: Normalizing names, removing empty dirs...', 'info');
     await sleep(400);
     addLog('[PASS] File hygiene enforced.', 'success');
-    if (hygieneIndex !== -1) {
-      setScannedFiles(prev => {
-        if (hygieneIndex < 0 || hygieneIndex >= prev.length) return prev;
-        const next = [...prev];
-        next[hygieneIndex] = { ...next[hygieneIndex], status: 'pass' };
-        return next;
-      });
-    }
+    setScannedFiles(prev => {
+      const next = [...prev];
+      next[hygieneIndex] = { ...next[hygieneIndex], status: 'pass' };
+      return next;
+    });
 
     // 3. Enforce subsystems
     let allPassed = true;
@@ -123,7 +117,6 @@ export function ContinuousAudit() {
       if (knownConfigs[i].id === 'hygiene') continue;
 
       setScannedFiles(prev => {
-        if (i < 0 || i >= prev.length) return prev;
         const next = [...prev];
         next[i] = { ...next[i], status: 'running' };
         return next;
@@ -135,7 +128,6 @@ export function ContinuousAudit() {
       if (isSuccess) {
         addLog(`[PASS] ${knownConfigs[i].name} is compliant.`, 'success');
         setScannedFiles(prev => {
-          if (i < 0 || i >= prev.length) return prev;
           const next = [...prev];
           next[i] = { ...next[i], status: 'pass' };
           return next;
@@ -145,7 +137,6 @@ export function ContinuousAudit() {
         const errorDetail = `Compliance violation in ${knownConfigs[i].name}. PENALTY APPLIED.`;
         addLog(`[FAIL] ${errorDetail}`, 'error');
         setScannedFiles(prev => {
-          if (i < 0 || i >= prev.length) return prev;
           const next = [...prev];
           next[i] = { ...next[i], status: 'fail' };
           return next;

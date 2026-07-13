@@ -30,7 +30,7 @@ jobs:
       - name: Create local.properties
         run: |
           {
-            echo "signing.storeFile=$(pwd)/keystore.jks";
+            echo "signing.storeFile=keystore.jks";
             echo "signing.keyAlias=${{ secrets.KEY_ALIAS }}";
             echo "signing.storePassword=${{ secrets.KEYSTORE_PASSWORD }}";
             echo "signing.keyPassword=${{ secrets.KEY_PASSWORD }}";
@@ -44,7 +44,7 @@ jobs:
 
       - name: Get APK file name
         id: get_apk
-        run: echo "APK_PATH=$(ls app/build/outputs/apk/release/*.apk)" >> "$GITHUB_OUTPUT"
+        run: echo "APK_PATH=$(find app/build/outputs/apk/release -name '*.apk')" >> "$GITHUB_OUTPUT"
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
