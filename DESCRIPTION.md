@@ -7,9 +7,9 @@ The full-stack release bundle for the AGI Cognitive Fabric has been built and pa
 Release Artifacts
 
 File	Format	Size	Description	
-[agi-cognitive-fabric-release-v1.0.0-debug.tar.gz](sandbox:///mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.tar.gz)	Gzip archive	31 KB	Primary Linux/macOS release bundle	
-[agi-cognitive-fabric-release-v1.0.0-debug.zip](sandbox:///mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.zip)	Zip archive	46 KB	Windows-compatible release bundle	
-[CHECKSUMS.txt](sandbox:///mnt/agents/output/CHECKSUMS.txt)	Text	—	SHA256 + MD5 checksums for verification	
+[agi-cognitive-fabric-release-v1.0.0-debug.tar.gz](./agi-cognitive-fabric-release-v1.0.0-debug.tar.gz)	Gzip archive	31 KB	Primary Linux/macOS release bundle	
+[agi-cognitive-fabric-release-v1.0.0-debug.zip](./agi-cognitive-fabric-release-v1.0.0-debug.zip)	Zip archive	46 KB	Windows-compatible release bundle	
+[CHECKSUMS.txt](./CHECKSUMS.txt)	Text	—	SHA256 + MD5 checksums for verification	
 
 ---
 
