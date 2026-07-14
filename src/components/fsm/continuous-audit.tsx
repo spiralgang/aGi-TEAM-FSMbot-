@@ -41,7 +41,7 @@ const knownConfigs: Omit<ConfigFile, 'status'>[] = [
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export function ContinuousAudit() {
-  const [scannedFiles, setScannedFiles] = useState<ConfigFile[]>([]);
+  const [fileStatuses, setFileStatuses] = useState<Record<string, AuditStatus>>({});
   const [isAuditing, setIsAuditing] = useState(false);
   const [logs, setLogs] = useState<AuditLog[]>([{ timestamp: new Date().toLocaleTimeString(), message: 'Supermax Compliance FSM standing by.', level: 'info' }]);
   const [vaultHash, setVaultHash] = useState<string | null>(null);
@@ -92,7 +92,9 @@ export function ContinuousAudit() {
 
     // 1. Scan for configs
     addLog('Scanning for all known config, dependency, and manifest files...', 'info');
-    setScannedFiles(knownConfigs.map(c => ({...c, status: 'pending' })));
+    const initialStatuses: Record<string, AuditStatus> = {};
+    knownConfigs.forEach(c => initialStatuses[c.id] = 'pending');
+    setFileStatuses(initialStatuses);
     await sleep(500);
 
     // 2. Enforce hygiene
@@ -114,7 +116,8 @@ export function ContinuousAudit() {
     // 3. Enforce subsystems
     let allPassed = true;
     for (let i = 0; i < knownConfigs.length; i++) {
-      if (knownConfigs[i].id === 'hygiene') continue;
+      const config = knownConfigs[i];
+      if (config.id === 'hygiene') continue;
 
       setScannedFiles(prev => {
         const next = [...prev];
@@ -134,7 +137,7 @@ export function ContinuousAudit() {
         });
       } else {
         allPassed = false;
-        const errorDetail = `Compliance violation in ${knownConfigs[i].name}. PENALTY APPLIED.`;
+        const errorDetail = `Compliance violation in ${config.name}. PENALTY APPLIED.`;
         addLog(`[FAIL] ${errorDetail}`, 'error');
         setScannedFiles(prev => {
           const next = [...prev];
@@ -219,16 +222,20 @@ export function ContinuousAudit() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {scannedFiles.length === 0 && <p className="text-muted-foreground text-sm">Awaiting scan...</p>}
-                {scannedFiles.map(file => (
-                  <div key={file.id} className="flex items-start gap-3">
-                    {getStatusIcon(file.status)}
-                    <div className="flex-1">
-                      <p className="font-medium">{file.name}</p>
-                       <p className="text-xs text-muted-foreground">{file.type}</p>
+                {Object.keys(fileStatuses).length === 0 && <p className="text-muted-foreground text-sm">Awaiting scan...</p>}
+                {knownConfigs.map(config => {
+                  const status = fileStatuses[config.id];
+                  if (!status) return null;
+                  return (
+                    <div key={config.id} className="flex items-start gap-3">
+                      {getStatusIcon(status)}
+                      <div className="flex-1">
+                        <p className="font-medium">{config.name}</p>
+                        <p className="text-xs text-muted-foreground">{config.type}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </CardContent>
            </Card>
