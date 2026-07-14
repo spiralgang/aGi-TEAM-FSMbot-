@@ -1,14 +1,13 @@
-
 name: FSMAssist CI
 
 on:
   workflow_call:
     inputs:
       run_build:
-        description: "Whether to run the production build step"
+        description: "Whether to execute the npm build step."
         required: false
+        default: true
         type: boolean
-        default: true 
     secrets:
       npm_token:
         description: "Token for authenticating with the npm registry when required."
@@ -49,5 +48,5 @@ jobs:
       run: npm run typecheck
 
     - name: Run Build
-      if: ${{ inputs.run_build != false }}
+      if: ${{ github.event_name != 'workflow_call' || inputs.run_build }}
       run: npm run build
