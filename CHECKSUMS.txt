@@ -1,0 +1,4 @@
+586712bbd6a75a1758a550881d3570f60b9d61435a6daf379b29df44135ae429  /mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.tar.gz
+1ef36ed1e4b49b4d283de4a55cbbc9ce  /mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.tar.gz
+0ba4c90e3d73b40635bb7af02ff5264ede7af15352062be5d6e531ea8481e5df  /mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.zip
+d27314b645d63ea9189bc24ba16ba6ec  /mnt/agents/output/agi-cognitive-fabric-release-v1.0.0-debug.zip
