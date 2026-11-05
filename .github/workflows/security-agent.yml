@@ -1,33 +1,61 @@
 name: Daily Security Scan
-
+# Self-contained security scan (no third-party agent action / no extra API key).
+# Uses the repo's existing OpenAI-compatible LLM secrets (GLM-4-flash free tier by default)
+# and publishes findings to the job summary. It never pushes code.
 on:
   schedule:
-    - cron: '0 6 * * *'  # Every day at 6 AM
+    - cron: '0 2 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  scan:
+  security-scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
+    timeout-minutes: 15
     steps:
-      - uses: google-labs-code/jules-invoke@v1
-        with:
-          prompt: |
-            You are a security agent. Scan for vulnerabilities and fix them:
+      - uses: actions/checkout@v4
 
-            CRITICAL (fix immediately):
-            - Hardcoded secrets, API keys, passwords
-            - SQL injection, command injection
-            - Missing auth on sensitive endpoints
+      - name: Static secret scan (gitleaks)
+        continue-on-error: true
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.21.2/gitleaks_8.21.2_linux_x64.tar.gz | tar xz gitleaks
+          ./gitleaks dir . --no-banner --redact --report-format json --report-path gitleaks.json || true
+          echo "### gitleaks" >> "$GITHUB_STEP_SUMMARY"
+          python3 -c "import json;d=json.load(open('gitleaks.json'));print(f'{len(d)} potential secret(s) found');[print('-',x['File'],x['StartLine'],x['RuleID']) for x in d[:50]]" >> "$GITHUB_STEP_SUMMARY" || echo "no report" >> "$GITHUB_STEP_SUMMARY"
 
-            HIGH PRIORITY:
-            - XSS, CSRF vulnerabilities
-            - Insecure direct object references
-            - Missing input validation
-
-            Rules:
-            - Fix highest severity first
-            - Keep changes under 100 lines
-            - Run tests before creating PR
-          jules_api_key: ${{ secrets.JULES_API_KEY }}
+      - name: LLM security review
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY || secrets.ZHIPU_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: |
+          if [ -z "$LLM_API_KEY" ]; then echo "::warning::No LLM key configured; skipping AI review."; exit 0; fi
+          python3 - <<'PY'
+          import os, json, subprocess, urllib.request
+          files = subprocess.run(["git","ls-files"],capture_output=True,text=True).stdout.split()
+          exts = (".py",".js",".ts",".kt",".java",".sh",".go",".rs",".c",".cpp",".yml",".yaml")
+          chunks, budget = [], 24000
+          for f in files:
+              if not f.endswith(exts) or budget <= 0: continue
+              try: s = open(f, encoding="utf-8", errors="ignore").read()[:3000]
+              except Exception: continue
+              chunks.append(f"--- {f}\n{s}"); budget -= len(s)
+          prompt = ("Review this code for security issues: hardcoded secrets, injection, missing auth, "
+                    "XSS/CSRF, unsafe workflow patterns. Return a concise markdown list ordered by severity "
+                    "with file paths and a one-line fix for each.\n\n" + "\n".join(chunks))
+          base = (os.environ.get("LLM_BASE_URL") or "https://open.bigmodel.cn/api/paas/v4").rstrip("/")
+          model = os.environ.get("LLM_MODEL") or "glm-4-flash"
+          req = urllib.request.Request(base + "/chat/completions", method="POST",
+              data=json.dumps({"model": model, "temperature": 0.2, "max_tokens": 1500,
+                               "messages": [{"role": "user", "content": prompt}]}).encode(),
+              headers={"Content-Type": "application/json", "Authorization": "Bearer " + os.environ["LLM_API_KEY"]})
+          try:
+              text = json.load(urllib.request.urlopen(req, timeout=120))["choices"][0]["message"]["content"]
+          except Exception as e:
+              text = f"AI review unavailable: {e}"
+              print(f"::warning::{text}")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as fh:
+              fh.write("\n### AI security review\n" + text + "\n")
+          PY

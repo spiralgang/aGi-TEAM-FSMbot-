@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ['${{ github.event.inputs.python_version || '3.11' }}']
+        python: ["${{ github.event.inputs.python_version || '3.11' }}"]
     timeout-minutes: 40
 
     steps:
