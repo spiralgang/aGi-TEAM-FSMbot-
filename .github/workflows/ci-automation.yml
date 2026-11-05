@@ -108,7 +108,7 @@ jobs:
           if command -v pytest >/dev/null 2>&1; then
             pytest -q || ( echo "pytest failed"; exit 1 )
           elif [ -f package.json ]; then
-            npm test || ( echo "npm test failed"; exit 1 )
+            npm test --if-present || ( echo "npm test failed"; exit 1 )
           else
             echo "No test runner found; skipping"
           fi

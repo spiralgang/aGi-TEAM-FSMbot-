@@ -98,20 +98,11 @@ export function ContinuousAudit() {
     await sleep(500);
 
     // 2. Enforce hygiene
-    const hygieneIndex = knownConfigs.findIndex(c => c.id === 'hygiene');
-    setScannedFiles(prev => {
-      const next = [...prev];
-      next[hygieneIndex] = { ...next[hygieneIndex], status: 'running' };
-      return next;
-    });
+    setFileStatuses(prev => ({ ...prev, ['hygiene']: 'running' }));
     addLog('[ENFORCE] File Hygiene: Normalizing names, removing empty dirs...', 'info');
     await sleep(400);
     addLog('[PASS] File hygiene enforced.', 'success');
-    setScannedFiles(prev => {
-      const next = [...prev];
-      next[hygieneIndex] = { ...next[hygieneIndex], status: 'pass' };
-      return next;
-    });
+    setFileStatuses(prev => ({ ...prev, ['hygiene']: 'pass' }));
 
     // 3. Enforce subsystems
     let allPassed = true;
@@ -119,31 +110,19 @@ export function ContinuousAudit() {
       const config = knownConfigs[i];
       if (config.id === 'hygiene') continue;
 
-      setScannedFiles(prev => {
-        const next = [...prev];
-        next[i] = { ...next[i], status: 'running' };
-        return next;
-      });
+      setFileStatuses(prev => ({ ...prev, [knownConfigs[i].id]: 'running' }));
       addLog(`[ENFORCE] Subsystem: ${knownConfigs[i].name}`, 'info');
       await sleep(350);
 
       const isSuccess = Math.random() > 0.2; // 80% chance of compliance
       if (isSuccess) {
         addLog(`[PASS] ${knownConfigs[i].name} is compliant.`, 'success');
-        setScannedFiles(prev => {
-          const next = [...prev];
-          next[i] = { ...next[i], status: 'pass' };
-          return next;
-        });
+        setFileStatuses(prev => ({ ...prev, [knownConfigs[i].id]: 'pass' }));
       } else {
         allPassed = false;
         const errorDetail = `Compliance violation in ${config.name}. PENALTY APPLIED.`;
         addLog(`[FAIL] ${errorDetail}`, 'error');
-        setScannedFiles(prev => {
-          const next = [...prev];
-          next[i] = { ...next[i], status: 'fail' };
-          return next;
-        });
+        setFileStatuses(prev => ({ ...prev, [knownConfigs[i].id]: 'fail' }));
         break;
       }
     }
